@@ -8,7 +8,7 @@ or automatic incident/threat generation is included in this stage. Other
 services can POST to this API with an authorized Service 1 token. Internal
 Python callers can reuse `Notification` and `repository.insert_notification`.
 
-## Run and verify
+## Run
 
 From the project root in the existing virtual environment:
 
@@ -32,15 +32,7 @@ in the Service 8 collection folder.
 
 ```powershell
 python -m unittest discover -s tests -v
-python -m tests.run_service8_qa --output C:\path\outside\repository --keep-running
 ```
-
-The live runner requires ports 5001 and 5008 to be free. Use a new output folder
-each time. It initializes a disposable database, registers users through
-Service 1, logs in as all four roles, runs 65 HTTP scenarios, restarts both
-services to verify persistence, and writes a QA matrix and database snapshots.
-`--keep-running` leaves the services available for Postman. Its private Postman
-environment contains generated local credentials and tokens: do not commit it.
 
 ## Requests and responses
 
@@ -153,17 +145,17 @@ erDiagram
     }
 ```
 
-## Postman and evidence
+## Manual Postman requests
 
 Import the project's existing collection; use the folder
-`Service 8 - Notification and Alert Management`. It contains 51 requests,
-expected-status assertions, fresh login/token capture, dynamic notification IDs,
-and saved examples from actual local HTTP execution. Import the live runner's
-private environment locally, then execute the folder in order. Login variables
-are `adminPassword`, `recipientUsername`, `recipientPassword`, `analystUsername`,
-`analystPassword`, `auditorUsername`, `auditorPassword`; also set `emptyUserId`.
-The runner environment supplies them. Historical saved examples illustrate a
-specific run; future IDs and timestamps will differ.
+`Service 8 - Notification and Alert Management`. Start both services and create
+the users you need through Service 1. Set the username/password variables
+locally, run each login request, and copy its returned token into `adminToken`,
+`employeeToken`, `analystToken`, or `auditorToken` as appropriate. Set
+`recipientId`, `emptyUserId`, and the returned `notificationId` manually.
+The requests include descriptions and expected HTTP statuses; no runner or
+scripts are required. Use Postman and your SQLite viewer for the instructor's
+screenshots. Keep screenshots and local credentials outside Git.
 
 Keep all screenshots, reports, databases, and environment exports outside Git.
 The instructor requires actual Postman screenshots in the final team report.
@@ -176,6 +168,5 @@ submission requirement.
 Shared authentication is unchanged from main. A deliberately signed token with
 `iat: null` or a numeric subject outside SQLite's integer range produces 500
 instead of 401 in both Service 1 and Service 8. Ordinary invalid, expired, and
-wrong-signature tokens return 401 and are tested. The local audit records these
-two pre-existing cases separately from Service 8 results. A team fix should
+wrong-signature tokens return 401. A team fix should
 validate JWT claim types/ranges and catch conversion/type errors in shared auth.

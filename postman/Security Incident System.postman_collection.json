@@ -683,7 +683,7 @@
     },
     {
       "name": "Service 8 - Notification and Alert Management",
-      "description": "Run logins first using a private environment, then requests in order. Service 1 on baseURL; Service 8 on notificationURL. Initialize with python -m database.init_db; launch python -m user_service.app and python -m notification_service.app. Create test accounts through Service 1 or use tests.run_service8_qa --keep-running. No committed credentials or tokens in this folder. Implemented by: Youssef Al Hajj Youness.",
+      "description": "Manual Service 8 requests. Run Service 1 on baseURL and Service 8 on notificationURL. Create users through Service 1. Enter local username/password variables, run the login requests, and copy the returned tokens into adminToken, employeeToken, analystToken and auditorToken. Set recipientId, emptyUserId and notificationId manually from actual responses. Implemented by: Youssef Al Hajj Youness.",
       "item": [
         {
           "name": "Login as admin through Service 1",
@@ -699,7 +699,7 @@
               }
             ],
             "url": "{{baseURL}}/users/login",
-            "description": "Obtain a fresh real Service 1 JWT. Set local credentials in the environment first. Expected HTTP 200. Implemented by: Youssef Al Hajj Youness.",
+            "description": "Log in through Service 1 and manually copy the returned token into adminToken. Set the username/password variables locally first. Expected HTTP 200. Implemented by: Youssef Al Hajj Youness.",
             "body": {
               "mode": "raw",
               "raw": "{\n  \"username\": \"admin\",\n  \"password\": \"{{adminPassword}}\"\n}",
@@ -710,18 +710,6 @@
               }
             }
           },
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test('Expected HTTP 200', function () { pm.response.to.have.status(200); });",
-                  "if (pm.response.code === 200) pm.environment.set('adminToken', pm.response.json().data.token);"
-                ]
-              }
-            }
-          ],
           "response": []
         },
         {
@@ -738,7 +726,7 @@
               }
             ],
             "url": "{{baseURL}}/users/login",
-            "description": "Obtain a fresh real Service 1 JWT. Set local credentials in the environment first. Expected HTTP 200. Implemented by: Youssef Al Hajj Youness.",
+            "description": "Log in through Service 1 and manually copy the returned token into employeeToken. Set the username/password variables locally first. Expected HTTP 200. Implemented by: Youssef Al Hajj Youness.",
             "body": {
               "mode": "raw",
               "raw": "{\n  \"username\": \"{{recipientUsername}}\",\n  \"password\": \"{{recipientPassword}}\"\n}",
@@ -749,19 +737,6 @@
               }
             }
           },
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test('Expected HTTP 200', function () { pm.response.to.have.status(200); });",
-                  "if (pm.response.code === 200) pm.environment.set('employeeToken', pm.response.json().data.token);",
-                  "if (pm.response.code === 200) pm.environment.set('recipientId', pm.response.json().data.user.user_id);"
-                ]
-              }
-            }
-          ],
           "response": []
         },
         {
@@ -778,7 +753,7 @@
               }
             ],
             "url": "{{baseURL}}/users/login",
-            "description": "Obtain a fresh real Service 1 JWT. Set local credentials in the environment first. Expected HTTP 200. Implemented by: Youssef Al Hajj Youness.",
+            "description": "Log in through Service 1 and manually copy the returned token into analystToken. Set the username/password variables locally first. Expected HTTP 200. Implemented by: Youssef Al Hajj Youness.",
             "body": {
               "mode": "raw",
               "raw": "{\n  \"username\": \"{{analystUsername}}\",\n  \"password\": \"{{analystPassword}}\"\n}",
@@ -789,19 +764,6 @@
               }
             }
           },
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test('Expected HTTP 200', function () { pm.response.to.have.status(200); });",
-                  "if (pm.response.code === 200) pm.environment.set('analystToken', pm.response.json().data.token);",
-                  "if (pm.response.code === 200) pm.environment.set('analystId', pm.response.json().data.user.user_id);"
-                ]
-              }
-            }
-          ],
           "response": []
         },
         {
@@ -818,7 +780,7 @@
               }
             ],
             "url": "{{baseURL}}/users/login",
-            "description": "Obtain a fresh real Service 1 JWT. Set local credentials in the environment first. Expected HTTP 200. Implemented by: Youssef Al Hajj Youness.",
+            "description": "Log in through Service 1 and manually copy the returned token into auditorToken. Set the username/password variables locally first. Expected HTTP 200. Implemented by: Youssef Al Hajj Youness.",
             "body": {
               "mode": "raw",
               "raw": "{\n  \"username\": \"{{auditorUsername}}\",\n  \"password\": \"{{auditorPassword}}\"\n}",
@@ -829,18 +791,6 @@
               }
             }
           },
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test('Expected HTTP 200', function () { pm.response.to.have.status(200); });",
-                  "if (pm.response.code === 200) pm.environment.set('auditorToken', pm.response.json().data.token);"
-                ]
-              }
-            }
-          ],
           "response": []
         },
         {
@@ -868,17 +818,6 @@
               }
             }
           },
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test('Expected HTTP 401', function () { pm.response.to.have.status(401); });"
-                ]
-              }
-            }
-          ],
           "response": []
         },
         {
@@ -902,7 +841,7 @@
               }
             ],
             "url": "{{notificationURL}}/notifications",
-            "description": "Admin creates one notification for the recipient. Save generated ID for later requests. Expected HTTP 201. Implemented by: Youssef Al Hajj Youness.",
+            "description": "Admin creates one Unread notification. Copy the returned ID into notificationId for later requests. Expected HTTP 201. Implemented by: Youssef Al Hajj Youness.",
             "body": {
               "mode": "raw",
               "raw": "{\n  \"user_id\": {{recipientId}},\n  \"title\": \"Security alert on QA workstation\",\n  \"message\": \"Suspicious activity requires investigation.\",\n  \"notification_type\": \"Security Alert\",\n  \"severity_level\": \"High\"\n}",
@@ -913,64 +852,7 @@
               }
             }
           },
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test('Expected HTTP 201', function () { pm.response.to.have.status(201); });",
-                  "if (pm.response.code === 201) pm.environment.set('notificationId', pm.response.json().data.notification_id);",
-                  "pm.test('New notification is unread without read date', function () { const n=pm.response.json().data; pm.expect(n.status).to.eql('Unread'); pm.expect(n.read_date).to.eql(null); });"
-                ]
-              }
-            }
-          ],
-          "response": [
-            {
-              "name": "Actual local execution S8-CREATE-01",
-              "originalRequest": {
-                "method": "POST",
-                "url": "http://127.0.0.1:5008/notifications",
-                "header": [
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  }
-                ],
-                "description": "Actual local input for S8-CREATE-01; tokens omitted.",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"user_id\": 2,\n  \"title\": \"Security Alert\",\n  \"message\": \"Suspicious activity detected on the QA workstation.\",\n  \"notification_type\": \"Security Alert\",\n  \"severity_level\": \"High\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                },
-                "auth": {
-                  "type": "bearer",
-                  "bearer": [
-                    {
-                      "key": "token",
-                      "value": "{{adminToken}}",
-                      "type": "string"
-                    }
-                  ]
-                }
-              },
-              "code": 201,
-              "status": "Created",
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"data\": {\n    \"created_at\": \"2026-10-15 17:13:22\",\n    \"message\": \"Suspicious activity detected on the QA workstation.\",\n    \"notification_id\": 1,\n    \"notification_type\": \"Security Alert\",\n    \"read_date\": null,\n    \"severity_level\": \"High\",\n    \"status\": \"Unread\",\n    \"title\": \"Security Alert\",\n    \"user_id\": 2\n  },\n  \"message\": \"Notification created successfully\",\n  \"status\": \"success\"\n}",
-              "cookie": []
-            }
-          ]
+          "response": []
         },
         {
           "name": "Create another notification type",
@@ -1004,62 +886,7 @@
               }
             }
           },
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test('Expected HTTP 201', function () { pm.response.to.have.status(201); });"
-                ]
-              }
-            }
-          ],
-          "response": [
-            {
-              "name": "Actual local execution S8-CREATE-02",
-              "originalRequest": {
-                "method": "POST",
-                "url": "http://127.0.0.1:5008/notifications",
-                "header": [
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  }
-                ],
-                "description": "Actual local input for S8-CREATE-02; tokens omitted.",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"user_id\": 2,\n  \"title\": \"Security Alert\",\n  \"message\": \"Suspicious activity detected on the QA workstation.\",\n  \"notification_type\": \"System Notification\",\n  \"severity_level\": \"Low\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                },
-                "auth": {
-                  "type": "bearer",
-                  "bearer": [
-                    {
-                      "key": "token",
-                      "value": "{{adminToken}}",
-                      "type": "string"
-                    }
-                  ]
-                }
-              },
-              "code": 201,
-              "status": "Created",
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"data\": {\n    \"created_at\": \"2026-10-15 17:13:22\",\n    \"message\": \"Suspicious activity detected on the QA workstation.\",\n    \"notification_id\": 2,\n    \"notification_type\": \"System Notification\",\n    \"read_date\": null,\n    \"severity_level\": \"Low\",\n    \"status\": \"Unread\",\n    \"title\": \"Security Alert\",\n    \"user_id\": 2\n  },\n  \"message\": \"Notification created successfully\",\n  \"status\": \"success\"\n}",
-              "cookie": []
-            }
-          ]
+          "response": []
         },
         {
           "name": "Create Incident Assignment",
@@ -1093,17 +920,6 @@
               }
             }
           },
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test('Expected HTTP 201', function () { pm.response.to.have.status(201); });"
-                ]
-              }
-            }
-          ],
           "response": []
         },
         {
@@ -1138,17 +954,6 @@
               }
             }
           },
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test('Expected HTTP 201', function () { pm.response.to.have.status(201); });"
-                ]
-              }
-            }
-          ],
           "response": []
         },
         {
@@ -1183,17 +988,6 @@
               }
             }
           },
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test('Expected HTTP 201', function () { pm.response.to.have.status(201); });"
-                ]
-              }
-            }
-          ],
           "response": []
         },
         {
@@ -1228,62 +1022,7 @@
               }
             }
           },
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test('Expected HTTP 404', function () { pm.response.to.have.status(404); });"
-                ]
-              }
-            }
-          ],
-          "response": [
-            {
-              "name": "Actual local execution S8-CREATE-05",
-              "originalRequest": {
-                "method": "POST",
-                "url": "http://127.0.0.1:5008/notifications",
-                "header": [
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  }
-                ],
-                "description": "Actual local input for S8-CREATE-05; tokens omitted.",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"user_id\": 99999,\n  \"title\": \"Security Alert\",\n  \"message\": \"Suspicious activity detected on the QA workstation.\",\n  \"notification_type\": \"Security Alert\",\n  \"severity_level\": \"High\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                },
-                "auth": {
-                  "type": "bearer",
-                  "bearer": [
-                    {
-                      "key": "token",
-                      "value": "{{adminToken}}",
-                      "type": "string"
-                    }
-                  ]
-                }
-              },
-              "code": 404,
-              "status": "Not Found",
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"User not found\",\n  \"status\": \"error\"\n}",
-              "cookie": []
-            }
-          ]
+          "response": []
         },
         {
           "name": "Reject invalid type",
@@ -1317,62 +1056,7 @@
               }
             }
           },
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test('Expected HTTP 400', function () { pm.response.to.have.status(400); });"
-                ]
-              }
-            }
-          ],
-          "response": [
-            {
-              "name": "Actual local execution S8-CREATE-09",
-              "originalRequest": {
-                "method": "POST",
-                "url": "http://127.0.0.1:5008/notifications",
-                "header": [
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  }
-                ],
-                "description": "Actual local input for S8-CREATE-09; tokens omitted.",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"user_id\": 2,\n  \"title\": \"Security Alert\",\n  \"message\": \"Suspicious activity detected on the QA workstation.\",\n  \"notification_type\": \"Random Message\",\n  \"severity_level\": \"High\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                },
-                "auth": {
-                  "type": "bearer",
-                  "bearer": [
-                    {
-                      "key": "token",
-                      "value": "{{adminToken}}",
-                      "type": "string"
-                    }
-                  ]
-                }
-              },
-              "code": 400,
-              "status": "Bad Request",
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"notification_type must be one of: Incident Assignment, Security Alert, System Notification, Threat Alert, Vulnerability Alert\",\n  \"status\": \"error\"\n}",
-              "cookie": []
-            }
-          ]
+          "response": []
         },
         {
           "name": "Reject invalid severity",
@@ -1406,62 +1090,7 @@
               }
             }
           },
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test('Expected HTTP 400', function () { pm.response.to.have.status(400); });"
-                ]
-              }
-            }
-          ],
-          "response": [
-            {
-              "name": "Actual local execution S8-CREATE-11",
-              "originalRequest": {
-                "method": "POST",
-                "url": "http://127.0.0.1:5008/notifications",
-                "header": [
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  }
-                ],
-                "description": "Actual local input for S8-CREATE-11; tokens omitted.",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"user_id\": 2,\n  \"title\": \"Security Alert\",\n  \"message\": \"Suspicious activity detected on the QA workstation.\",\n  \"notification_type\": \"Security Alert\",\n  \"severity_level\": \"Urgent\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                },
-                "auth": {
-                  "type": "bearer",
-                  "bearer": [
-                    {
-                      "key": "token",
-                      "value": "{{adminToken}}",
-                      "type": "string"
-                    }
-                  ]
-                }
-              },
-              "code": 400,
-              "status": "Bad Request",
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"severity_level must be one of: Low, Medium, High, Critical\",\n  \"status\": \"error\"\n}",
-              "cookie": []
-            }
-          ]
+          "response": []
         },
         {
           "name": "Reject empty title",
@@ -1495,17 +1124,6 @@
               }
             }
           },
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test('Expected HTTP 400', function () { pm.response.to.have.status(400); });"
-                ]
-              }
-            }
-          ],
           "response": []
         },
         {
@@ -1540,17 +1158,6 @@
               }
             }
           },
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test('Expected HTTP 400', function () { pm.response.to.have.status(400); });"
-                ]
-              }
-            }
-          ],
           "response": []
         },
         {
@@ -1585,17 +1192,6 @@
               }
             }
           },
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test('Expected HTTP 400', function () { pm.response.to.have.status(400); });"
-                ]
-              }
-            }
-          ],
           "response": []
         },
         {
@@ -1630,17 +1226,6 @@
               }
             }
           },
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test('Expected HTTP 400', function () { pm.response.to.have.status(400); });"
-                ]
-              }
-            }
-          ],
           "response": []
         },
         {
@@ -1675,17 +1260,6 @@
               }
             }
           },
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test('Expected HTTP 400', function () { pm.response.to.have.status(400); });"
-                ]
-              }
-            }
-          ],
           "response": []
         },
         {
@@ -1720,17 +1294,6 @@
               }
             }
           },
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test('Expected HTTP 400', function () { pm.response.to.have.status(400); });"
-                ]
-              }
-            }
-          ],
           "response": []
         },
         {
@@ -1751,48 +1314,7 @@
             "url": "{{notificationURL}}/notifications",
             "description": "Missing JSON object is a validation error. Expected HTTP 400. Implemented by: Youssef Al Hajj Youness."
           },
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test('Expected HTTP 400', function () { pm.response.to.have.status(400); });"
-                ]
-              }
-            }
-          ],
-          "response": [
-            {
-              "name": "Actual local execution S8-CREATE-03",
-              "originalRequest": {
-                "method": "POST",
-                "url": "http://127.0.0.1:5008/notifications",
-                "header": [],
-                "description": "Actual local input for S8-CREATE-03; tokens omitted.",
-                "auth": {
-                  "type": "bearer",
-                  "bearer": [
-                    {
-                      "key": "token",
-                      "value": "{{adminToken}}",
-                      "type": "string"
-                    }
-                  ]
-                }
-              },
-              "code": 400,
-              "status": "Bad Request",
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"Request body must be a JSON object\",\n  \"status\": \"error\"\n}",
-              "cookie": []
-            }
-          ]
+          "response": []
         },
         {
           "name": "Reject employee creation",
@@ -1826,62 +1348,7 @@
               }
             }
           },
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test('Expected HTTP 403', function () { pm.response.to.have.status(403); });"
-                ]
-              }
-            }
-          ],
-          "response": [
-            {
-              "name": "Actual local execution S8-CREATE-13",
-              "originalRequest": {
-                "method": "POST",
-                "url": "http://127.0.0.1:5008/notifications",
-                "header": [
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  }
-                ],
-                "description": "Actual local input for S8-CREATE-13; tokens omitted.",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"user_id\": 2,\n  \"title\": \"Security Alert\",\n  \"message\": \"Suspicious activity detected on the QA workstation.\",\n  \"notification_type\": \"Security Alert\",\n  \"severity_level\": \"High\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                },
-                "auth": {
-                  "type": "bearer",
-                  "bearer": [
-                    {
-                      "key": "token",
-                      "value": "{{employeeToken}}",
-                      "type": "string"
-                    }
-                  ]
-                }
-              },
-              "code": 403,
-              "status": "Forbidden",
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"User does not have permission to perform this operation\",\n  \"status\": \"error\"\n}",
-              "cookie": []
-            }
-          ]
+          "response": []
         },
         {
           "name": "Retrieve recipient history",
@@ -1901,48 +1368,7 @@
             "url": "{{notificationURL}}/notifications/user/{{recipientId}}",
             "description": "Return only this user's notification list. Expected HTTP 200. Implemented by: Youssef Al Hajj Youness."
           },
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test('Expected HTTP 200', function () { pm.response.to.have.status(200); });"
-                ]
-              }
-            }
-          ],
-          "response": [
-            {
-              "name": "Actual local execution S8-USER-02",
-              "originalRequest": {
-                "method": "GET",
-                "url": "http://127.0.0.1:5008/notifications/user/2",
-                "header": [],
-                "description": "Actual local input for S8-USER-02; tokens omitted.",
-                "auth": {
-                  "type": "bearer",
-                  "bearer": [
-                    {
-                      "key": "token",
-                      "value": "{{adminToken}}",
-                      "type": "string"
-                    }
-                  ]
-                }
-              },
-              "code": 200,
-              "status": "OK",
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"data\": [\n    {\n      \"created_at\": \"2026-10-15 17:13:22\",\n      \"message\": \"Suspicious activity detected on the QA workstation.\",\n      \"notification_id\": 1,\n      \"notification_type\": \"Security Alert\",\n      \"read_date\": null,\n      \"severity_level\": \"High\",\n      \"status\": \"Unread\",\n      \"title\": \"Security Alert\",\n      \"user_id\": 2\n    },\n    {\n      \"created_at\": \"2026-10-15 17:13:22\",\n      \"message\": \"Suspicious activity detected on the QA workstation.\",\n      \"notification_id\": 2,\n      \"notification_type\": \"System Notification\",\n      \"read_date\": null,\n      \"severity_level\": \"Low\",\n      \"status\": \"Unread\",\n      \"title\": \"Security Alert\",\n      \"user_id\": 2\n    }\n  ],\n  \"message\": \"Notifications retrieved successfully\",\n  \"status\": \"success\"\n}",
-              "cookie": []
-            }
-          ]
+          "response": []
         },
         {
           "name": "Retrieve empty history",
@@ -1962,48 +1388,7 @@
             "url": "{{notificationURL}}/notifications/user/{{emptyUserId}}",
             "description": "Use an existing user with no notifications; data is an empty list. Expected HTTP 200. Implemented by: Youssef Al Hajj Youness."
           },
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test('Expected HTTP 200', function () { pm.response.to.have.status(200); });"
-                ]
-              }
-            }
-          ],
-          "response": [
-            {
-              "name": "Actual local execution S8-USER-03",
-              "originalRequest": {
-                "method": "GET",
-                "url": "http://127.0.0.1:5008/notifications/user/3",
-                "header": [],
-                "description": "Actual local input for S8-USER-03; tokens omitted.",
-                "auth": {
-                  "type": "bearer",
-                  "bearer": [
-                    {
-                      "key": "token",
-                      "value": "{{adminToken}}",
-                      "type": "string"
-                    }
-                  ]
-                }
-              },
-              "code": 200,
-              "status": "OK",
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"data\": [],\n  \"message\": \"Notifications retrieved successfully\",\n  \"status\": \"success\"\n}",
-              "cookie": []
-            }
-          ]
+          "response": []
         },
         {
           "name": "Reject nonexistent recipient history",
@@ -2023,48 +1408,7 @@
             "url": "{{notificationURL}}/notifications/user/99999",
             "description": "Nonexistent user differs from empty history. Expected HTTP 404. Implemented by: Youssef Al Hajj Youness."
           },
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test('Expected HTTP 404', function () { pm.response.to.have.status(404); });"
-                ]
-              }
-            }
-          ],
-          "response": [
-            {
-              "name": "Actual local execution S8-USER-04",
-              "originalRequest": {
-                "method": "GET",
-                "url": "http://127.0.0.1:5008/notifications/user/99999",
-                "header": [],
-                "description": "Actual local input for S8-USER-04; tokens omitted.",
-                "auth": {
-                  "type": "bearer",
-                  "bearer": [
-                    {
-                      "key": "token",
-                      "value": "{{adminToken}}",
-                      "type": "string"
-                    }
-                  ]
-                }
-              },
-              "code": 404,
-              "status": "Not Found",
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"User not found\",\n  \"status\": \"error\"\n}",
-              "cookie": []
-            }
-          ]
+          "response": []
         },
         {
           "name": "Retrieve own history as employee",
@@ -2084,48 +1428,7 @@
             "url": "{{notificationURL}}/notifications/user/{{recipientId}}",
             "description": "Regular User can view personal notifications. Expected HTTP 200. Implemented by: Youssef Al Hajj Youness."
           },
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test('Expected HTTP 200', function () { pm.response.to.have.status(200); });"
-                ]
-              }
-            }
-          ],
-          "response": [
-            {
-              "name": "Actual local execution S8-USER-05",
-              "originalRequest": {
-                "method": "GET",
-                "url": "http://127.0.0.1:5008/notifications/user/2",
-                "header": [],
-                "description": "Actual local input for S8-USER-05; tokens omitted.",
-                "auth": {
-                  "type": "bearer",
-                  "bearer": [
-                    {
-                      "key": "token",
-                      "value": "{{employeeToken}}",
-                      "type": "string"
-                    }
-                  ]
-                }
-              },
-              "code": 200,
-              "status": "OK",
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"data\": [\n    {\n      \"created_at\": \"2026-10-15 17:13:22\",\n      \"message\": \"Suspicious activity detected on the QA workstation.\",\n      \"notification_id\": 1,\n      \"notification_type\": \"Security Alert\",\n      \"read_date\": null,\n      \"severity_level\": \"High\",\n      \"status\": \"Unread\",\n      \"title\": \"Security Alert\",\n      \"user_id\": 2\n    },\n    {\n      \"created_at\": \"2026-10-15 17:13:22\",\n      \"message\": \"Suspicious activity detected on the QA workstation.\",\n      \"notification_id\": 2,\n      \"notification_type\": \"System Notification\",\n      \"read_date\": null,\n      \"severity_level\": \"Low\",\n      \"status\": \"Unread\",\n      \"title\": \"Security Alert\",\n      \"user_id\": 2\n    }\n  ],\n  \"message\": \"Notifications retrieved successfully\",\n  \"status\": \"success\"\n}",
-              "cookie": []
-            }
-          ]
+          "response": []
         },
         {
           "name": "Reject another user's history",
@@ -2145,48 +1448,7 @@
             "url": "{{notificationURL}}/notifications/user/1",
             "description": "Recipient must differ from the employee's ID; prevents private history disclosure. Expected HTTP 403. Implemented by: Youssef Al Hajj Youness."
           },
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test('Expected HTTP 403', function () { pm.response.to.have.status(403); });"
-                ]
-              }
-            }
-          ],
-          "response": [
-            {
-              "name": "Actual local execution S8-USER-06",
-              "originalRequest": {
-                "method": "GET",
-                "url": "http://127.0.0.1:5008/notifications/user/2",
-                "header": [],
-                "description": "Actual local input for S8-USER-06; tokens omitted.",
-                "auth": {
-                  "type": "bearer",
-                  "bearer": [
-                    {
-                      "key": "token",
-                      "value": "{{otherToken}}",
-                      "type": "string"
-                    }
-                  ]
-                }
-              },
-              "code": 403,
-              "status": "Forbidden",
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"You can only access your own notifications\",\n  \"status\": \"error\"\n}",
-              "cookie": []
-            }
-          ]
+          "response": []
         },
         {
           "name": "Retrieve specific notification before reading",
@@ -2204,51 +1466,9 @@
             },
             "header": [],
             "url": "{{notificationURL}}/notifications/{{notificationId}}",
-            "description": "Capture Unread and null read_date before the update. Expected HTTP 200. Implemented by: Youssef Al Hajj Youness."
+            "description": "Show Unread, null read_date and created_at before marking the notification read. Expected HTTP 200. Implemented by: Youssef Al Hajj Youness."
           },
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test('Expected HTTP 200', function () { pm.response.to.have.status(200); });",
-                  "if (pm.response.code === 200) pm.environment.set('originalCreatedAt', pm.response.json().data.created_at);"
-                ]
-              }
-            }
-          ],
-          "response": [
-            {
-              "name": "Actual local execution S8-GET-01",
-              "originalRequest": {
-                "method": "GET",
-                "url": "http://127.0.0.1:5008/notifications/1",
-                "header": [],
-                "description": "Actual local input for S8-GET-01; tokens omitted.",
-                "auth": {
-                  "type": "bearer",
-                  "bearer": [
-                    {
-                      "key": "token",
-                      "value": "{{adminToken}}",
-                      "type": "string"
-                    }
-                  ]
-                }
-              },
-              "code": 200,
-              "status": "OK",
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"data\": {\n    \"created_at\": \"2026-10-15 17:13:22\",\n    \"message\": \"Suspicious activity detected on the QA workstation.\",\n    \"notification_id\": 1,\n    \"notification_type\": \"Security Alert\",\n    \"read_date\": null,\n    \"severity_level\": \"High\",\n    \"status\": \"Unread\",\n    \"title\": \"Security Alert\",\n    \"user_id\": 2\n  },\n  \"message\": \"Notification retrieved successfully\",\n  \"status\": \"success\"\n}",
-              "cookie": []
-            }
-          ]
+          "response": []
         },
         {
           "name": "Retrieve nonexistent notification",
@@ -2268,48 +1488,7 @@
             "url": "{{notificationURL}}/notifications/99999",
             "description": "Administrator receives Notification not found. Expected HTTP 404. Implemented by: Youssef Al Hajj Youness."
           },
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test('Expected HTTP 404', function () { pm.response.to.have.status(404); });"
-                ]
-              }
-            }
-          ],
-          "response": [
-            {
-              "name": "Actual local execution S8-GET-02",
-              "originalRequest": {
-                "method": "GET",
-                "url": "http://127.0.0.1:5008/notifications/99999",
-                "header": [],
-                "description": "Actual local input for S8-GET-02; tokens omitted.",
-                "auth": {
-                  "type": "bearer",
-                  "bearer": [
-                    {
-                      "key": "token",
-                      "value": "{{adminToken}}",
-                      "type": "string"
-                    }
-                  ]
-                }
-              },
-              "code": 404,
-              "status": "Not Found",
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"Notification not found\",\n  \"status\": \"error\"\n}",
-              "cookie": []
-            }
-          ]
+          "response": []
         },
         {
           "name": "Reject malformed notification ID",
@@ -2329,48 +1508,7 @@
             "url": "{{notificationURL}}/notifications/not-a-number",
             "description": "ID validation returns a JSON error. Expected HTTP 400. Implemented by: Youssef Al Hajj Youness."
           },
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test('Expected HTTP 400', function () { pm.response.to.have.status(400); });"
-                ]
-              }
-            }
-          ],
-          "response": [
-            {
-              "name": "Actual local execution S8-EXTRA-01",
-              "originalRequest": {
-                "method": "GET",
-                "url": "http://127.0.0.1:5008/notifications/abc",
-                "header": [],
-                "description": "Actual local input for S8-EXTRA-01; tokens omitted.",
-                "auth": {
-                  "type": "bearer",
-                  "bearer": [
-                    {
-                      "key": "token",
-                      "value": "{{adminToken}}",
-                      "type": "string"
-                    }
-                  ]
-                }
-              },
-              "code": 400,
-              "status": "Bad Request",
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"notification id must be a positive whole number\",\n  \"status\": \"error\"\n}",
-              "cookie": []
-            }
-          ]
+          "response": []
         },
         {
           "name": "Reject missing authentication",
@@ -2383,41 +1521,7 @@
             "url": "{{notificationURL}}/notifications/{{notificationId}}",
             "description": "Protected API requires a Service 1 bearer token. Expected HTTP 401. Implemented by: Youssef Al Hajj Youness."
           },
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test('Expected HTTP 401', function () { pm.response.to.have.status(401); });"
-                ]
-              }
-            }
-          ],
-          "response": [
-            {
-              "name": "Actual local execution S8-GET-03",
-              "originalRequest": {
-                "method": "GET",
-                "url": "http://127.0.0.1:5008/notifications/1",
-                "header": [],
-                "description": "Actual local input for S8-GET-03; tokens omitted.",
-                "auth": {
-                  "type": "noauth"
-                }
-              },
-              "code": 401,
-              "status": "Unauthorized",
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"Authentication required: send 'Authorization: Bearer <token>'\",\n  \"status\": \"error\"\n}",
-              "cookie": []
-            }
-          ]
+          "response": []
         },
         {
           "name": "Reject invalid authentication",
@@ -2437,48 +1541,7 @@
             "url": "{{notificationURL}}/notifications/{{notificationId}}",
             "description": "invalidToken is deliberately invalid; signature/format validation rejects it. Expected HTTP 401. Implemented by: Youssef Al Hajj Youness."
           },
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test('Expected HTTP 401', function () { pm.response.to.have.status(401); });"
-                ]
-              }
-            }
-          ],
-          "response": [
-            {
-              "name": "Actual local execution S8-EXTRA-08",
-              "originalRequest": {
-                "method": "GET",
-                "url": "http://127.0.0.1:5008/notifications/search?status=Unread",
-                "header": [],
-                "description": "Actual local input for S8-EXTRA-08; tokens omitted.",
-                "auth": {
-                  "type": "bearer",
-                  "bearer": [
-                    {
-                      "key": "token",
-                      "value": "{{invalidToken}}",
-                      "type": "string"
-                    }
-                  ]
-                }
-              },
-              "code": 401,
-              "status": "Unauthorized",
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"Invalid authentication token\",\n  \"status\": \"error\"\n}",
-              "cookie": []
-            }
-          ]
+          "response": []
         },
         {
           "name": "Mark own notification as Read",
@@ -2498,51 +1561,7 @@
             "url": "{{notificationURL}}/notifications/{{notificationId}}/read",
             "description": "Persist Read state and actual UTC read timestamp; creation timestamp stays unchanged. Expected HTTP 200. Implemented by: Youssef Al Hajj Youness."
           },
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test('Expected HTTP 200', function () { pm.response.to.have.status(200); });",
-                  "const n=pm.response.json().data;",
-                  "pm.test('Read date populated and creation date unchanged', function () { pm.expect(n.status).to.eql('Read'); pm.expect(n.read_date).to.be.a('string'); pm.expect(n.created_at).to.eql(pm.environment.get('originalCreatedAt')); });",
-                  "pm.environment.set('firstReadDate', n.read_date);"
-                ]
-              }
-            }
-          ],
-          "response": [
-            {
-              "name": "Actual local execution S8-READ-01",
-              "originalRequest": {
-                "method": "PUT",
-                "url": "http://127.0.0.1:5008/notifications/1/read",
-                "header": [],
-                "description": "Actual local input for S8-READ-01; tokens omitted.",
-                "auth": {
-                  "type": "bearer",
-                  "bearer": [
-                    {
-                      "key": "token",
-                      "value": "{{employeeToken}}",
-                      "type": "string"
-                    }
-                  ]
-                }
-              },
-              "code": 200,
-              "status": "OK",
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"data\": {\n    \"created_at\": \"2026-10-15 17:13:22\",\n    \"message\": \"Suspicious activity detected on the QA workstation.\",\n    \"notification_id\": 1,\n    \"notification_type\": \"Security Alert\",\n    \"read_date\": \"2026-10-15 17:13:22\",\n    \"severity_level\": \"High\",\n    \"status\": \"Read\",\n    \"title\": \"Security Alert\",\n    \"user_id\": 2\n  },\n  \"message\": \"Notification marked as read\",\n  \"status\": \"success\"\n}",
-              "cookie": []
-            }
-          ]
+          "response": []
         },
         {
           "name": "Mark already Read notification",
@@ -2562,49 +1581,7 @@
             "url": "{{notificationURL}}/notifications/{{notificationId}}/read",
             "description": "Idempotent read acknowledgement keeps the first read timestamp. Expected HTTP 200. Implemented by: Youssef Al Hajj Youness."
           },
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test('Expected HTTP 200', function () { pm.response.to.have.status(200); });",
-                  "pm.test('Original read date preserved', function () { pm.expect(pm.response.json().data.read_date).to.eql(pm.environment.get('firstReadDate')); });"
-                ]
-              }
-            }
-          ],
-          "response": [
-            {
-              "name": "Actual local execution S8-READ-08",
-              "originalRequest": {
-                "method": "PUT",
-                "url": "http://127.0.0.1:5008/notifications/1/read",
-                "header": [],
-                "description": "Actual local input for S8-READ-08; tokens omitted.",
-                "auth": {
-                  "type": "bearer",
-                  "bearer": [
-                    {
-                      "key": "token",
-                      "value": "{{employeeToken}}",
-                      "type": "string"
-                    }
-                  ]
-                }
-              },
-              "code": 200,
-              "status": "OK",
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"data\": {\n    \"created_at\": \"2026-10-15 17:13:22\",\n    \"message\": \"Suspicious activity detected on the QA workstation.\",\n    \"notification_id\": 1,\n    \"notification_type\": \"Security Alert\",\n    \"read_date\": \"2026-10-15 17:13:22\",\n    \"severity_level\": \"High\",\n    \"status\": \"Read\",\n    \"title\": \"Security Alert\",\n    \"user_id\": 2\n  },\n  \"message\": \"Notification marked as read\",\n  \"status\": \"success\"\n}",
-              "cookie": []
-            }
-          ]
+          "response": []
         },
         {
           "name": "Retrieve persisted Read state",
@@ -2624,17 +1601,6 @@
             "url": "{{notificationURL}}/notifications/{{notificationId}}",
             "description": "API reflects the saved Read status and populated read_date. Expected HTTP 200. Implemented by: Youssef Al Hajj Youness."
           },
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test('Expected HTTP 200', function () { pm.response.to.have.status(200); });"
-                ]
-              }
-            }
-          ],
           "response": []
         },
         {
@@ -2655,17 +1621,6 @@
             "url": "{{notificationURL}}/notifications/{{notificationId}}/read",
             "description": "Auditor is read only. Expected HTTP 403. Implemented by: Youssef Al Hajj Youness."
           },
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test('Expected HTTP 403', function () { pm.response.to.have.status(403); });"
-                ]
-              }
-            }
-          ],
           "response": []
         },
         {
@@ -2686,48 +1641,7 @@
             "url": "{{notificationURL}}/notifications/search?user_id={{recipientId}}",
             "description": "SQL combines provided filters with AND. Values use the project's stored spellings. Expected HTTP 200. Implemented by: Youssef Al Hajj Youness."
           },
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test('Expected HTTP 200', function () { pm.response.to.have.status(200); });"
-                ]
-              }
-            }
-          ],
-          "response": [
-            {
-              "name": "Actual local execution S8-SEARCH-01",
-              "originalRequest": {
-                "method": "GET",
-                "url": "http://127.0.0.1:5008/notifications/search?user_id=2",
-                "header": [],
-                "description": "Actual local input for S8-SEARCH-01; tokens omitted.",
-                "auth": {
-                  "type": "bearer",
-                  "bearer": [
-                    {
-                      "key": "token",
-                      "value": "{{adminToken}}",
-                      "type": "string"
-                    }
-                  ]
-                }
-              },
-              "code": 200,
-              "status": "OK",
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"data\": [\n    {\n      \"created_at\": \"2026-10-15 17:13:22\",\n      \"message\": \"Suspicious activity detected on the QA workstation.\",\n      \"notification_id\": 1,\n      \"notification_type\": \"Security Alert\",\n      \"read_date\": \"2026-10-15 17:13:22\",\n      \"severity_level\": \"High\",\n      \"status\": \"Read\",\n      \"title\": \"Security Alert\",\n      \"user_id\": 2\n    },\n    {\n      \"created_at\": \"2026-10-15 17:13:22\",\n      \"message\": \"Suspicious activity detected on the QA workstation.\",\n      \"notification_id\": 2,\n      \"notification_type\": \"System Notification\",\n      \"read_date\": null,\n      \"severity_level\": \"Low\",\n      \"status\": \"Unread\",\n      \"title\": \"Security Alert\",\n      \"user_id\": 2\n    }\n  ],\n  \"message\": \"Notifications retrieved successfully\",\n  \"status\": \"success\"\n}",
-              "cookie": []
-            }
-          ]
+          "response": []
         },
         {
           "name": "Search by notification type",
@@ -2747,48 +1661,7 @@
             "url": "{{notificationURL}}/notifications/search?notification_type=Security%20Alert",
             "description": "SQL combines provided filters with AND. Values use the project's stored spellings. Expected HTTP 200. Implemented by: Youssef Al Hajj Youness."
           },
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test('Expected HTTP 200', function () { pm.response.to.have.status(200); });"
-                ]
-              }
-            }
-          ],
-          "response": [
-            {
-              "name": "Actual local execution S8-SEARCH-02",
-              "originalRequest": {
-                "method": "GET",
-                "url": "http://127.0.0.1:5008/notifications/search?notification_type=Security%20Alert",
-                "header": [],
-                "description": "Actual local input for S8-SEARCH-02; tokens omitted.",
-                "auth": {
-                  "type": "bearer",
-                  "bearer": [
-                    {
-                      "key": "token",
-                      "value": "{{adminToken}}",
-                      "type": "string"
-                    }
-                  ]
-                }
-              },
-              "code": 200,
-              "status": "OK",
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"data\": [\n    {\n      \"created_at\": \"2026-10-15 17:13:22\",\n      \"message\": \"Suspicious activity detected on the QA workstation.\",\n      \"notification_id\": 1,\n      \"notification_type\": \"Security Alert\",\n      \"read_date\": \"2026-10-15 17:13:22\",\n      \"severity_level\": \"High\",\n      \"status\": \"Read\",\n      \"title\": \"Security Alert\",\n      \"user_id\": 2\n    },\n    {\n      \"created_at\": \"2026-10-15 17:13:23\",\n      \"message\": \"Suspicious activity detected on the QA workstation.\",\n      \"notification_id\": 4,\n      \"notification_type\": \"Security Alert\",\n      \"read_date\": \"2026-10-15 17:13:24\",\n      \"severity_level\": \"Medium\",\n      \"status\": \"Read\",\n      \"title\": \"Security Alert\",\n      \"user_id\": 4\n    }\n  ],\n  \"message\": \"Notifications retrieved successfully\",\n  \"status\": \"success\"\n}",
-              "cookie": []
-            }
-          ]
+          "response": []
         },
         {
           "name": "Search by severity",
@@ -2808,48 +1681,7 @@
             "url": "{{notificationURL}}/notifications/search?severity_level=High",
             "description": "SQL combines provided filters with AND. Values use the project's stored spellings. Expected HTTP 200. Implemented by: Youssef Al Hajj Youness."
           },
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test('Expected HTTP 200', function () { pm.response.to.have.status(200); });"
-                ]
-              }
-            }
-          ],
-          "response": [
-            {
-              "name": "Actual local execution S8-SEARCH-03",
-              "originalRequest": {
-                "method": "GET",
-                "url": "http://127.0.0.1:5008/notifications/search?severity_level=High",
-                "header": [],
-                "description": "Actual local input for S8-SEARCH-03; tokens omitted.",
-                "auth": {
-                  "type": "bearer",
-                  "bearer": [
-                    {
-                      "key": "token",
-                      "value": "{{adminToken}}",
-                      "type": "string"
-                    }
-                  ]
-                }
-              },
-              "code": 200,
-              "status": "OK",
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"data\": [\n    {\n      \"created_at\": \"2026-10-15 17:13:22\",\n      \"message\": \"Suspicious activity detected on the QA workstation.\",\n      \"notification_id\": 1,\n      \"notification_type\": \"Security Alert\",\n      \"read_date\": \"2026-10-15 17:13:22\",\n      \"severity_level\": \"High\",\n      \"status\": \"Read\",\n      \"title\": \"Security Alert\",\n      \"user_id\": 2\n    },\n    {\n      \"created_at\": \"2026-10-15 17:13:24\",\n      \"message\": \"Suspicious activity detected on the QA workstation.\",\n      \"notification_id\": 5,\n      \"notification_type\": \"Vulnerability Alert\",\n      \"read_date\": null,\n      \"severity_level\": \"High\",\n      \"status\": \"Unread\",\n      \"title\": \"Security Alert\",\n      \"user_id\": 3\n    },\n    {\n      \"created_at\": \"2026-10-15 17:13:24\",\n      \"message\": \"Suspicious activity detected on the QA workstation.\",\n      \"notification_id\": 6,\n      \"notification_type\": \"Incident Assignment\",\n      \"read_date\": null,\n      \"severity_level\": \"High\",\n      \"status\": \"Unread\",\n      \"title\": \"Security Alert\",\n      \"user_id\": 4\n    }\n  ],\n  \"message\": \"Notifications retrieved successfully\",\n  \"status\": \"success\"\n}",
-              "cookie": []
-            }
-          ]
+          "response": []
         },
         {
           "name": "Search by status",
@@ -2869,48 +1701,7 @@
             "url": "{{notificationURL}}/notifications/search?status=Unread",
             "description": "SQL combines provided filters with AND. Values use the project's stored spellings. Expected HTTP 200. Implemented by: Youssef Al Hajj Youness."
           },
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test('Expected HTTP 200', function () { pm.response.to.have.status(200); });"
-                ]
-              }
-            }
-          ],
-          "response": [
-            {
-              "name": "Actual local execution S8-SEARCH-04",
-              "originalRequest": {
-                "method": "GET",
-                "url": "http://127.0.0.1:5008/notifications/search?status=Unread",
-                "header": [],
-                "description": "Actual local input for S8-SEARCH-04; tokens omitted.",
-                "auth": {
-                  "type": "bearer",
-                  "bearer": [
-                    {
-                      "key": "token",
-                      "value": "{{adminToken}}",
-                      "type": "string"
-                    }
-                  ]
-                }
-              },
-              "code": 200,
-              "status": "OK",
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"data\": [\n    {\n      \"created_at\": \"2026-10-15 17:13:22\",\n      \"message\": \"Suspicious activity detected on the QA workstation.\",\n      \"notification_id\": 2,\n      \"notification_type\": \"System Notification\",\n      \"read_date\": null,\n      \"severity_level\": \"Low\",\n      \"status\": \"Unread\",\n      \"title\": \"Security Alert\",\n      \"user_id\": 2\n    },\n    {\n      \"created_at\": \"2026-10-15 17:13:23\",\n      \"message\": \"Suspicious activity detected on the QA workstation.\",\n      \"notification_id\": 3,\n      \"notification_type\": \"Threat Alert\",\n      \"read_date\": null,\n      \"severity_level\": \"Critical\",\n      \"status\": \"Unread\",\n      \"title\": \"Security Alert\",\n      \"user_id\": 4\n    },\n    {\n      \"created_at\": \"2026-10-15 17:13:24\",\n      \"message\": \"Suspicious activity detected on the QA workstation.\",\n      \"notification_id\": 5,\n      \"notification_type\": \"Vulnerability Alert\",\n      \"read_date\": null,\n      \"severity_level\": \"High\",\n      \"status\": \"Unread\",\n      \"title\": \"Security Alert\",\n      \"user_id\": 3\n    },\n    {\n      \"created_at\": \"2026-10-15 17:13:24\",\n      \"message\": \"Suspicious activity detected on the QA workstation.\",\n      \"notification_id\": 6,\n      \"notification_type\": \"Incident Assignment\",\n      \"read_date\": null,\n      \"severity_level\": \"High\",\n      \"status\": \"Unread\",\n      \"title\": \"Security Alert\",\n      \"user_id\": 4\n    }\n  ],\n  \"message\": \"Notifications retrieved successfully\",\n  \"status\": \"success\"\n}",
-              "cookie": []
-            }
-          ]
+          "response": []
         },
         {
           "name": "Search combined type and status",
@@ -2930,48 +1721,7 @@
             "url": "{{notificationURL}}/notifications/search?notification_type=Security%20Alert&status=Read",
             "description": "SQL combines provided filters with AND. Values use the project's stored spellings. Expected HTTP 200. Implemented by: Youssef Al Hajj Youness."
           },
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test('Expected HTTP 200', function () { pm.response.to.have.status(200); });"
-                ]
-              }
-            }
-          ],
-          "response": [
-            {
-              "name": "Actual local execution S8-SEARCH-05",
-              "originalRequest": {
-                "method": "GET",
-                "url": "http://127.0.0.1:5008/notifications/search?notification_type=Security%20Alert&status=Read",
-                "header": [],
-                "description": "Actual local input for S8-SEARCH-05; tokens omitted.",
-                "auth": {
-                  "type": "bearer",
-                  "bearer": [
-                    {
-                      "key": "token",
-                      "value": "{{adminToken}}",
-                      "type": "string"
-                    }
-                  ]
-                }
-              },
-              "code": 200,
-              "status": "OK",
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"data\": [\n    {\n      \"created_at\": \"2026-10-15 17:13:22\",\n      \"message\": \"Suspicious activity detected on the QA workstation.\",\n      \"notification_id\": 1,\n      \"notification_type\": \"Security Alert\",\n      \"read_date\": \"2026-10-15 17:13:22\",\n      \"severity_level\": \"High\",\n      \"status\": \"Read\",\n      \"title\": \"Security Alert\",\n      \"user_id\": 2\n    },\n    {\n      \"created_at\": \"2026-10-15 17:13:23\",\n      \"message\": \"Suspicious activity detected on the QA workstation.\",\n      \"notification_id\": 4,\n      \"notification_type\": \"Security Alert\",\n      \"read_date\": \"2026-10-15 17:13:24\",\n      \"severity_level\": \"Medium\",\n      \"status\": \"Read\",\n      \"title\": \"Security Alert\",\n      \"user_id\": 4\n    }\n  ],\n  \"message\": \"Notifications retrieved successfully\",\n  \"status\": \"success\"\n}",
-              "cookie": []
-            }
-          ]
+          "response": []
         },
         {
           "name": "Search with zero matches",
@@ -2991,48 +1741,7 @@
             "url": "{{notificationURL}}/notifications/search?notification_type=Security%20Alert&severity_level=Low",
             "description": "SQL combines provided filters with AND. Values use the project's stored spellings. Expected HTTP 200. Implemented by: Youssef Al Hajj Youness."
           },
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test('Expected HTTP 200', function () { pm.response.to.have.status(200); });"
-                ]
-              }
-            }
-          ],
-          "response": [
-            {
-              "name": "Actual local execution S8-SEARCH-06",
-              "originalRequest": {
-                "method": "GET",
-                "url": "http://127.0.0.1:5008/notifications/search?notification_type=Security%20Alert&severity_level=Low",
-                "header": [],
-                "description": "Actual local input for S8-SEARCH-06; tokens omitted.",
-                "auth": {
-                  "type": "bearer",
-                  "bearer": [
-                    {
-                      "key": "token",
-                      "value": "{{adminToken}}",
-                      "type": "string"
-                    }
-                  ]
-                }
-              },
-              "code": 200,
-              "status": "OK",
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"data\": [],\n  \"message\": \"Notifications retrieved successfully\",\n  \"status\": \"success\"\n}",
-              "cookie": []
-            }
-          ]
+          "response": []
         },
         {
           "name": "Analyst search assigned notifications",
@@ -3052,48 +1761,7 @@
             "url": "{{notificationURL}}/notifications/search?status=Unread",
             "description": "Results automatically restricted to the authenticated Analyst's user ID. Expected HTTP 200. Implemented by: Youssef Al Hajj Youness."
           },
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test('Expected HTTP 200', function () { pm.response.to.have.status(200); });"
-                ]
-              }
-            }
-          ],
-          "response": [
-            {
-              "name": "Actual local execution S8-SEARCH-09",
-              "originalRequest": {
-                "method": "GET",
-                "url": "http://127.0.0.1:5008/notifications/search?status=Unread",
-                "header": [],
-                "description": "Actual local input for S8-SEARCH-09; tokens omitted.",
-                "auth": {
-                  "type": "bearer",
-                  "bearer": [
-                    {
-                      "key": "token",
-                      "value": "{{analystToken}}",
-                      "type": "string"
-                    }
-                  ]
-                }
-              },
-              "code": 200,
-              "status": "OK",
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"data\": [\n    {\n      \"created_at\": \"2026-10-15 17:13:23\",\n      \"message\": \"Suspicious activity detected on the QA workstation.\",\n      \"notification_id\": 3,\n      \"notification_type\": \"Threat Alert\",\n      \"read_date\": null,\n      \"severity_level\": \"Critical\",\n      \"status\": \"Unread\",\n      \"title\": \"Security Alert\",\n      \"user_id\": 4\n    },\n    {\n      \"created_at\": \"2026-10-15 17:13:24\",\n      \"message\": \"Suspicious activity detected on the QA workstation.\",\n      \"notification_id\": 6,\n      \"notification_type\": \"Incident Assignment\",\n      \"read_date\": null,\n      \"severity_level\": \"High\",\n      \"status\": \"Unread\",\n      \"title\": \"Security Alert\",\n      \"user_id\": 4\n    }\n  ],\n  \"message\": \"Notifications retrieved successfully\",\n  \"status\": \"success\"\n}",
-              "cookie": []
-            }
-          ]
+          "response": []
         },
         {
           "name": "Auditor search",
@@ -3113,48 +1781,7 @@
             "url": "{{notificationURL}}/notifications/search?status=Unread",
             "description": "Auditor may search across recipients. Expected HTTP 200. Implemented by: Youssef Al Hajj Youness."
           },
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test('Expected HTTP 200', function () { pm.response.to.have.status(200); });"
-                ]
-              }
-            }
-          ],
-          "response": [
-            {
-              "name": "Actual local execution S8-SEARCH-10",
-              "originalRequest": {
-                "method": "GET",
-                "url": "http://127.0.0.1:5008/notifications/search?status=Unread",
-                "header": [],
-                "description": "Actual local input for S8-SEARCH-10; tokens omitted.",
-                "auth": {
-                  "type": "bearer",
-                  "bearer": [
-                    {
-                      "key": "token",
-                      "value": "{{auditorToken}}",
-                      "type": "string"
-                    }
-                  ]
-                }
-              },
-              "code": 200,
-              "status": "OK",
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"data\": [\n    {\n      \"created_at\": \"2026-10-15 17:13:22\",\n      \"message\": \"Suspicious activity detected on the QA workstation.\",\n      \"notification_id\": 2,\n      \"notification_type\": \"System Notification\",\n      \"read_date\": null,\n      \"severity_level\": \"Low\",\n      \"status\": \"Unread\",\n      \"title\": \"Security Alert\",\n      \"user_id\": 2\n    },\n    {\n      \"created_at\": \"2026-10-15 17:13:23\",\n      \"message\": \"Suspicious activity detected on the QA workstation.\",\n      \"notification_id\": 3,\n      \"notification_type\": \"Threat Alert\",\n      \"read_date\": null,\n      \"severity_level\": \"Critical\",\n      \"status\": \"Unread\",\n      \"title\": \"Security Alert\",\n      \"user_id\": 4\n    },\n    {\n      \"created_at\": \"2026-10-15 17:13:24\",\n      \"message\": \"Suspicious activity detected on the QA workstation.\",\n      \"notification_id\": 5,\n      \"notification_type\": \"Vulnerability Alert\",\n      \"read_date\": null,\n      \"severity_level\": \"High\",\n      \"status\": \"Unread\",\n      \"title\": \"Security Alert\",\n      \"user_id\": 3\n    },\n    {\n      \"created_at\": \"2026-10-15 17:13:24\",\n      \"message\": \"Suspicious activity detected on the QA workstation.\",\n      \"notification_id\": 6,\n      \"notification_type\": \"Incident Assignment\",\n      \"read_date\": null,\n      \"severity_level\": \"High\",\n      \"status\": \"Unread\",\n      \"title\": \"Security Alert\",\n      \"user_id\": 4\n    }\n  ],\n  \"message\": \"Notifications retrieved successfully\",\n  \"status\": \"success\"\n}",
-              "cookie": []
-            }
-          ]
+          "response": []
         },
         {
           "name": "Reject Regular User search",
@@ -3174,48 +1801,7 @@
             "url": "{{notificationURL}}/notifications/search?status=Unread",
             "description": "General search is excluded for Regular Users. Expected HTTP 403. Implemented by: Youssef Al Hajj Youness."
           },
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test('Expected HTTP 403', function () { pm.response.to.have.status(403); });"
-                ]
-              }
-            }
-          ],
-          "response": [
-            {
-              "name": "Actual local execution S8-SEARCH-11",
-              "originalRequest": {
-                "method": "GET",
-                "url": "http://127.0.0.1:5008/notifications/search?status=Unread",
-                "header": [],
-                "description": "Actual local input for S8-SEARCH-11; tokens omitted.",
-                "auth": {
-                  "type": "bearer",
-                  "bearer": [
-                    {
-                      "key": "token",
-                      "value": "{{employeeToken}}",
-                      "type": "string"
-                    }
-                  ]
-                }
-              },
-              "code": 403,
-              "status": "Forbidden",
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"User does not have permission to perform this operation\",\n  \"status\": \"error\"\n}",
-              "cookie": []
-            }
-          ]
+          "response": []
         },
         {
           "name": "Reject invalid search status",
@@ -3235,48 +1821,7 @@
             "url": "{{notificationURL}}/notifications/search?status=Seen",
             "description": "Unsupported filter values are errors, not empty successes. Expected HTTP 400. Implemented by: Youssef Al Hajj Youness."
           },
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test('Expected HTTP 400', function () { pm.response.to.have.status(400); });"
-                ]
-              }
-            }
-          ],
-          "response": [
-            {
-              "name": "Actual local execution S8-SEARCH-07",
-              "originalRequest": {
-                "method": "GET",
-                "url": "http://127.0.0.1:5008/notifications/search?status=Seen",
-                "header": [],
-                "description": "Actual local input for S8-SEARCH-07; tokens omitted.",
-                "auth": {
-                  "type": "bearer",
-                  "bearer": [
-                    {
-                      "key": "token",
-                      "value": "{{adminToken}}",
-                      "type": "string"
-                    }
-                  ]
-                }
-              },
-              "code": 400,
-              "status": "Bad Request",
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"status must be one of: Unread, Read\",\n  \"status\": \"error\"\n}",
-              "cookie": []
-            }
-          ]
+          "response": []
         },
         {
           "name": "Reject analyst deletion",
@@ -3296,48 +1841,7 @@
             "url": "{{notificationURL}}/notifications/{{notificationId}}",
             "description": "Only the Security Administrator can delete; row remains present. Expected HTTP 403. Implemented by: Youssef Al Hajj Youness."
           },
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test('Expected HTTP 403', function () { pm.response.to.have.status(403); });"
-                ]
-              }
-            }
-          ],
-          "response": [
-            {
-              "name": "Actual local execution S8-DELETE-04",
-              "originalRequest": {
-                "method": "DELETE",
-                "url": "http://127.0.0.1:5008/notifications/1",
-                "header": [],
-                "description": "Actual local input for S8-DELETE-04; tokens omitted.",
-                "auth": {
-                  "type": "bearer",
-                  "bearer": [
-                    {
-                      "key": "token",
-                      "value": "{{analystToken}}",
-                      "type": "string"
-                    }
-                  ]
-                }
-              },
-              "code": 403,
-              "status": "Forbidden",
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"User does not have permission to perform this operation\",\n  \"status\": \"error\"\n}",
-              "cookie": []
-            }
-          ]
+          "response": []
         },
         {
           "name": "Reject employee deletion",
@@ -3357,48 +1861,7 @@
             "url": "{{notificationURL}}/notifications/{{notificationId}}",
             "description": "Only the Security Administrator can delete; row remains present. Expected HTTP 403. Implemented by: Youssef Al Hajj Youness."
           },
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test('Expected HTTP 403', function () { pm.response.to.have.status(403); });"
-                ]
-              }
-            }
-          ],
-          "response": [
-            {
-              "name": "Actual local execution S8-DELETE-05",
-              "originalRequest": {
-                "method": "DELETE",
-                "url": "http://127.0.0.1:5008/notifications/1",
-                "header": [],
-                "description": "Actual local input for S8-DELETE-05; tokens omitted.",
-                "auth": {
-                  "type": "bearer",
-                  "bearer": [
-                    {
-                      "key": "token",
-                      "value": "{{employeeToken}}",
-                      "type": "string"
-                    }
-                  ]
-                }
-              },
-              "code": 403,
-              "status": "Forbidden",
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"User does not have permission to perform this operation\",\n  \"status\": \"error\"\n}",
-              "cookie": []
-            }
-          ]
+          "response": []
         },
         {
           "name": "Reject auditor deletion",
@@ -3418,48 +1881,7 @@
             "url": "{{notificationURL}}/notifications/{{notificationId}}",
             "description": "Only the Security Administrator can delete; row remains present. Expected HTTP 403. Implemented by: Youssef Al Hajj Youness."
           },
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test('Expected HTTP 403', function () { pm.response.to.have.status(403); });"
-                ]
-              }
-            }
-          ],
-          "response": [
-            {
-              "name": "Actual local execution S8-DELETE-06",
-              "originalRequest": {
-                "method": "DELETE",
-                "url": "http://127.0.0.1:5008/notifications/1",
-                "header": [],
-                "description": "Actual local input for S8-DELETE-06; tokens omitted.",
-                "auth": {
-                  "type": "bearer",
-                  "bearer": [
-                    {
-                      "key": "token",
-                      "value": "{{auditorToken}}",
-                      "type": "string"
-                    }
-                  ]
-                }
-              },
-              "code": 403,
-              "status": "Forbidden",
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"User does not have permission to perform this operation\",\n  \"status\": \"error\"\n}",
-              "cookie": []
-            }
-          ]
+          "response": []
         },
         {
           "name": "Admin deletes notification",
@@ -3479,48 +1901,7 @@
             "url": "{{notificationURL}}/notifications/{{notificationId}}",
             "description": "Remove the selected notification and preserve the recipient user. Expected HTTP 200. Implemented by: Youssef Al Hajj Youness."
           },
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test('Expected HTTP 200', function () { pm.response.to.have.status(200); });"
-                ]
-              }
-            }
-          ],
-          "response": [
-            {
-              "name": "Actual local execution S8-DELETE-01",
-              "originalRequest": {
-                "method": "DELETE",
-                "url": "http://127.0.0.1:5008/notifications/1",
-                "header": [],
-                "description": "Actual local input for S8-DELETE-01; tokens omitted.",
-                "auth": {
-                  "type": "bearer",
-                  "bearer": [
-                    {
-                      "key": "token",
-                      "value": "{{adminToken}}",
-                      "type": "string"
-                    }
-                  ]
-                }
-              },
-              "code": 200,
-              "status": "OK",
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"data\": null,\n  \"message\": \"Notification deleted successfully\",\n  \"status\": \"success\"\n}",
-              "cookie": []
-            }
-          ]
+          "response": []
         },
         {
           "name": "Verify retrieval after deletion",
@@ -3540,48 +1921,7 @@
             "url": "{{notificationURL}}/notifications/{{notificationId}}",
             "description": "Deleted notification is no longer retrievable. Expected HTTP 404. Implemented by: Youssef Al Hajj Youness."
           },
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test('Expected HTTP 404', function () { pm.response.to.have.status(404); });"
-                ]
-              }
-            }
-          ],
-          "response": [
-            {
-              "name": "Actual local execution S8-DELETE-02",
-              "originalRequest": {
-                "method": "GET",
-                "url": "http://127.0.0.1:5008/notifications/1",
-                "header": [],
-                "description": "Actual local input for S8-DELETE-02; tokens omitted.",
-                "auth": {
-                  "type": "bearer",
-                  "bearer": [
-                    {
-                      "key": "token",
-                      "value": "{{adminToken}}",
-                      "type": "string"
-                    }
-                  ]
-                }
-              },
-              "code": 404,
-              "status": "Not Found",
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"Notification not found\",\n  \"status\": \"error\"\n}",
-              "cookie": []
-            }
-          ]
+          "response": []
         },
         {
           "name": "Reject deleting absent notification",
@@ -3601,48 +1941,7 @@
             "url": "{{notificationURL}}/notifications/{{notificationId}}",
             "description": "A repeated deletion returns not found. Expected HTTP 404. Implemented by: Youssef Al Hajj Youness."
           },
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test('Expected HTTP 404', function () { pm.response.to.have.status(404); });"
-                ]
-              }
-            }
-          ],
-          "response": [
-            {
-              "name": "Actual local execution S8-DELETE-03",
-              "originalRequest": {
-                "method": "DELETE",
-                "url": "http://127.0.0.1:5008/notifications/1",
-                "header": [],
-                "description": "Actual local input for S8-DELETE-03; tokens omitted.",
-                "auth": {
-                  "type": "bearer",
-                  "bearer": [
-                    {
-                      "key": "token",
-                      "value": "{{adminToken}}",
-                      "type": "string"
-                    }
-                  ]
-                }
-              },
-              "code": 404,
-              "status": "Not Found",
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"Notification not found\",\n  \"status\": \"error\"\n}",
-              "cookie": []
-            }
-          ]
+          "response": []
         }
       ]
     }
@@ -3692,6 +1991,61 @@
     {
       "key": "auditorUsername",
       "value": "s8_auditor",
+      "type": "string"
+    },
+    {
+      "key": "adminPassword",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "recipientPassword",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "analystPassword",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "auditorPassword",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "adminToken",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "employeeToken",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "analystToken",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "auditorToken",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "recipientId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "emptyUserId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "notificationId",
+      "value": "",
       "type": "string"
     }
   ]
