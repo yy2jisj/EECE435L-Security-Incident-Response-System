@@ -132,8 +132,15 @@ CREATE TABLE IF NOT EXISTS notifications (
     incident_id     INTEGER REFERENCES incidents(incident_id) ON DELETE SET NULL,
     title           TEXT NOT NULL,
     message         TEXT NOT NULL,
+    notification_type TEXT NOT NULL DEFAULT 'System Notification'
+                      CHECK (notification_type IN ('Incident Assignment', 'Security Alert',
+                                                    'System Notification', 'Threat Alert',
+                                                    'Vulnerability Alert')),
+    severity_level  TEXT NOT NULL DEFAULT 'Low'
+                    CHECK (severity_level IN ('Low', 'Medium', 'High', 'Critical')),
     is_read         INTEGER NOT NULL DEFAULT 0 CHECK (is_read IN (0, 1)),
-    created_at      TEXT NOT NULL DEFAULT (datetime('now'))
+    created_at      TEXT NOT NULL DEFAULT (datetime('now')),
+    read_date       TEXT
 );
 
 -- Playbooks 
