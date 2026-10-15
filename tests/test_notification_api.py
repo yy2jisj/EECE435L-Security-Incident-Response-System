@@ -3,7 +3,7 @@ from notification_service.app import app
 from tests.support import DatabaseTest
 
 
-class NotificationApiTests(DatabaseTest):
+class NotificationApiCase(DatabaseTest):
     def setUp(self):
         super().setUp()
         self.client = app.test_client()
@@ -18,6 +18,8 @@ class NotificationApiTests(DatabaseTest):
         self.assertEqual(response.get_json()["status"], "error")
         self.assertTrue(response.get_json()["message"])
 
+
+class NotificationApiTests(NotificationApiCase):
     def test_create_persists_multiple_notifications(self):
         first = self.create()
         second = self.create(notification_type="Threat Alert", severity_level="Critical")

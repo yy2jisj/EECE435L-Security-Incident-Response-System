@@ -1,12 +1,14 @@
-from flask import Flask, g
+from flask import Flask, g, request
 
 from common import config
 from common.audit import log_event
 from common.auth import deny, roles_required
-from common.errors import ApiError, register_error_handlers, success_response
-from common.validators import check_fields, get_json_body
+from common.errors import ApiError, ValidationError, register_error_handlers, success_response
+from common.validators import check_fields, choice, get_json_body, read_filters
 from notification_service import repository
-from notification_service.models import Notification, notification_id
+from notification_service.models import (
+    NOTIFICATION_TYPES, SEVERITIES, STATUSES, Notification, notification_id,
+)
 from user_service import repository as users
 
 SERVICE = "notifications"
@@ -72,6 +74,59 @@ def get_notification(item_id):
     Implemented by: Youssef Al Hajj Youness
     """
     return success_response("Notification retrieved successfully", find_notification(item_id))
+
+
+@app.put("/notifications/<item_id>/read")
+@roles_required(config.ROLE_ADMIN, config.ROLE_ANALYST, config.ROLE_USER, service=SERVICE)
+def mark_notification_read(item_id):
+    """Mark an accessible notification read; repeated calls keep its timestamp.
+
+    Implemented by: Youssef Al Hajj Youness
+    """
+    item = find_notification(item_id)
+    repository.mark_read(item["notification_id"])
+    log_event(g.current_user["user_id"], "Notification read",
+              f"Notification {item['notification_id']} marked read", "Information", SERVICE)
+    return success_response("Notification marked as read", repository.get_by_id(item["notification_id"]))
+
+
+@app.get("/notifications/search")
+@roles_required(config.ROLE_ADMIN, config.ROLE_ANALYST, config.ROLE_AUDITOR, service=SERVICE)
+def search_notifications():
+    """Filter notifications by recipient, type, severity and/or read status.
+
+    Implemented by: Youssef Al Hajj Youness
+    """
+    filters = read_filters(("user_id", "notification_type", "severity_level", "status"))
+    for name in request.args:
+        if len(request.args.getlist(name)) != 1 or not request.args[name].strip():
+            raise ValidationError(f"{name} must have one nonempty value")
+    if "user_id" in filters:
+        filters["user_id"] = notification_id(filters["user_id"], "user id")
+        check_owner(filters["user_id"])
+        if users.get_by_id(filters["user_id"]) is None:
+            raise ApiError("User not found", 404)
+    for name, options in (("notification_type", NOTIFICATION_TYPES),
+                          ("severity_level", SEVERITIES), ("status", STATUSES)):
+        if name in filters:
+            filters[name] = choice(filters[name], name, options)
+    if g.current_user["role"] == config.ROLE_ANALYST:
+        filters["user_id"] = g.current_user["user_id"]
+    return success_response("Notifications retrieved successfully", repository.search(filters))
+
+
+@app.delete("/notifications/<item_id>")
+@roles_required(config.ROLE_ADMIN, service=SERVICE)
+def delete_notification(item_id):
+    """Delete a notification as Security Administrator only.
+
+    Implemented by: Youssef Al Hajj Youness
+    """
+    item = find_notification(item_id)
+    repository.delete_notification(item["notification_id"])
+    log_event(g.current_user["user_id"], "Notification deleted",
+              f"Notification {item['notification_id']} deleted", "Warning", SERVICE)
+    return success_response("Notification deleted successfully")
 
 
 if __name__ == "__main__":

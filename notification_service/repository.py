@@ -37,3 +37,29 @@ def get_by_id(notification_id):
 def get_for_user(user_id):
     return fetch_all(f"SELECT {PUBLIC_COLUMNS} FROM notifications WHERE user_id = ? "
                      "ORDER BY notification_id", (user_id,))
+
+
+def mark_read(notification_id):
+    """Keep the first read time on repeated requests and preserve created_at."""
+    execute("UPDATE notifications SET is_read = 1, "
+            "read_date = COALESCE(read_date, datetime('now')) WHERE notification_id = ?",
+            (notification_id,))
+
+
+def search(filters):
+    """Combine validated filters using AND; values always use placeholders."""
+    clauses = []
+    values = []
+    for name in ("user_id", "notification_type", "severity_level", "status"):
+        if name in filters:
+            column = "is_read" if name == "status" else name
+            clauses.append(f"{column} = ?")
+            value = filters[name]
+            values.append(int(value == "Read") if name == "status" else value)
+    where = " AND ".join(clauses)
+    return fetch_all(f"SELECT {PUBLIC_COLUMNS} FROM notifications WHERE {where} "
+                     "ORDER BY notification_id", values)
+
+
+def delete_notification(notification_id):
+    return execute("DELETE FROM notifications WHERE notification_id = ?", (notification_id,))
