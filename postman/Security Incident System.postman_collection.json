@@ -1,0 +1,703 @@
+{
+  "info": {
+    "_postman_id": "c82043a1-0995-4486-8227-dc41b06bf36a",
+    "name": "Security Incident System",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "58859283",
+    "_collection_link": "https://go.postman.co/collection/58859283-c82043a1-0995-4486-8227-dc41b06bf36a?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Service 1 – Users",
+      "item": [
+        {
+          "name": "Admin Login",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"username\": \"admin\", \"password\": \"admin12345\"}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseURL}}/users/login",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "users",
+                "login"
+              ]
+            },
+            "description": "Logs in the admin and returns a token. Used by: all roles. Implemented by: Adam Yahya"
+          },
+          "response": [
+            {
+              "name": "Admin Login",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"username\": \"admin\", \"password\": \"admin12345\"}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseURL}}/users/login",
+                  "host": [
+                    "{{baseURL}}"
+                  ],
+                  "path": [
+                    "users",
+                    "login"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "server",
+                  "value": "Werkzeug/3.1.8 Python/3.14.2"
+                },
+                {
+                  "key": "date",
+                  "value": "Thu, 15 Oct 2026 10:27:39 GMT"
+                },
+                {
+                  "key": "content-type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "content-length",
+                  "value": "534"
+                },
+                {
+                  "key": "connection",
+                  "value": "close"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"data\": {\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwicm9sZSI6IlNlY3VyaXR5IEFkbWluaXN0cmF0b3IiLCJpYXQiOjE3OTIwNjAwNTksImV4cCI6MTc5MjA2MzY1OX0.2jyxX0EC7teTnqQBCORljBePJy0158JsV_K18FfiIMs\",\n    \"token_type\": \"Bearer\",\n    \"user\": {\n      \"account_status\": \"Active\",\n      \"created_at\": \"2026-10-15 10:14:48\",\n      \"department\": \"IT Security\",\n      \"email\": \"admin@example.com\",\n      \"full_name\": \"System Administrator\",\n      \"last_login\": \"2026-10-15 10:27:39\",\n      \"role\": \"Security Administrator\",\n      \"user_id\": 1,\n      \"username\": \"admin\"\n    }\n  },\n  \"message\": \"Login successful\",\n  \"status\": \"success\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Incorrect pass login",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"username\": \"admin\", \"password\": \"admin12345\"}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseURL}}/users/login",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "users",
+                "login"
+              ]
+            },
+            "description": "Login with a wrong password. Returns 401 “Invalid username or password”. Implemented by: Adam Yahya"
+          },
+          "response": [
+            {
+              "name": "Incorrect pass login",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"username\": \"admin\", \"password\": \"admin15\"}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseURL}}/users/login",
+                  "host": [
+                    "{{baseURL}}"
+                  ],
+                  "path": [
+                    "users",
+                    "login"
+                  ]
+                }
+              },
+              "status": "UNAUTHORIZED",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "server",
+                  "value": "Werkzeug/3.1.8 Python/3.14.2"
+                },
+                {
+                  "key": "date",
+                  "value": "Thu, 15 Oct 2026 10:30:42 GMT"
+                },
+                {
+                  "key": "content-type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "content-length",
+                  "value": "60"
+                },
+                {
+                  "key": "connection",
+                  "value": "close"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"message\": \"Invalid username or password\",\n  \"status\": \"error\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Register User",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"full_name\": \"Youssef Al Hajj Younness\", \"username\": \"yy123\", \"email\": \"yym\", \"password\": \"Youssefz123\", \"department\": \"HR\"}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseURL}}/users/register",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "users",
+                "register"
+              ]
+            },
+            "description": "Creates a new account (Regular User by default). Returns 201, or 409 for a duplicate username, or 400 for invalid input. Implemented by: Adam Yahya"
+          },
+          "response": [
+            {
+              "name": "Register User",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"full_name\": \"Youssef Al Hajj Younness\", \"username\": \"yy123\", \"email\": \"yy@example.com\", \"password\": \"Youssefz123\", \"department\": \"HR\"}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseURL}}/users/register",
+                  "host": [
+                    "{{baseURL}}"
+                  ],
+                  "path": [
+                    "users",
+                    "register"
+                  ]
+                }
+              },
+              "status": "CREATED",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "server",
+                  "value": "Werkzeug/3.1.8 Python/3.14.2"
+                },
+                {
+                  "key": "date",
+                  "value": "Thu, 15 Oct 2026 10:32:40 GMT"
+                },
+                {
+                  "key": "content-type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "content-length",
+                  "value": "285"
+                },
+                {
+                  "key": "connection",
+                  "value": "close"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"data\": {\n    \"account_status\": \"Active\",\n    \"created_at\": \"2026-10-15 10:32:40\",\n    \"department\": \"HR\",\n    \"email\": \"yy@example.com\",\n    \"full_name\": \"Youssef Al Hajj Younness\",\n    \"last_login\": null,\n    \"role\": \"Regular User\",\n    \"user_id\": 2,\n    \"username\": \"yy123\"\n  },\n  \"message\": \"User registered successfully\",\n  \"status\": \"success\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Successful Login",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseURL}}/users/login",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "users",
+                "login"
+              ]
+            },
+            "description": "Logs in yy123 (a Regular User) and returns a token. Implemented by: Adam Yahya"
+          },
+          "response": [
+            {
+              "name": "New Request",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"username\": \"yy123\", \"password\": \"Youssefz123\"}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseURL}}/users/login",
+                  "host": [
+                    "{{baseURL}}"
+                  ],
+                  "path": [
+                    "users",
+                    "login"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "server",
+                  "value": "Werkzeug/3.1.8 Python/3.14.2"
+                },
+                {
+                  "key": "date",
+                  "value": "Thu, 15 Oct 2026 10:48:27 GMT"
+                },
+                {
+                  "key": "content-type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "content-length",
+                  "value": "503"
+                },
+                {
+                  "key": "connection",
+                  "value": "close"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"data\": {\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyIiwicm9sZSI6IlJlZ3VsYXIgVXNlciIsImlhdCI6MTc5MjA2MTMwNywiZXhwIjoxNzkyMDY0OTA3fQ.SN1745BCPAwcmY_D2fPzqMGSO-ozY_QJSNA8XId9ebg\",\n    \"token_type\": \"Bearer\",\n    \"user\": {\n      \"account_status\": \"Active\",\n      \"created_at\": \"2026-10-15 10:32:40\",\n      \"department\": \"HR\",\n      \"email\": \"yy@example.com\",\n      \"full_name\": \"Youssef Al Hajj Younness\",\n      \"last_login\": \"2026-10-15 10:48:27\",\n      \"role\": \"Regular User\",\n      \"user_id\": 2,\n      \"username\": \"yy123\"\n    }\n  },\n  \"message\": \"Login successful\",\n  \"status\": \"success\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Failed Get users req",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{json_web_token_1103}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseURL}}/users",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "users"
+              ]
+            },
+            "description": "GET /users with a Regular User token. Returns 403 because only Administrators and Auditors may list users. Implemented by: Adam Yahya"
+          },
+          "response": [
+            {
+              "name": "Failed Get users req",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseURL}}/users",
+                  "host": [
+                    "{{baseURL}}"
+                  ],
+                  "path": [
+                    "users"
+                  ]
+                }
+              },
+              "status": "FORBIDDEN",
+              "code": 403,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "server",
+                  "value": "Werkzeug/3.1.8 Python/3.14.2"
+                },
+                {
+                  "key": "date",
+                  "value": "Thu, 15 Oct 2026 10:49:47 GMT"
+                },
+                {
+                  "key": "content-type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "content-length",
+                  "value": "87"
+                },
+                {
+                  "key": "connection",
+                  "value": "close"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"message\": \"User does not have permission to perform this operation\",\n  \"status\": \"error\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Succusseful get user req",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{json_web_token_1103}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseURL}}/users/yy123",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "users",
+                "yy123"
+              ]
+            },
+            "description": "GET /users/{username} for the caller’s own record. Returns 200. Implemented by: Adam Yahya"
+          },
+          "response": [
+            {
+              "name": "Succusseful get user req",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseURL}}/users/yy123",
+                  "host": [
+                    "{{baseURL}}"
+                  ],
+                  "path": [
+                    "users",
+                    "yy123"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "server",
+                  "value": "Werkzeug/3.1.8 Python/3.14.2"
+                },
+                {
+                  "key": "date",
+                  "value": "Thu, 15 Oct 2026 10:51:22 GMT"
+                },
+                {
+                  "key": "content-type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "content-length",
+                  "value": "301"
+                },
+                {
+                  "key": "connection",
+                  "value": "close"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"data\": {\n    \"account_status\": \"Active\",\n    \"created_at\": \"2026-10-15 10:32:40\",\n    \"department\": \"HR\",\n    \"email\": \"yy@example.com\",\n    \"full_name\": \"Youssef Al Hajj Younness\",\n    \"last_login\": \"2026-10-15 10:48:27\",\n    \"role\": \"Regular User\",\n    \"user_id\": 2,\n    \"username\": \"yy123\"\n  },\n  \"message\": \"User retrieved successfully\",\n  \"status\": \"success\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Get users as admin",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{json_web_token_0dxg}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"department\": \"Finance\"}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseURL}}/users",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "users"
+              ]
+            },
+            "description": "GET /users with the admin token. Returns 200 with all users. Implemented by: Adam Yahya"
+          },
+          "response": [
+            {
+              "name": "Get users as admin",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"department\": \"Finance\"}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseURL}}/users",
+                  "host": [
+                    "{{baseURL}}"
+                  ],
+                  "path": [
+                    "users"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "server",
+                  "value": "Werkzeug/3.1.8 Python/3.14.2"
+                },
+                {
+                  "key": "date",
+                  "value": "Thu, 15 Oct 2026 14:06:09 GMT"
+                },
+                {
+                  "key": "content-type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "content-length",
+                  "value": "555"
+                },
+                {
+                  "key": "connection",
+                  "value": "close"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"data\": [\n    {\n      \"account_status\": \"Active\",\n      \"created_at\": \"2026-10-15 10:14:48\",\n      \"department\": \"IT Security\",\n      \"email\": \"admin@example.com\",\n      \"full_name\": \"System Administrator\",\n      \"last_login\": \"2026-10-15 14:01:21\",\n      \"role\": \"Security Administrator\",\n      \"user_id\": 1,\n      \"username\": \"admin\"\n    },\n    {\n      \"account_status\": \"Active\",\n      \"created_at\": \"2026-10-15 10:32:40\",\n      \"department\": \"HR\",\n      \"email\": \"yy@example.com\",\n      \"full_name\": \"Youssef Al Hajj Younness\",\n      \"last_login\": \"2026-10-15 10:48:27\",\n      \"role\": \"Regular User\",\n      \"user_id\": 2,\n      \"username\": \"yy123\"\n    }\n  ],\n  \"message\": \"Users retrieved successfully\",\n  \"status\": \"success\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Delete User",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{json_web_token_03ru}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseURL}}/users/2",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "users",
+                "2"
+              ]
+            },
+            "description": "DELETE /users/{id}. Security Administrator only. Returns 200, or 403 for other roles. Implemented by: Adam Yahya"
+          },
+          "response": []
+        },
+        {
+          "name": "Get nobody as admin",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{json_web_token_03ru}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseURL}}/users/nobody",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "users",
+                "nobody"
+              ]
+            },
+            "description": "GET /users/nobody with the admin token. Returns 404 “User not found”. Implemented by: Adam Yahya"
+          },
+          "response": []
+        },
+        {
+          "name": "Change Department",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{json_web_token_0qvv}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"department\": \"Finance\"}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseURL}}/users/1",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "users",
+                "1"
+              ]
+            },
+            "description": "PUT /users/{id}. Updates full_name, email or department. Admin may update anyone; a Regular User only themselves (403 otherwise). Implemented by: Adam Yahya"
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "json_web_token_1103",
+      "secret": true
+    },
+    {
+      "key": "json_web_token_0qvv",
+      "secret": true
+    },
+    {
+      "key": "json_web_token_03ru",
+      "secret": true
+    },
+    {
+      "key": "json_web_token_0dxg",
+      "secret": true
+    }
+  ]
+}
