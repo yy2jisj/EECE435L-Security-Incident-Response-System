@@ -134,6 +134,25 @@ User deletion keeps the pre-existing ON DELETE CASCADE behavior. Deleting a
 notification never deletes its user. The optional incident relationship remains
 ON DELETE SET NULL. No Service 3 or Service 9 routes are implemented.
 
+```mermaid
+erDiagram
+    USERS ||--o{ NOTIFICATIONS : receives
+    USERS {
+        INTEGER user_id PK
+    }
+    NOTIFICATIONS {
+        INTEGER notification_id PK
+        INTEGER user_id FK
+        TEXT title
+        TEXT message
+        TEXT notification_type
+        TEXT severity_level
+        INTEGER is_read
+        TEXT created_at
+        TEXT read_date
+    }
+```
+
 ## Postman and evidence
 
 Import the project's existing collection; use the folder

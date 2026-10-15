@@ -41,6 +41,7 @@ class NotificationModelTests(DatabaseTest):
                 Notification(**self.payload(**changes))
         valid = Notification(**self.payload(title="a" * 255, message="a" * 4000))
         self.assertEqual(len(valid.message), 4000)
+        self.assertEqual(notification_id("0" * 5000 + "1"), 1)
         for value in ("0", "-1", "1.1", "abc", "9223372036854775808", "9" * 5000):
             with self.subTest(value=value[:30]), self.assertRaises(ValidationError):
                 notification_id(value)
@@ -63,6 +64,21 @@ class NotificationModelTests(DatabaseTest):
         self.assertIsNone(row["read_date"])
         self.assertEqual(row["notification_type"], "System Notification")
         self.assertEqual(row["severity_level"], "Low")
+
+    def test_optional_incident_link_keeps_set_null_behavior(self):
+        new_id = repository.insert_notification(Notification(**self.payload()))
+        with get_connection() as conn:
+            asset = conn.execute("INSERT INTO assets "
+                                 "(asset_name,asset_type,ip_address,department,owner_id,criticality_level) "
+                                 "VALUES ('QA server','Server','127.0.0.1','QA',1,'High')").lastrowid
+            incident = conn.execute("INSERT INTO incidents "
+                                    "(title,description,category,severity_level,reporter_id,asset_id) "
+                                    "VALUES ('QA','Test','Other','High',1,?)", (asset,)).lastrowid
+            conn.execute("UPDATE notifications SET incident_id=? WHERE notification_id=?", (incident, new_id))
+            conn.execute("DELETE FROM incidents WHERE incident_id=?", (incident,))
+        row = fetch_one("SELECT * FROM notifications WHERE notification_id=?", (new_id,))
+        self.assertIsNone(row["incident_id"])
+        self.assertEqual(row["is_read"], 0)
 
 
 if __name__ == "__main__":
