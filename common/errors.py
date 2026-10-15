@@ -31,6 +31,16 @@ def error_response(message, status_code):
     return jsonify({"status": "error", "message": message}), status_code
 
 
+def success_response(message, data=None, status_code=200):
+    """Build the JSON success response used everywhere.
+
+    :param message: text shown to the client.
+    :param data: the result (a dictionary or a list).
+    :param status_code: HTTP status code.
+    """
+    return jsonify({"status": "success", "message": message, "data": data}), status_code
+
+
 def register_error_handlers(app):
     """Attach the JSON error handlers to a Flask app.
 
