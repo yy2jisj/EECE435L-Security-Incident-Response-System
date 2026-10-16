@@ -1396,6 +1396,91 @@
     {
       "key": "json_web_token_0rs7",
       "secret": true
+    },
+    {
+      "key": "baseURL",
+      "value": "http://127.0.0.1:5001",
+      "type": "string"
+    },
+    {
+      "key": "notificationURL",
+      "value": "http://127.0.0.1:5008",
+      "type": "string"
+    },
+    {
+      "key": "invalidToken",
+      "value": "invalid-token",
+      "type": "string"
+    },
+    {
+      "key": "recipientUsername",
+      "value": "s8_employee",
+      "type": "string"
+    },
+    {
+      "key": "analystUsername",
+      "value": "s8_analyst",
+      "type": "string"
+    },
+    {
+      "key": "auditorUsername",
+      "value": "s8_auditor",
+      "type": "string"
+    },
+    {
+      "key": "adminPassword",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "recipientPassword",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "analystPassword",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "auditorPassword",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "adminToken",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "employeeToken",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "analystToken",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "auditorToken",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "recipientId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "emptyUserId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "notificationId",
+      "value": "",
+      "type": "string"
     }
   ]
 }
