@@ -1,7 +1,7 @@
 """Upgrade the original Service 9 placeholder tables without replacing other data."""
 
 from common import config
-from common.db import get_connection
+from common.db import get_connection, init_schema
 
 
 def _create_upgrade_table(conn, name):
@@ -73,4 +73,5 @@ def migrate_playbooks():
 
 
 if __name__ == "__main__":
+    init_schema()
     migrate_playbooks()
