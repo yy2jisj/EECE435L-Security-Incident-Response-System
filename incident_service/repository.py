@@ -43,6 +43,11 @@ def update_status(incident_id, status, conn):
     )
 
 
+def assign_analyst(incident_id, analyst_id, conn):
+    execute("UPDATE incidents SET assigned_analyst_id = ? WHERE incident_id = ?",
+            (analyst_id, incident_id), conn)
+
+
 def insert_note(incident_id, analyst_id, note_content, conn):
     new_id = execute(
         "INSERT INTO investigation_notes (incident_id, analyst_id, note_content) "
