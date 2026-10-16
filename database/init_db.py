@@ -9,6 +9,7 @@ from werkzeug.security import generate_password_hash
 from common import config
 from common.db import get_connection, init_schema
 from database.migrate_notifications import migrate_notifications
+from database.migrate_playbooks import migrate_playbooks
 #change password in env
 ADMIN_PASSWORD = os.environ.get("ADMIN_PASSWORD", "Admin@1234")
 
@@ -29,6 +30,7 @@ def main():
     """Create the schema in the database file and the default administrator."""
     init_schema()
     migrate_notifications()
+    migrate_playbooks()
     create_default_admin()
     print(f"Database ready at {config.DB_PATH}")
 
