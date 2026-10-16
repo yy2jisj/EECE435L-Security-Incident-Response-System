@@ -9,8 +9,10 @@ from common.errors import ApiError, error_response, register_error_handlers, suc
 from common.validators import check_fields, choice, get_json_body
 from incident_service import repository
 from incident_service.models import (
-    NEXT_STATUS, STATUSES, Incident, incident_id, investigation_note,
+    NEXT_STATUS, STATUSES, Incident, incident_id, investigation_note, related_id,
 )
+from notification_service import repository as notifications
+from notification_service.models import Notification
 from user_service import repository as users
 
 SERVICE = "incidents"
@@ -87,6 +89,43 @@ def get_all_incidents():
 def get_incident(item_id):
     """Retrieve an incident and its notes. Implemented by: Youssef Al Hajj Youness."""
     return success_response("Incident retrieved successfully", find_incident(item_id))
+
+
+@app.put(BASE_ROUTE + "/<item_id>/assign")
+@roles_required(config.ROLE_ADMIN, service=SERVICE)
+def assign_incident(item_id):
+    """Assign and notify an analyst. Implemented by: Youssef Al Hajj Youness."""
+    data = get_json_body()
+    check_fields(data, required=["analyst_id"])
+    analyst_id = related_id(data["analyst_id"], "analyst_id")
+    with get_connection() as conn:
+        conn.execute("BEGIN IMMEDIATE")
+        item = find_incident(item_id, conn)
+        analyst = users.get_by_id(analyst_id, conn)
+        if analyst is None:
+            raise ApiError("Analyst not found", 404)
+        if analyst["role"] != config.ROLE_ANALYST:
+            raise ApiError("Assigned user must have the Security Analyst role", 400)
+        if analyst["account_status"] != "Active":
+            raise ApiError("Assigned analyst must have an active account", 400)
+        if item["assigned_analyst_id"] != analyst_id:
+            repository.assign_analyst(item["incident_id"], analyst_id, conn)
+            notification = Notification(
+                analyst_id, f"Incident #{item['incident_id']} assigned",
+                f"You have been assigned incident #{item['incident_id']}: {item['title']}",
+                "Incident Assignment", item["severity_level"],
+            )
+            notification_id = notifications.insert_notification(
+                notification, conn, incident_id=item["incident_id"],
+            )
+            log_event(g.current_user["user_id"], "Incident assigned",
+                      f"Incident {item['incident_id']}: analyst {item['assigned_analyst_id']} "
+                      f"-> {analyst_id}", "Information", SERVICE, conn)
+            log_event(g.current_user["user_id"], "Notification created",
+                      f"Notification {notification_id} created for user {analyst_id}",
+                      "Information", "notifications", conn)
+        updated = repository.get_by_id(item["incident_id"], conn)
+    return success_response("Incident assigned successfully", updated)
 
 
 @app.put(BASE_ROUTE + "/<item_id>/status")

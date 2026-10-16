@@ -11,22 +11,25 @@ PUBLIC_COLUMNS = (
 )
 
 
-def insert_notification(notification):
-    """Save a validated Notification and return its ID for API/future callers."""
-    with get_connection() as conn:
-        conn.execute("BEGIN IMMEDIATE")
+def insert_notification(notification, conn=None, incident_id=None):
+    """Save a notification, optionally as part of an incident transaction."""
+    if conn is not None:
         if fetch_one("SELECT user_id FROM users WHERE user_id = ?",
                      (notification.user_id,), conn) is None:
             raise ApiError("User not found", 404)
         try:
             return execute(
                 "INSERT INTO notifications "
-                "(user_id, title, message, notification_type, severity_level) VALUES (?, ?, ?, ?, ?)",
-                (notification.user_id, notification.title, notification.message,
+                "(user_id, incident_id, title, message, notification_type, severity_level) "
+                "VALUES (?, ?, ?, ?, ?, ?)",
+                (notification.user_id, incident_id, notification.title, notification.message,
                  notification.notification_type, notification.severity_level), conn,
             )
         except sqlite3.IntegrityError:
             raise ApiError("Notification could not be saved", 409)
+    with get_connection() as conn:
+        conn.execute("BEGIN IMMEDIATE")
+        return insert_notification(notification, conn, incident_id)
 
 
 def get_by_id(notification_id):
