@@ -177,11 +177,21 @@
         {
           "name": "Register User",
           "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{json_web_token_0u3y}}",
+                  "type": "string"
+                }
+              ]
+            },
             "method": "POST",
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\"full_name\": \"Youssef Al Hajj Younness\", \"username\": \"yy123\", \"email\": \"yym\", \"password\": \"Youssefz123\", \"department\": \"HR\"}",
+              "raw": "{\"full_name\":\"Adam Yahya\",\"username\":\"adam.yahya\",\"email\":\"adam.yahya@example.com\",\"password\":\"Passw0rd123\",\"department\":\"Finance\"}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -261,6 +271,15 @@
           "request": {
             "method": "POST",
             "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"username\":\"youssef.younnes\",\"password\":\"Passw0rd123\"}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
             "url": {
               "raw": "{{baseURL}}/users/login",
               "host": [
@@ -680,6 +699,669 @@
           "response": []
         }
       ]
+    },
+    {
+      "name": "Service 2",
+      "item": [
+        {
+          "name": "Create web server",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{json_web_token_0zp4}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"asset_name\":\"Web Server 01\",\"asset_type\":\"Server\",\"ip_address\":\"10.0.0.5\",\"operating_system\":\"Ubuntu 22.04\",\"department\":\"IT\",\"owner_id\":1,\"location\":\"Data Center A\",\"criticality_level\":\"High\"}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{assetsURL}}/assets",
+              "host": [
+                "{{assetsURL}}"
+              ],
+              "path": [
+                "assets"
+              ]
+            },
+            "description": "POST /assets. Creates a new asset (a High criticality Server). Only a Security Administrator may create assets. Required: asset_name, asset_type, ip_address, department, owner_id, criticality_level. Returns 201 with the new asset. Implemented by: Adam Yahya"
+          },
+          "response": []
+        },
+        {
+          "name": "create hr db",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{json_web_token_0zp4}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"asset_name\":\"HR Database\",\"asset_type\":\"Database\",\"ip_address\":\"10.0.0.9\",\"operating_system\":\"PostgreSQL 15\",\"department\":\"HR\",\"owner_id\":1,\"location\":\"Data Center A\",\"criticality_level\":\"Critical\"}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{assetsURL}}/assets",
+              "host": [
+                "{{assetsURL}}"
+              ],
+              "path": [
+                "assets"
+              ]
+            },
+            "description": "POST /assets. Creates a new asset (a Critical Database). Security Administrator only. Returns 201 with the new asset. Implemented by: Adam Yahya"
+          },
+          "response": []
+        },
+        {
+          "name": "create laptop",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{json_web_token_0zp4}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"asset_name\":\"Finance Laptop 07\",\"asset_type\":\"Workstation\",\"ip_address\":\"192.168.1.23\",\"operating_system\":\"Windows 11\",\"department\":\"Finance\",\"owner_id\":1,\"location\":\"Office 3F\",\"criticality_level\":\"Medium\"}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{assetsURL}}/assets",
+              "host": [
+                "{{assetsURL}}"
+              ],
+              "path": [
+                "assets"
+              ]
+            },
+            "description": "POST /assets. Creates a new asset (a Medium criticality Workstation). Security Administrator only. Returns 201 with the new asset. Implemented by: Adam Yahya"
+          },
+          "response": []
+        },
+        {
+          "name": "create router",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{json_web_token_0zp4}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"asset_name\":\"Core Router\",\"asset_type\":\"Network Device\",\"ip_address\":\"192.168.1.1\",\"department\":\"IT\",\"owner_id\":1,\"location\":\"Server Room\",\"criticality_level\":\"High\",\"status\":\"Under Maintenance\"}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{assetsURL}}/assets",
+              "host": [
+                "{{assetsURL}}"
+              ],
+              "path": [
+                "assets"
+              ]
+            },
+            "description": "POST /assets. Creates a new asset (a Network Device with status Under Maintenance). Optional fields such as operating_system are left out and stored as null. Security Administrator only. Returns 201. Implemented by: Adam Yahya"
+          },
+          "response": []
+        },
+        {
+          "name": "create marketing site",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{json_web_token_0zp4}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"asset_name\":\"Marketing Site\",\"asset_type\":\"Cloud Resource\",\"ip_address\":\"203.0.113.40\",\"department\":\"Marketing\",\"owner_id\":1,\"criticality_level\":\"Low\"}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{assetsURL}}/assets",
+              "host": [
+                "{{assetsURL}}"
+              ],
+              "path": [
+                "assets"
+              ]
+            },
+            "description": "POST /assets. Creates a new asset (a Low criticality Cloud Resource). Optional fields location and operating_system are left out. Security Administrator only. Returns 201. Implemented by: Adam Yahya"
+          },
+          "response": []
+        },
+        {
+          "name": "invalid IP",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{json_web_token_0zp4}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"asset_name\":\"Test Server\",\"asset_type\":\"Server\",\"ip_address\":\"999.1.1.1\",\"department\":\"IT\",\"owner_id\":1,\"criticality_level\":\"High\"}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{assetsURL}}/assets",
+              "host": [
+                "{{assetsURL}}"
+              ],
+              "path": [
+                "assets"
+              ]
+            },
+            "description": "POST /assets. Validation test: the ip_address 999.1.1.1 is not a valid IP address, so the asset is rejected with 400 and a clear message. Implemented by: Adam Yahya"
+          },
+          "response": []
+        },
+        {
+          "name": "invalid type",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{json_web_token_0zp4}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"asset_name\":\"Test Server\",\"asset_type\":\"Toaster\",\"ip_address\":\"10.0.0.50\",\"department\":\"IT\",\"owner_id\":1,\"criticality_level\":\"High\"}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{assetsURL}}/assets",
+              "host": [
+                "{{assetsURL}}"
+              ],
+              "path": [
+                "assets"
+              ]
+            },
+            "description": "POST /assets. Validation test: the asset_type Toaster is not one of the allowed types (Server, Workstation, Database, Application, Network Device, Cloud Resource), so the request is rejected with 400. Implemented by: Adam Yahya"
+          },
+          "response": []
+        },
+        {
+          "name": "no token",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": []
+            },
+            "url": {
+              "raw": "{{assetsURL}}/assets",
+              "host": [
+                "{{assetsURL}}"
+              ],
+              "path": [
+                "assets"
+              ]
+            },
+            "description": "POST /assets. Authentication test: the request is sent with no Authorization header, so it is rejected with 401 (Authentication required). Implemented by: Adam Yahya"
+          },
+          "response": []
+        },
+        {
+          "name": "create regular user",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{json_web_token_113g}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"asset_name\":\"Test Server\",\"asset_type\":\"Server\",\"ip_address\":\"10.0.0.50\",\"department\":\"IT\",\"owner_id\":1,\"criticality_level\":\"High\"}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{assetsURL}}/assets",
+              "host": [
+                "{{assetsURL}}"
+              ],
+              "path": [
+                "assets"
+              ]
+            },
+            "description": "POST /assets. Authorization test: a Regular User token is valid but this role has no access to asset APIs, so the request is rejected with 403. The violation is written to the audit log. Implemented by: Adam Yahya"
+          },
+          "response": []
+        },
+        {
+          "name": "update asset 1",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{json_web_token_0zp4}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"asset_name\":\"Web Server 01 (Primary)\",\"owner_id\":3,\"department\":\"Infrastructure\",\"criticality_level\":\"Critical\",\"status\":\"Under Maintenance\"}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{assetsURL}}/assets/1",
+              "host": [
+                "{{assetsURL}}"
+              ],
+              "path": [
+                "assets",
+                "1"
+              ]
+            },
+            "description": "PUT /assets/{id}. Updates asset_name, owner_id, department, criticality_level and/or status of an existing asset. Security Administrator only. The new owner must be an existing user. Returns 200 with the updated asset. Implemented by: Adam Yahya"
+          },
+          "response": []
+        },
+        {
+          "name": "get assset 1 after updaet",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{json_web_token_0zp4}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{assetsURL}}/assets/1",
+              "host": [
+                "{{assetsURL}}"
+              ],
+              "path": [
+                "assets",
+                "1"
+              ]
+            },
+            "description": "GET /assets/{id}. Returns one asset by id, including its owner name and its related_incidents and related_vulnerabilities lists. Allowed for Security Administrator, Security Analyst and Auditor. Used here to show the asset after the update. Implemented by: Adam Yahya"
+          },
+          "response": []
+        },
+        {
+          "name": "get all assets",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{json_web_token_0zp4}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{assetsURL}}/assets",
+              "host": [
+                "{{assetsURL}}"
+              ],
+              "path": [
+                "assets"
+              ]
+            },
+            "description": "GET /assets. Returns every registered asset with its details, criticality level and status. Allowed for Security Administrator and Auditor only (an Analyst gets 403). Implemented by: Adam Yahya"
+          },
+          "response": []
+        },
+        {
+          "name": "get asset that doesnt exist",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{json_web_token_0zp4}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{assetsURL}}/assets/9999",
+              "host": [
+                "{{assetsURL}}"
+              ],
+              "path": [
+                "assets",
+                "9999"
+              ]
+            },
+            "description": "GET /assets/{id}. Error test: asset 9999 does not exist, so the service returns 404 with the message Asset not found. Implemented by: Adam Yahya"
+          },
+          "response": []
+        },
+        {
+          "name": "search by name",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{json_web_token_0zp4}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{assetsURL}}/assets/search?asset_name=server",
+              "host": [
+                "{{assetsURL}}"
+              ],
+              "path": [
+                "assets",
+                "search"
+              ],
+              "query": [
+                {
+                  "key": "asset_name",
+                  "value": "server"
+                }
+              ]
+            },
+            "description": "GET /assets/search?asset_name=... Searches assets by name. The text can match part of the name and is not case sensitive. Allowed for Security Administrator, Security Analyst and Auditor. Implemented by: Adam Yahya"
+          },
+          "response": []
+        },
+        {
+          "name": "search by type",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{json_web_token_0zp4}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{assetsURL}}/assets/search?asset_type=Database",
+              "host": [
+                "{{assetsURL}}"
+              ],
+              "path": [
+                "assets",
+                "search"
+              ],
+              "query": [
+                {
+                  "key": "asset_type",
+                  "value": "Database"
+                }
+              ]
+            },
+            "description": "GET /assets/search?asset_type=... Searches assets by exact asset type (for example Database). Allowed for Security Administrator, Security Analyst and Auditor. Implemented by: Adam Yahya"
+          },
+          "response": []
+        },
+        {
+          "name": "search by IP",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{json_web_token_0zp4}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{assetsURL}}/assets/search?ip_address=192.168.1.23",
+              "host": [
+                "{{assetsURL}}"
+              ],
+              "path": [
+                "assets",
+                "search"
+              ],
+              "query": [
+                {
+                  "key": "ip_address",
+                  "value": "192.168.1.23"
+                }
+              ]
+            },
+            "description": "GET /assets/search?ip_address=... Searches assets by exact IP address. The address is validated first. Allowed for Security Administrator, Security Analyst and Auditor. Implemented by: Adam Yahya"
+          },
+          "response": []
+        },
+        {
+          "name": "serarch by department",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{json_web_token_0zp4}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{assetsURL}}/assets/search?department=IT",
+              "host": [
+                "{{assetsURL}}"
+              ],
+              "path": [
+                "assets",
+                "search"
+              ],
+              "query": [
+                {
+                  "key": "department",
+                  "value": "IT"
+                }
+              ]
+            },
+            "description": "GET /assets/search?department=... Searches assets by department. The text can match part of the department name. Allowed for Security Administrator, Security Analyst and Auditor. Implemented by: Adam Yahya"
+          },
+          "response": []
+        },
+        {
+          "name": "serarch by criticality",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{json_web_token_0zp4}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{assetsURL}}/assets/search?criticality_level=Critical",
+              "host": [
+                "{{assetsURL}}"
+              ],
+              "path": [
+                "assets",
+                "search"
+              ],
+              "query": [
+                {
+                  "key": "criticality_level",
+                  "value": "Critical"
+                }
+              ]
+            },
+            "description": "GET /assets/search?criticality_level=... Searches assets by exact criticality level (Low, Medium, High or Critical). Allowed for Security Administrator, Security Analyst and Auditor. Implemented by: Adam Yahya"
+          },
+          "response": []
+        },
+        {
+          "name": "delete asset 5",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{json_web_token_0zp4}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{assetsURL}}/assets/5",
+              "host": [
+                "{{assetsURL}}"
+              ],
+              "path": [
+                "assets",
+                "5"
+              ]
+            },
+            "description": "DELETE /assets/{id}. Removes an asset. Security Administrator only: any other role gets 403 and the attempt is logged. Returns 200 on success, 404 if the asset does not exist, and 409 if incidents or vulnerabilities still reference it. Implemented by: Adam Yahya"
+          },
+          "response": []
+        }
+      ]
     }
   ],
   "variable": [
@@ -697,6 +1379,22 @@
     },
     {
       "key": "json_web_token_0dxg",
+      "secret": true
+    },
+    {
+      "key": "json_web_token_0u3y",
+      "secret": true
+    },
+    {
+      "key": "json_web_token_0zp4",
+      "secret": true
+    },
+    {
+      "key": "json_web_token_113g",
+      "secret": true
+    },
+    {
+      "key": "json_web_token_0rs7",
       "secret": true
     }
   ]
