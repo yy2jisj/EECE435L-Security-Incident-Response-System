@@ -680,6 +680,1270 @@
           "response": []
         }
       ]
+    },
+    {
+      "name": "Service 8 - Notification and Alert Management",
+      "description": "Manual Service 8 requests. Run Service 1 on baseURL and Service 8 on notificationURL. Create users through Service 1. Enter local username/password variables, run the login requests, and copy the returned tokens into adminToken, employeeToken, analystToken and auditorToken. Set recipientId, emptyUserId and notificationId manually from actual responses. Implemented by: Youssef Al Hajj Youness.",
+      "item": [
+        {
+          "name": "Login as admin through Service 1",
+          "request": {
+            "method": "POST",
+            "auth": {
+              "type": "noauth"
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseURL}}/users/login",
+            "description": "Log in through Service 1 and manually copy the returned token into adminToken. Set the username/password variables locally first. Expected HTTP 200. Implemented by: Youssef Al Hajj Youness.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"admin\",\n  \"password\": \"{{adminPassword}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login as employee through Service 1",
+          "request": {
+            "method": "POST",
+            "auth": {
+              "type": "noauth"
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseURL}}/users/login",
+            "description": "Log in through Service 1 and manually copy the returned token into employeeToken. Set the username/password variables locally first. Expected HTTP 200. Implemented by: Youssef Al Hajj Youness.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"{{recipientUsername}}\",\n  \"password\": \"{{recipientPassword}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login as analyst through Service 1",
+          "request": {
+            "method": "POST",
+            "auth": {
+              "type": "noauth"
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseURL}}/users/login",
+            "description": "Log in through Service 1 and manually copy the returned token into analystToken. Set the username/password variables locally first. Expected HTTP 200. Implemented by: Youssef Al Hajj Youness.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"{{analystUsername}}\",\n  \"password\": \"{{analystPassword}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login as auditor through Service 1",
+          "request": {
+            "method": "POST",
+            "auth": {
+              "type": "noauth"
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseURL}}/users/login",
+            "description": "Log in through Service 1 and manually copy the returned token into auditorToken. Set the username/password variables locally first. Expected HTTP 200. Implemented by: Youssef Al Hajj Youness.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"{{auditorUsername}}\",\n  \"password\": \"{{auditorPassword}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Failed Service 1 login",
+          "request": {
+            "method": "POST",
+            "auth": {
+              "type": "noauth"
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseURL}}/users/login",
+            "description": "Demonstrate failed authentication. Expected HTTP 401. Implemented by: Youssef Al Hajj Youness.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"admin\",\n  \"password\": \"deliberately-incorrect\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Security Alert (Unread)",
+          "request": {
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{adminToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{notificationURL}}/notifications",
+            "description": "Admin creates one Unread notification. Copy the returned ID into notificationId for later requests. Expected HTTP 201. Implemented by: Youssef Al Hajj Youness.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": {{recipientId}},\n  \"title\": \"Security alert on QA workstation\",\n  \"message\": \"Suspicious activity requires investigation.\",\n  \"notification_type\": \"Security Alert\",\n  \"severity_level\": \"High\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create another notification type",
+          "request": {
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{adminToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{notificationURL}}/notifications",
+            "description": "Create multiple notifications for one user with different metadata. Expected HTTP 201. Implemented by: Youssef Al Hajj Youness.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": {{recipientId}},\n  \"title\": \"Security alert on QA workstation\",\n  \"message\": \"Suspicious activity requires investigation.\",\n  \"notification_type\": \"System Notification\",\n  \"severity_level\": \"Low\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Incident Assignment",
+          "request": {
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{adminToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{notificationURL}}/notifications",
+            "description": "Supported notification generation category. Expected HTTP 201. Implemented by: Youssef Al Hajj Youness.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": {{recipientId}},\n  \"title\": \"Security alert on QA workstation\",\n  \"message\": \"Suspicious activity requires investigation.\",\n  \"notification_type\": \"Incident Assignment\",\n  \"severity_level\": \"Critical\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Threat Alert",
+          "request": {
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{adminToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{notificationURL}}/notifications",
+            "description": "Supported notification generation category. Expected HTTP 201. Implemented by: Youssef Al Hajj Youness.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": {{recipientId}},\n  \"title\": \"Security alert on QA workstation\",\n  \"message\": \"Suspicious activity requires investigation.\",\n  \"notification_type\": \"Threat Alert\",\n  \"severity_level\": \"Critical\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Vulnerability Alert",
+          "request": {
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{adminToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{notificationURL}}/notifications",
+            "description": "Supported notification generation category. Expected HTTP 201. Implemented by: Youssef Al Hajj Youness.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": {{recipientId}},\n  \"title\": \"Security alert on QA workstation\",\n  \"message\": \"Suspicious activity requires investigation.\",\n  \"notification_type\": \"Vulnerability Alert\",\n  \"severity_level\": \"Critical\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Reject invalid recipient",
+          "request": {
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{adminToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{notificationURL}}/notifications",
+            "description": "Validation failure must leave the notification table unchanged. Expected HTTP 404. Implemented by: Youssef Al Hajj Youness.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": 99999,\n  \"title\": \"Security alert on QA workstation\",\n  \"message\": \"Suspicious activity requires investigation.\",\n  \"notification_type\": \"Security Alert\",\n  \"severity_level\": \"High\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Reject invalid type",
+          "request": {
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{adminToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{notificationURL}}/notifications",
+            "description": "Validation failure must leave the notification table unchanged. Expected HTTP 400. Implemented by: Youssef Al Hajj Youness.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": {{recipientId}},\n  \"title\": \"Security alert on QA workstation\",\n  \"message\": \"Suspicious activity requires investigation.\",\n  \"notification_type\": \"Other\",\n  \"severity_level\": \"High\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Reject invalid severity",
+          "request": {
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{adminToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{notificationURL}}/notifications",
+            "description": "Validation failure must leave the notification table unchanged. Expected HTTP 400. Implemented by: Youssef Al Hajj Youness.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": {{recipientId}},\n  \"title\": \"Security alert on QA workstation\",\n  \"message\": \"Suspicious activity requires investigation.\",\n  \"notification_type\": \"Security Alert\",\n  \"severity_level\": \"Urgent\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Reject empty title",
+          "request": {
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{adminToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{notificationURL}}/notifications",
+            "description": "Validation failure must leave the notification table unchanged. Expected HTTP 400. Implemented by: Youssef Al Hajj Youness.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": {{recipientId}},\n  \"title\": \" \",\n  \"message\": \"Suspicious activity requires investigation.\",\n  \"notification_type\": \"Security Alert\",\n  \"severity_level\": \"High\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Reject missing user_id",
+          "request": {
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{adminToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{notificationURL}}/notifications",
+            "description": "Every required create field is validated. Expected HTTP 400. Implemented by: Youssef Al Hajj Youness.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Security alert on QA workstation\",\n  \"message\": \"Suspicious activity requires investigation.\",\n  \"notification_type\": \"Security Alert\",\n  \"severity_level\": \"High\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Reject missing title",
+          "request": {
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{adminToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{notificationURL}}/notifications",
+            "description": "Every required create field is validated. Expected HTTP 400. Implemented by: Youssef Al Hajj Youness.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": {{recipientId}},\n  \"message\": \"Suspicious activity requires investigation.\",\n  \"notification_type\": \"Security Alert\",\n  \"severity_level\": \"High\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Reject missing message",
+          "request": {
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{adminToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{notificationURL}}/notifications",
+            "description": "Every required create field is validated. Expected HTTP 400. Implemented by: Youssef Al Hajj Youness.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": {{recipientId}},\n  \"title\": \"Security alert on QA workstation\",\n  \"notification_type\": \"Security Alert\",\n  \"severity_level\": \"High\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Reject missing notification_type",
+          "request": {
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{adminToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{notificationURL}}/notifications",
+            "description": "Every required create field is validated. Expected HTTP 400. Implemented by: Youssef Al Hajj Youness.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": {{recipientId}},\n  \"title\": \"Security alert on QA workstation\",\n  \"message\": \"Suspicious activity requires investigation.\",\n  \"severity_level\": \"High\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Reject missing severity_level",
+          "request": {
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{adminToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{notificationURL}}/notifications",
+            "description": "Every required create field is validated. Expected HTTP 400. Implemented by: Youssef Al Hajj Youness.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": {{recipientId}},\n  \"title\": \"Security alert on QA workstation\",\n  \"message\": \"Suspicious activity requires investigation.\",\n  \"notification_type\": \"Security Alert\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Reject missing create body",
+          "request": {
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{adminToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "header": [],
+            "url": "{{notificationURL}}/notifications",
+            "description": "Missing JSON object is a validation error. Expected HTTP 400. Implemented by: Youssef Al Hajj Youness."
+          },
+          "response": []
+        },
+        {
+          "name": "Reject employee creation",
+          "request": {
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{employeeToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{notificationURL}}/notifications",
+            "description": "Only the Security Administrator can create notifications. Expected HTTP 403. Implemented by: Youssef Al Hajj Youness.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": {{recipientId}},\n  \"title\": \"Security alert on QA workstation\",\n  \"message\": \"Suspicious activity requires investigation.\",\n  \"notification_type\": \"Security Alert\",\n  \"severity_level\": \"High\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Retrieve recipient history",
+          "request": {
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{adminToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "header": [],
+            "url": "{{notificationURL}}/notifications/user/{{recipientId}}",
+            "description": "Return only this user's notification list. Expected HTTP 200. Implemented by: Youssef Al Hajj Youness."
+          },
+          "response": []
+        },
+        {
+          "name": "Retrieve empty history",
+          "request": {
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{adminToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "header": [],
+            "url": "{{notificationURL}}/notifications/user/{{emptyUserId}}",
+            "description": "Use an existing user with no notifications; data is an empty list. Expected HTTP 200. Implemented by: Youssef Al Hajj Youness."
+          },
+          "response": []
+        },
+        {
+          "name": "Reject nonexistent recipient history",
+          "request": {
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{adminToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "header": [],
+            "url": "{{notificationURL}}/notifications/user/99999",
+            "description": "Nonexistent user differs from empty history. Expected HTTP 404. Implemented by: Youssef Al Hajj Youness."
+          },
+          "response": []
+        },
+        {
+          "name": "Retrieve own history as employee",
+          "request": {
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{employeeToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "header": [],
+            "url": "{{notificationURL}}/notifications/user/{{recipientId}}",
+            "description": "Regular User can view personal notifications. Expected HTTP 200. Implemented by: Youssef Al Hajj Youness."
+          },
+          "response": []
+        },
+        {
+          "name": "Reject another user's history",
+          "request": {
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{employeeToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "header": [],
+            "url": "{{notificationURL}}/notifications/user/1",
+            "description": "Recipient must differ from the employee's ID; prevents private history disclosure. Expected HTTP 403. Implemented by: Youssef Al Hajj Youness."
+          },
+          "response": []
+        },
+        {
+          "name": "Retrieve specific notification before reading",
+          "request": {
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{adminToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "header": [],
+            "url": "{{notificationURL}}/notifications/{{notificationId}}",
+            "description": "Show Unread, null read_date and created_at before marking the notification read. Expected HTTP 200. Implemented by: Youssef Al Hajj Youness."
+          },
+          "response": []
+        },
+        {
+          "name": "Retrieve nonexistent notification",
+          "request": {
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{adminToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "header": [],
+            "url": "{{notificationURL}}/notifications/99999",
+            "description": "Administrator receives Notification not found. Expected HTTP 404. Implemented by: Youssef Al Hajj Youness."
+          },
+          "response": []
+        },
+        {
+          "name": "Reject malformed notification ID",
+          "request": {
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{adminToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "header": [],
+            "url": "{{notificationURL}}/notifications/not-a-number",
+            "description": "ID validation returns a JSON error. Expected HTTP 400. Implemented by: Youssef Al Hajj Youness."
+          },
+          "response": []
+        },
+        {
+          "name": "Reject missing authentication",
+          "request": {
+            "method": "GET",
+            "auth": {
+              "type": "noauth"
+            },
+            "header": [],
+            "url": "{{notificationURL}}/notifications/{{notificationId}}",
+            "description": "Protected API requires a Service 1 bearer token. Expected HTTP 401. Implemented by: Youssef Al Hajj Youness."
+          },
+          "response": []
+        },
+        {
+          "name": "Reject invalid authentication",
+          "request": {
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{invalidToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "header": [],
+            "url": "{{notificationURL}}/notifications/{{notificationId}}",
+            "description": "invalidToken is deliberately invalid; signature/format validation rejects it. Expected HTTP 401. Implemented by: Youssef Al Hajj Youness."
+          },
+          "response": []
+        },
+        {
+          "name": "Mark own notification as Read",
+          "request": {
+            "method": "PUT",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{employeeToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "header": [],
+            "url": "{{notificationURL}}/notifications/{{notificationId}}/read",
+            "description": "Persist Read state and actual UTC read timestamp; creation timestamp stays unchanged. Expected HTTP 200. Implemented by: Youssef Al Hajj Youness."
+          },
+          "response": []
+        },
+        {
+          "name": "Mark already Read notification",
+          "request": {
+            "method": "PUT",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{employeeToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "header": [],
+            "url": "{{notificationURL}}/notifications/{{notificationId}}/read",
+            "description": "Idempotent read acknowledgement keeps the first read timestamp. Expected HTTP 200. Implemented by: Youssef Al Hajj Youness."
+          },
+          "response": []
+        },
+        {
+          "name": "Retrieve persisted Read state",
+          "request": {
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{employeeToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "header": [],
+            "url": "{{notificationURL}}/notifications/{{notificationId}}",
+            "description": "API reflects the saved Read status and populated read_date. Expected HTTP 200. Implemented by: Youssef Al Hajj Youness."
+          },
+          "response": []
+        },
+        {
+          "name": "Reject Auditor read mutation",
+          "request": {
+            "method": "PUT",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{auditorToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "header": [],
+            "url": "{{notificationURL}}/notifications/{{notificationId}}/read",
+            "description": "Auditor is read only. Expected HTTP 403. Implemented by: Youssef Al Hajj Youness."
+          },
+          "response": []
+        },
+        {
+          "name": "Search by recipient",
+          "request": {
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{adminToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "header": [],
+            "url": "{{notificationURL}}/notifications/search?user_id={{recipientId}}",
+            "description": "SQL combines provided filters with AND. Values use the project's stored spellings. Expected HTTP 200. Implemented by: Youssef Al Hajj Youness."
+          },
+          "response": []
+        },
+        {
+          "name": "Search by notification type",
+          "request": {
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{adminToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "header": [],
+            "url": "{{notificationURL}}/notifications/search?notification_type=Security%20Alert",
+            "description": "SQL combines provided filters with AND. Values use the project's stored spellings. Expected HTTP 200. Implemented by: Youssef Al Hajj Youness."
+          },
+          "response": []
+        },
+        {
+          "name": "Search by severity",
+          "request": {
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{adminToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "header": [],
+            "url": "{{notificationURL}}/notifications/search?severity_level=High",
+            "description": "SQL combines provided filters with AND. Values use the project's stored spellings. Expected HTTP 200. Implemented by: Youssef Al Hajj Youness."
+          },
+          "response": []
+        },
+        {
+          "name": "Search by status",
+          "request": {
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{adminToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "header": [],
+            "url": "{{notificationURL}}/notifications/search?status=Unread",
+            "description": "SQL combines provided filters with AND. Values use the project's stored spellings. Expected HTTP 200. Implemented by: Youssef Al Hajj Youness."
+          },
+          "response": []
+        },
+        {
+          "name": "Search combined type and status",
+          "request": {
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{adminToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "header": [],
+            "url": "{{notificationURL}}/notifications/search?notification_type=Security%20Alert&status=Read",
+            "description": "SQL combines provided filters with AND. Values use the project's stored spellings. Expected HTTP 200. Implemented by: Youssef Al Hajj Youness."
+          },
+          "response": []
+        },
+        {
+          "name": "Search with zero matches",
+          "request": {
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{adminToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "header": [],
+            "url": "{{notificationURL}}/notifications/search?notification_type=Security%20Alert&severity_level=Low",
+            "description": "SQL combines provided filters with AND. Values use the project's stored spellings. Expected HTTP 200. Implemented by: Youssef Al Hajj Youness."
+          },
+          "response": []
+        },
+        {
+          "name": "Analyst search assigned notifications",
+          "request": {
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{analystToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "header": [],
+            "url": "{{notificationURL}}/notifications/search?status=Unread",
+            "description": "Results automatically restricted to the authenticated Analyst's user ID. Expected HTTP 200. Implemented by: Youssef Al Hajj Youness."
+          },
+          "response": []
+        },
+        {
+          "name": "Auditor search",
+          "request": {
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{auditorToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "header": [],
+            "url": "{{notificationURL}}/notifications/search?status=Unread",
+            "description": "Auditor may search across recipients. Expected HTTP 200. Implemented by: Youssef Al Hajj Youness."
+          },
+          "response": []
+        },
+        {
+          "name": "Reject Regular User search",
+          "request": {
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{employeeToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "header": [],
+            "url": "{{notificationURL}}/notifications/search?status=Unread",
+            "description": "General search is excluded for Regular Users. Expected HTTP 403. Implemented by: Youssef Al Hajj Youness."
+          },
+          "response": []
+        },
+        {
+          "name": "Reject invalid search status",
+          "request": {
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{adminToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "header": [],
+            "url": "{{notificationURL}}/notifications/search?status=Seen",
+            "description": "Unsupported filter values are errors, not empty successes. Expected HTTP 400. Implemented by: Youssef Al Hajj Youness."
+          },
+          "response": []
+        },
+        {
+          "name": "Reject analyst deletion",
+          "request": {
+            "method": "DELETE",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{analystToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "header": [],
+            "url": "{{notificationURL}}/notifications/{{notificationId}}",
+            "description": "Only the Security Administrator can delete; row remains present. Expected HTTP 403. Implemented by: Youssef Al Hajj Youness."
+          },
+          "response": []
+        },
+        {
+          "name": "Reject employee deletion",
+          "request": {
+            "method": "DELETE",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{employeeToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "header": [],
+            "url": "{{notificationURL}}/notifications/{{notificationId}}",
+            "description": "Only the Security Administrator can delete; row remains present. Expected HTTP 403. Implemented by: Youssef Al Hajj Youness."
+          },
+          "response": []
+        },
+        {
+          "name": "Reject auditor deletion",
+          "request": {
+            "method": "DELETE",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{auditorToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "header": [],
+            "url": "{{notificationURL}}/notifications/{{notificationId}}",
+            "description": "Only the Security Administrator can delete; row remains present. Expected HTTP 403. Implemented by: Youssef Al Hajj Youness."
+          },
+          "response": []
+        },
+        {
+          "name": "Admin deletes notification",
+          "request": {
+            "method": "DELETE",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{adminToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "header": [],
+            "url": "{{notificationURL}}/notifications/{{notificationId}}",
+            "description": "Remove the selected notification and preserve the recipient user. Expected HTTP 200. Implemented by: Youssef Al Hajj Youness."
+          },
+          "response": []
+        },
+        {
+          "name": "Verify retrieval after deletion",
+          "request": {
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{adminToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "header": [],
+            "url": "{{notificationURL}}/notifications/{{notificationId}}",
+            "description": "Deleted notification is no longer retrievable. Expected HTTP 404. Implemented by: Youssef Al Hajj Youness."
+          },
+          "response": []
+        },
+        {
+          "name": "Reject deleting absent notification",
+          "request": {
+            "method": "DELETE",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{adminToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "header": [],
+            "url": "{{notificationURL}}/notifications/{{notificationId}}",
+            "description": "A repeated deletion returns not found. Expected HTTP 404. Implemented by: Youssef Al Hajj Youness."
+          },
+          "response": []
+        }
+      ]
     }
   ],
   "variable": [
@@ -698,6 +1962,91 @@
     {
       "key": "json_web_token_0dxg",
       "secret": true
+    },
+    {
+      "key": "baseURL",
+      "value": "http://127.0.0.1:5001",
+      "type": "string"
+    },
+    {
+      "key": "notificationURL",
+      "value": "http://127.0.0.1:5008",
+      "type": "string"
+    },
+    {
+      "key": "invalidToken",
+      "value": "invalid-token",
+      "type": "string"
+    },
+    {
+      "key": "recipientUsername",
+      "value": "s8_employee",
+      "type": "string"
+    },
+    {
+      "key": "analystUsername",
+      "value": "s8_analyst",
+      "type": "string"
+    },
+    {
+      "key": "auditorUsername",
+      "value": "s8_auditor",
+      "type": "string"
+    },
+    {
+      "key": "adminPassword",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "recipientPassword",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "analystPassword",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "auditorPassword",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "adminToken",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "employeeToken",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "analystToken",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "auditorToken",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "recipientId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "emptyUserId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "notificationId",
+      "value": "",
+      "type": "string"
     }
   ]
 }
