@@ -32,3 +32,23 @@ def get_by_id(incident_id, conn=None):
 
 def get_all():
     return fetch_all(f"SELECT {PUBLIC_COLUMNS} FROM incidents ORDER BY incident_id")
+
+
+def update_status(incident_id, status, conn):
+    """Stamp the resolution date on resolution and preserve it when closing."""
+    execute(
+        "UPDATE incidents SET status = ?, resolution_date = "
+        "CASE WHEN ? = 'Resolved' THEN date('now') ELSE resolution_date END "
+        "WHERE incident_id = ?", (status, status, incident_id), conn,
+    )
+
+
+def insert_note(incident_id, analyst_id, note_content, conn):
+    new_id = execute(
+        "INSERT INTO investigation_notes (incident_id, analyst_id, note_content) "
+        "VALUES (?, ?, ?)", (incident_id, analyst_id, note_content), conn,
+    )
+    return fetch_one(
+        "SELECT note_id, incident_id, analyst_id, note_content, created_at "
+        "FROM investigation_notes WHERE note_id = ?", (new_id,), conn,
+    )

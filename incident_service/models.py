@@ -5,6 +5,7 @@ from common.validators import choice, clean_text, parse_id
 
 SEVERITIES = ("Low", "Medium", "High", "Critical")
 STATUSES = ("Open", "Under Investigation", "Mitigated", "Resolved", "Closed")
+NEXT_STATUS = dict(zip(STATUSES, STATUSES[1:]))
 MAX_ID = 9223372036854775807
 
 
@@ -41,3 +42,7 @@ class Incident:
         self.severity_level = choice(severity_level, "severity_level", SEVERITIES)
         self.reporter_id = related_id(reporter_id, "reporter_id")
         self.asset_id = related_id(asset_id, "asset_id")
+
+
+def investigation_note(value):
+    return clean_text(value, "note_content", max_length=4000)
