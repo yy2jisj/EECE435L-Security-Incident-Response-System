@@ -26,8 +26,8 @@ def insert_asset(asset):
     )
 
 
-def get_by_id(asset_id):
-    return fetch_one(SELECT_ASSET + " WHERE a.asset_id = ?", (asset_id,))
+def get_by_id(asset_id, conn=None):
+    return fetch_one(SELECT_ASSET + " WHERE a.asset_id = ?", (asset_id,), conn)
 
 
 def get_all():
