@@ -1,7 +1,9 @@
 """Service 9 inputs; identity, creator and creation time belong to the server."""
 
+from datetime import datetime, timezone
+
 from common.errors import ValidationError
-from common.validators import choice, clean_text, parse_id
+from common.validators import choice, clean_text, parse_id, validate_iso_date
 
 SEVERITIES = ("Low", "Medium", "High", "Critical")
 STATUSES = ("Pending", "In Progress", "Completed")
@@ -38,3 +40,34 @@ class ResponseAction:
     def __init__(self, action_description, step_number):
         self.action_description = clean_text(action_description, "action_description", max_length=4000)
         self.step_number = positive_integer(step_number, "step_number")
+
+
+def action_update(data, item):
+    """Normalize an action update while keeping completion and status consistent.
+
+    The specification defines three statuses without a transition graph.
+    Reopening clears the completion date; repeated completion preserves it.
+    """
+    status = choice(data["status"], "status", STATUSES) if "status" in data else item["status"]
+    assigned = item["assigned_user_id"]
+    if "assigned_user_id" in data:
+        assigned = data["assigned_user_id"]
+        if assigned is not None:
+            assigned = positive_integer(assigned, "assigned_user_id")
+
+    completed = item["completion_date"] if status == "Completed" else None
+    today = datetime.now(timezone.utc).date().isoformat()
+    if "completion_date" in data:
+        completed = data["completion_date"]
+        if completed is not None:
+            completed = validate_iso_date(completed, "completion_date")
+            if completed > today:
+                raise ValidationError("completion_date cannot be in the future")
+        if status == "Completed" and completed is None:
+            raise ValidationError("Completed actions require a completion_date")
+        if status != "Completed" and completed is not None:
+            raise ValidationError("completion_date is only valid for Completed actions")
+    elif status == "Completed" and completed is None:
+        completed = today
+
+    return {"status": status, "assigned_user_id": assigned, "completion_date": completed}
