@@ -1362,6 +1362,2375 @@
           "response": []
         }
       ]
+    },
+    {
+      "name": "Service 4 – Threat Intelligence",
+      "item": [
+        {
+          "name": "Setup – Logins",
+          "item": [
+            {
+              "name": "Admin login",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () { pm.response.to.have.status(200); });",
+                      "pm.collectionVariables.set(\"adminToken\", pm.response.json().data.token);"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"username\":\"admin\",\"password\":\"{{adminPassword}}\"}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseURL}}/users/login",
+                  "host": [
+                    "{{baseURL}}"
+                  ],
+                  "path": [
+                    "users",
+                    "login"
+                  ]
+                },
+                "description": "POST /users/login. Logs in and stores the token in the adminToken collection variable. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Analyst login",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () { pm.response.to.have.status(200); });",
+                      "pm.collectionVariables.set(\"analystToken\", pm.response.json().data.token);"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"username\":\"{{analystUsername}}\",\"password\":\"{{analystPassword}}\"}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseURL}}/users/login",
+                  "host": [
+                    "{{baseURL}}"
+                  ],
+                  "path": [
+                    "users",
+                    "login"
+                  ]
+                },
+                "description": "POST /users/login. Logs in and stores the token in the analystToken collection variable. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Auditor login",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () { pm.response.to.have.status(200); });",
+                      "pm.collectionVariables.set(\"auditorToken\", pm.response.json().data.token);"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"username\":\"{{auditorUsername}}\",\"password\":\"{{auditorPassword}}\"}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseURL}}/users/login",
+                  "host": [
+                    "{{baseURL}}"
+                  ],
+                  "path": [
+                    "users",
+                    "login"
+                  ]
+                },
+                "description": "POST /users/login. Logs in and stores the token in the auditorToken collection variable. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Regular user login",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () { pm.response.to.have.status(200); });",
+                      "pm.collectionVariables.set(\"employeeToken\", pm.response.json().data.token);"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"username\":\"{{recipientUsername}}\",\"password\":\"{{recipientPassword}}\"}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseURL}}/users/login",
+                  "host": [
+                    "{{baseURL}}"
+                  ],
+                  "path": [
+                    "users",
+                    "login"
+                  ]
+                },
+                "description": "POST /users/login. Logs in and stores the token in the employeeToken collection variable. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "1. Add Threat Indicator",
+          "item": [
+            {
+              "name": "Add IP threat (admin)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 201\", function () { pm.response.to.have.status(201); });",
+                      "pm.collectionVariables.set(\"threatId\", pm.response.json().data.threat_id);"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{adminToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"threat_type\": \"IP Address\", \"threat_value\": \"192.168.1.5\", \"description\": \"Port scanner\", \"severity_level\": \"High\", \"source\": \"AbuseIPDB\"}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{threatsURL}}/threats",
+                  "host": [
+                    "{{threatsURL}}"
+                  ],
+                  "path": [
+                    "threats"
+                  ]
+                },
+                "description": "POST /threats. Adds a High severity IP Address threat. Admin only. Returns 201. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Add domain threat (admin)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 201\", function () { pm.response.to.have.status(201); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{adminToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"threat_type\": \"Domain\", \"threat_value\": \"evil.example.com\", \"description\": \"Phishing site\", \"severity_level\": \"Critical\", \"source\": \"OSINT feed\"}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{threatsURL}}/threats",
+                  "host": [
+                    "{{threatsURL}}"
+                  ],
+                  "path": [
+                    "threats"
+                  ]
+                },
+                "description": "POST /threats. Adds a Critical severity Domain threat. Returns 201. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Add file hash threat (admin)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 201\", function () { pm.response.to.have.status(201); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{adminToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"threat_type\": \"File Hash\", \"threat_value\": \"d41d8cd98f00b204e9800998ecf8427e\", \"description\": \"Known malware sample\", \"severity_level\": \"Low\", \"source\": \"VirusTotal\"}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{threatsURL}}/threats",
+                  "host": [
+                    "{{threatsURL}}"
+                  ],
+                  "path": [
+                    "threats"
+                  ]
+                },
+                "description": "POST /threats. Adds a Low severity File Hash (MD5) threat. Returns 201. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Add malware signature threat (admin)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 201\", function () { pm.response.to.have.status(201); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{adminToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"threat_type\": \"Malware Signature\", \"threat_value\": \"Trojan.Win32.Agent\", \"description\": \"Trojan signature\", \"severity_level\": \"Medium\", \"source\": \"AV vendor\"}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{threatsURL}}/threats",
+                  "host": [
+                    "{{threatsURL}}"
+                  ],
+                  "path": [
+                    "threats"
+                  ]
+                },
+                "description": "POST /threats. Adds a Medium severity Malware Signature threat. Returns 201. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Add other indicator (admin)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 201\", function () { pm.response.to.have.status(201); });",
+                      "pm.collectionVariables.set(\"deleteThreatId\", pm.response.json().data.threat_id);"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{adminToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"threat_type\": \"Other\", \"threat_value\": \"suspicious-user-agent-xyz\", \"description\": \"Odd attack indicator\", \"severity_level\": \"Medium\", \"source\": \"SOC analyst\"}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{threatsURL}}/threats",
+                  "host": [
+                    "{{threatsURL}}"
+                  ],
+                  "path": [
+                    "threats"
+                  ]
+                },
+                "description": "POST /threats. Adds a Medium severity Other indicator (used by the delete tests). Returns 201. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Duplicate threat",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 409\", function () { pm.response.to.have.status(409); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{adminToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"threat_type\": \"IP Address\", \"threat_value\": \"192.168.1.5\", \"description\": \"Port scanner\", \"severity_level\": \"High\", \"source\": \"AbuseIPDB\"}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{threatsURL}}/threats",
+                  "host": [
+                    "{{threatsURL}}"
+                  ],
+                  "path": [
+                    "threats"
+                  ]
+                },
+                "description": "POST /threats. Same type and value as an existing threat. Returns 409. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Invalid IP",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 400\", function () { pm.response.to.have.status(400); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{adminToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"threat_type\": \"IP Address\", \"threat_value\": \"999.1.1.1\", \"description\": \"Port scanner\", \"severity_level\": \"High\", \"source\": \"AbuseIPDB\"}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{threatsURL}}/threats",
+                  "host": [
+                    "{{threatsURL}}"
+                  ],
+                  "path": [
+                    "threats"
+                  ]
+                },
+                "description": "POST /threats. IP threat with an invalid IP address. Returns 400. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Invalid domain",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 400\", function () { pm.response.to.have.status(400); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{adminToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"threat_type\": \"Domain\", \"threat_value\": \"not a domain\", \"description\": \"Phishing site\", \"severity_level\": \"Critical\", \"source\": \"OSINT feed\"}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{threatsURL}}/threats",
+                  "host": [
+                    "{{threatsURL}}"
+                  ],
+                  "path": [
+                    "threats"
+                  ]
+                },
+                "description": "POST /threats. Domain threat with an invalid domain. Returns 400. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Invalid hash",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 400\", function () { pm.response.to.have.status(400); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{adminToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"threat_type\": \"File Hash\", \"threat_value\": \"xyz\", \"description\": \"Known malware sample\", \"severity_level\": \"Low\", \"source\": \"VirusTotal\"}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{threatsURL}}/threats",
+                  "host": [
+                    "{{threatsURL}}"
+                  ],
+                  "path": [
+                    "threats"
+                  ]
+                },
+                "description": "POST /threats. File hash threat that is not 32, 40 or 64 hex characters. Returns 400. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Invalid threat type",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 400\", function () { pm.response.to.have.status(400); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{adminToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"threat_type\": \"Bogus\", \"threat_value\": \"1.2.3.4\", \"description\": \"Port scanner\", \"severity_level\": \"High\", \"source\": \"AbuseIPDB\"}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{threatsURL}}/threats",
+                  "host": [
+                    "{{threatsURL}}"
+                  ],
+                  "path": [
+                    "threats"
+                  ]
+                },
+                "description": "POST /threats. Unsupported threat type. Returns 400. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Invalid severity",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 400\", function () { pm.response.to.have.status(400); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{adminToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"threat_type\": \"IP Address\", \"threat_value\": \"1.2.3.4\", \"description\": \"Port scanner\", \"severity_level\": \"Urgent\", \"source\": \"AbuseIPDB\"}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{threatsURL}}/threats",
+                  "host": [
+                    "{{threatsURL}}"
+                  ],
+                  "path": [
+                    "threats"
+                  ]
+                },
+                "description": "POST /threats. Unsupported severity level. Returns 400. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Missing fields",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 400\", function () { pm.response.to.have.status(400); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{adminToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"threat_type\": \"Other\"}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{threatsURL}}/threats",
+                  "host": [
+                    "{{threatsURL}}"
+                  ],
+                  "path": [
+                    "threats"
+                  ]
+                },
+                "description": "POST /threats. Required fields missing. Returns 400. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Add as analyst",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 403\", function () { pm.response.to.have.status(403); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{analystToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"threat_type\": \"IP Address\", \"threat_value\": \"1.2.3.4\", \"description\": \"Port scanner\", \"severity_level\": \"High\", \"source\": \"AbuseIPDB\"}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{threatsURL}}/threats",
+                  "host": [
+                    "{{threatsURL}}"
+                  ],
+                  "path": [
+                    "threats"
+                  ]
+                },
+                "description": "POST /threats. Analysts cannot add threats. Returns 403 and the attempt is logged. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Add as auditor",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 403\", function () { pm.response.to.have.status(403); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{auditorToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"threat_type\": \"IP Address\", \"threat_value\": \"1.2.3.4\", \"description\": \"Port scanner\", \"severity_level\": \"High\", \"source\": \"AbuseIPDB\"}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{threatsURL}}/threats",
+                  "host": [
+                    "{{threatsURL}}"
+                  ],
+                  "path": [
+                    "threats"
+                  ]
+                },
+                "description": "POST /threats. Auditors cannot add threats. Returns 403. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Add as regular user",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 403\", function () { pm.response.to.have.status(403); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{employeeToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"threat_type\": \"IP Address\", \"threat_value\": \"1.2.3.4\", \"description\": \"Port scanner\", \"severity_level\": \"High\", \"source\": \"AbuseIPDB\"}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{threatsURL}}/threats",
+                  "host": [
+                    "{{threatsURL}}"
+                  ],
+                  "path": [
+                    "threats"
+                  ]
+                },
+                "description": "POST /threats. Regular users have no threat access. Returns 403. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Add without token",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 401\", function () { pm.response.to.have.status(401); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"threat_type\": \"IP Address\", \"threat_value\": \"1.2.3.4\", \"description\": \"Port scanner\", \"severity_level\": \"High\", \"source\": \"AbuseIPDB\"}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{threatsURL}}/threats",
+                  "host": [
+                    "{{threatsURL}}"
+                  ],
+                  "path": [
+                    "threats"
+                  ]
+                },
+                "description": "POST /threats. No token. Returns 401. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "2. Retrieve All Threat Indicators",
+          "item": [
+            {
+              "name": "Get all (admin)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () { pm.response.to.have.status(200); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{adminToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{threatsURL}}/threats",
+                  "host": [
+                    "{{threatsURL}}"
+                  ],
+                  "path": [
+                    "threats"
+                  ]
+                },
+                "description": "GET /threats. Returns every threat. Admin, Analyst and Auditor allowed. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Get all (analyst)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () { pm.response.to.have.status(200); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{analystToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{threatsURL}}/threats",
+                  "host": [
+                    "{{threatsURL}}"
+                  ],
+                  "path": [
+                    "threats"
+                  ]
+                },
+                "description": "GET /threats. Analyst may read all threats. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Get all (auditor)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () { pm.response.to.have.status(200); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{auditorToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{threatsURL}}/threats",
+                  "host": [
+                    "{{threatsURL}}"
+                  ],
+                  "path": [
+                    "threats"
+                  ]
+                },
+                "description": "GET /threats. Auditor may read all threats. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Get all (regular user)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 403\", function () { pm.response.to.have.status(403); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{employeeToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{threatsURL}}/threats",
+                  "host": [
+                    "{{threatsURL}}"
+                  ],
+                  "path": [
+                    "threats"
+                  ]
+                },
+                "description": "GET /threats. Regular users are refused. Returns 403. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "3. Retrieve Specific Threat Indicator",
+          "item": [
+            {
+              "name": "Get threat by id",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () { pm.response.to.have.status(200); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{adminToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{threatsURL}}/threats/{{threatId}}",
+                  "host": [
+                    "{{threatsURL}}"
+                  ],
+                  "path": [
+                    "threats",
+                    "{{threatId}}"
+                  ]
+                },
+                "description": "GET /threats/{id}. Returns one threat. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Get threat by id (auditor)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () { pm.response.to.have.status(200); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{auditorToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{threatsURL}}/threats/{{threatId}}",
+                  "host": [
+                    "{{threatsURL}}"
+                  ],
+                  "path": [
+                    "threats",
+                    "{{threatId}}"
+                  ]
+                },
+                "description": "GET /threats/{id}. Auditor may read a threat. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Get non-existing threat",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 404\", function () { pm.response.to.have.status(404); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{adminToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{threatsURL}}/threats/999999",
+                  "host": [
+                    "{{threatsURL}}"
+                  ],
+                  "path": [
+                    "threats",
+                    "999999"
+                  ]
+                },
+                "description": "GET /threats/{id}. Unknown id returns 404. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Get threat with invalid id",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 400\", function () { pm.response.to.have.status(400); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{adminToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{threatsURL}}/threats/abc",
+                  "host": [
+                    "{{threatsURL}}"
+                  ],
+                  "path": [
+                    "threats",
+                    "abc"
+                  ]
+                },
+                "description": "GET /threats/{id}. Non-numeric id returns 400. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Get threat (regular user)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 403\", function () { pm.response.to.have.status(403); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{employeeToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{threatsURL}}/threats/{{threatId}}",
+                  "host": [
+                    "{{threatsURL}}"
+                  ],
+                  "path": [
+                    "threats",
+                    "{{threatId}}"
+                  ]
+                },
+                "description": "GET /threats/{id}. Regular users are refused. Returns 403. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "4. Search Threat Indicators",
+          "item": [
+            {
+              "name": "Search by type",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () { pm.response.to.have.status(200); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{adminToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{threatsURL}}/threats/search?threat_type=Domain",
+                  "host": [
+                    "{{threatsURL}}"
+                  ],
+                  "path": [
+                    "threats",
+                    "search?threat_type=Domain"
+                  ]
+                },
+                "description": "GET /threats/search. Admin and Analyst only. Filters by threat_type. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Search by value",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () { pm.response.to.have.status(200); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{adminToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{threatsURL}}/threats/search?threat_value=192.168",
+                  "host": [
+                    "{{threatsURL}}"
+                  ],
+                  "path": [
+                    "threats",
+                    "search?threat_value=192.168"
+                  ]
+                },
+                "description": "GET /threats/search. Admin and Analyst only. Partial match on threat_value. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Search by severity (analyst)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () { pm.response.to.have.status(200); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{analystToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{threatsURL}}/threats/search?severity_level=High",
+                  "host": [
+                    "{{threatsURL}}"
+                  ],
+                  "path": [
+                    "threats",
+                    "search?severity_level=High"
+                  ]
+                },
+                "description": "GET /threats/search. Admin and Analyst only. Filters by severity_level. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Search by source",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () { pm.response.to.have.status(200); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{adminToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{threatsURL}}/threats/search?source=virus",
+                  "host": [
+                    "{{threatsURL}}"
+                  ],
+                  "path": [
+                    "threats",
+                    "search?source=virus"
+                  ]
+                },
+                "description": "GET /threats/search. Admin and Analyst only. Partial match on source. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Search combined",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () { pm.response.to.have.status(200); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{adminToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{threatsURL}}/threats/search?threat_type=Domain&severity_level=Critical",
+                  "host": [
+                    "{{threatsURL}}"
+                  ],
+                  "path": [
+                    "threats",
+                    "search?threat_type=Domain&severity_level=Critical"
+                  ]
+                },
+                "description": "GET /threats/search. Admin and Analyst only. Combines two filters. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Search without parameters",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 400\", function () { pm.response.to.have.status(400); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{adminToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{threatsURL}}/threats/search",
+                  "host": [
+                    "{{threatsURL}}"
+                  ],
+                  "path": [
+                    "threats",
+                    "search"
+                  ]
+                },
+                "description": "GET /threats/search. Admin and Analyst only. At least one filter is required. Returns 400. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Search invalid severity",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 400\", function () { pm.response.to.have.status(400); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{adminToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{threatsURL}}/threats/search?severity_level=x",
+                  "host": [
+                    "{{threatsURL}}"
+                  ],
+                  "path": [
+                    "threats",
+                    "search?severity_level=x"
+                  ]
+                },
+                "description": "GET /threats/search. Admin and Analyst only. Invalid filter value. Returns 400. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Search as auditor",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 403\", function () { pm.response.to.have.status(403); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{auditorToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{threatsURL}}/threats/search?source=a",
+                  "host": [
+                    "{{threatsURL}}"
+                  ],
+                  "path": [
+                    "threats",
+                    "search?source=a"
+                  ]
+                },
+                "description": "GET /threats/search. Admin and Analyst only. Auditors cannot search. Returns 403. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Search as regular user",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 403\", function () { pm.response.to.have.status(403); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{employeeToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{threatsURL}}/threats/search?source=a",
+                  "host": [
+                    "{{threatsURL}}"
+                  ],
+                  "path": [
+                    "threats",
+                    "search?source=a"
+                  ]
+                },
+                "description": "GET /threats/search. Admin and Analyst only. Regular users are refused. Returns 403. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "5. Update Threat Information",
+          "item": [
+            {
+              "name": "Before update",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () { pm.response.to.have.status(200); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{adminToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{threatsURL}}/threats/{{threatId}}",
+                  "host": [
+                    "{{threatsURL}}"
+                  ],
+                  "path": [
+                    "threats",
+                    "{{threatId}}"
+                  ]
+                },
+                "description": "Shows the threat before the update. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Update description, severity and source",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () { pm.response.to.have.status(200); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "PUT",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{adminToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"description\": \"Updated description\", \"severity_level\": \"Critical\", \"source\": \"New source\"}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{threatsURL}}/threats/{{threatId}}",
+                  "host": [
+                    "{{threatsURL}}"
+                  ],
+                  "path": [
+                    "threats",
+                    "{{threatId}}"
+                  ]
+                },
+                "description": "PUT /threats/{id}. Admin only. Updates all three updatable fields. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "After update",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () { pm.response.to.have.status(200); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{adminToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{threatsURL}}/threats/{{threatId}}",
+                  "host": [
+                    "{{threatsURL}}"
+                  ],
+                  "path": [
+                    "threats",
+                    "{{threatId}}"
+                  ]
+                },
+                "description": "Shows the threat after the update. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Update one field",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () { pm.response.to.have.status(200); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "PUT",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{adminToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"severity_level\": \"Low\"}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{threatsURL}}/threats/{{threatId}}",
+                  "host": [
+                    "{{threatsURL}}"
+                  ],
+                  "path": [
+                    "threats",
+                    "{{threatId}}"
+                  ]
+                },
+                "description": "PUT /threats/{id}. Admin only. Partial update. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Update threat value",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 400\", function () { pm.response.to.have.status(400); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "PUT",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{adminToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"threat_value\": \"1.1.1.1\"}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{threatsURL}}/threats/{{threatId}}",
+                  "host": [
+                    "{{threatsURL}}"
+                  ],
+                  "path": [
+                    "threats",
+                    "{{threatId}}"
+                  ]
+                },
+                "description": "PUT /threats/{id}. Admin only. Type and value cannot be changed. Returns 400. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Update invalid severity",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 400\", function () { pm.response.to.have.status(400); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "PUT",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{adminToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"severity_level\": \"Urgent\"}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{threatsURL}}/threats/{{threatId}}",
+                  "host": [
+                    "{{threatsURL}}"
+                  ],
+                  "path": [
+                    "threats",
+                    "{{threatId}}"
+                  ]
+                },
+                "description": "PUT /threats/{id}. Admin only. Invalid severity. Returns 400. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Update non-existing threat",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 404\", function () { pm.response.to.have.status(404); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "PUT",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{adminToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"source\": \"x\"}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{threatsURL}}/threats/999999",
+                  "host": [
+                    "{{threatsURL}}"
+                  ],
+                  "path": [
+                    "threats",
+                    "999999"
+                  ]
+                },
+                "description": "PUT /threats/{id}. Admin only. Unknown id returns 404. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Update as analyst",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 403\", function () { pm.response.to.have.status(403); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "PUT",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{analystToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"source\": \"x\"}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{threatsURL}}/threats/{{threatId}}",
+                  "host": [
+                    "{{threatsURL}}"
+                  ],
+                  "path": [
+                    "threats",
+                    "{{threatId}}"
+                  ]
+                },
+                "description": "PUT /threats/{id}. Admin only. Analysts cannot update. Returns 403. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Update as regular user",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 403\", function () { pm.response.to.have.status(403); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "PUT",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{employeeToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"source\": \"x\"}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{threatsURL}}/threats/{{threatId}}",
+                  "host": [
+                    "{{threatsURL}}"
+                  ],
+                  "path": [
+                    "threats",
+                    "{{threatId}}"
+                  ]
+                },
+                "description": "PUT /threats/{id}. Admin only. Regular users cannot update. Returns 403. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "6. Delete Threat Indicator",
+          "item": [
+            {
+              "name": "Delete as analyst",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 403\", function () { pm.response.to.have.status(403); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{analystToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{threatsURL}}/threats/{{deleteThreatId}}",
+                  "host": [
+                    "{{threatsURL}}"
+                  ],
+                  "path": [
+                    "threats",
+                    "{{deleteThreatId}}"
+                  ]
+                },
+                "description": "DELETE /threats/{id}. Admin only. Analysts cannot delete. Returns 403 and the attempt is logged. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Delete as auditor",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 403\", function () { pm.response.to.have.status(403); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{auditorToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{threatsURL}}/threats/{{deleteThreatId}}",
+                  "host": [
+                    "{{threatsURL}}"
+                  ],
+                  "path": [
+                    "threats",
+                    "{{deleteThreatId}}"
+                  ]
+                },
+                "description": "DELETE /threats/{id}. Admin only. Auditors cannot delete. Returns 403. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Delete as regular user",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 403\", function () { pm.response.to.have.status(403); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{employeeToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{threatsURL}}/threats/{{deleteThreatId}}",
+                  "host": [
+                    "{{threatsURL}}"
+                  ],
+                  "path": [
+                    "threats",
+                    "{{deleteThreatId}}"
+                  ]
+                },
+                "description": "DELETE /threats/{id}. Admin only. Regular users cannot delete. Returns 403. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Delete without token",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 401\", function () { pm.response.to.have.status(401); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{threatsURL}}/threats/{{deleteThreatId}}",
+                  "host": [
+                    "{{threatsURL}}"
+                  ],
+                  "path": [
+                    "threats",
+                    "{{deleteThreatId}}"
+                  ]
+                },
+                "description": "DELETE /threats/{id}. Admin only. No token. Returns 401. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Delete threat (admin)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () { pm.response.to.have.status(200); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{adminToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{threatsURL}}/threats/{{deleteThreatId}}",
+                  "host": [
+                    "{{threatsURL}}"
+                  ],
+                  "path": [
+                    "threats",
+                    "{{deleteThreatId}}"
+                  ]
+                },
+                "description": "DELETE /threats/{id}. Admin only. Deletes the threat. Returns 200. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Get deleted threat",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 404\", function () { pm.response.to.have.status(404); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{adminToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{threatsURL}}/threats/{{deleteThreatId}}",
+                  "host": [
+                    "{{threatsURL}}"
+                  ],
+                  "path": [
+                    "threats",
+                    "{{deleteThreatId}}"
+                  ]
+                },
+                "description": "The deleted threat can no longer be found. Returns 404. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Delete already deleted threat",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 404\", function () { pm.response.to.have.status(404); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{adminToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{threatsURL}}/threats/{{deleteThreatId}}",
+                  "host": [
+                    "{{threatsURL}}"
+                  ],
+                  "path": [
+                    "threats",
+                    "{{deleteThreatId}}"
+                  ]
+                },
+                "description": "DELETE /threats/{id}. Admin only. Returns 404. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
     }
   ],
   "variable": [
@@ -1479,6 +3848,21 @@
     },
     {
       "key": "notificationId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "threatsURL",
+      "value": "http://127.0.0.1:5004",
+      "type": "string"
+    },
+    {
+      "key": "threatId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "deleteThreatId",
       "value": "",
       "type": "string"
     }
