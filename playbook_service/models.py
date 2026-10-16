@@ -61,6 +61,8 @@ def action_update(data, item):
         completed = data["completion_date"]
         if completed is not None:
             completed = validate_iso_date(completed, "completion_date")
+            if completed != data["completion_date"].strip():
+                raise ValidationError("completion_date must use YYYY-MM-DD format")
             if completed > today:
                 raise ValidationError("completion_date cannot be in the future")
         if status == "Completed" and completed is None:
