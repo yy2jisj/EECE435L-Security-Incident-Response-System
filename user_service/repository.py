@@ -28,8 +28,8 @@ def insert_user(user):
     )
 
 
-def get_by_id(user_id):
-    return fetch_one(f"SELECT {PUBLIC_COLUMNS} FROM users WHERE user_id = ?", (user_id,))
+def get_by_id(user_id, conn=None):
+    return fetch_one(f"SELECT {PUBLIC_COLUMNS} FROM users WHERE user_id = ?", (user_id,), conn)
 
 
 def find_for_login(identifier):
