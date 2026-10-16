@@ -107,5 +107,62 @@ def get_threat(threat_id):
     return success_response("Threat retrieved successfully", threat)
 
 
+@app.put("/threats/<threat_id>")
+@roles_required(config.ROLE_ADMIN, service=SERVICE)
+def update_threat(threat_id):
+    """Update the description, severity level and/or source of a threat.
+
+    The threat type and value identify the indicator, so they cannot be changed.
+    (Security Administrator only.)
+
+    Implemented by: Leen Abdallah
+    """
+    caller = g.current_user
+    threat_id = parse_id(threat_id, "threat id")
+
+    data = get_json_body()
+    check_fields(data, allowed=["description", "severity_level", "source"])
+
+    if repository.get_by_id(threat_id) is None:
+        raise ApiError("Threat not found", 404)
+
+    # check each field the same way as when adding a threat
+    fields = {}
+    if "description" in data:
+        fields["description"] = clean_text(data["description"], "description", 500)
+    if "severity_level" in data:
+        fields["severity_level"] = choice(
+            data["severity_level"], "severity_level", SEVERITY_LEVELS)
+    if "source" in data:
+        fields["source"] = clean_text(data["source"], "source", 100)
+
+    repository.update_threat(threat_id, fields)
+    log_event(caller["user_id"], "Threat updated",
+              f"Threat {threat_id} updated fields: {', '.join(fields)}",
+              "Information", SERVICE)
+    return success_response("Threat updated successfully", repository.get_by_id(threat_id))
+
+
+@app.delete("/threats/<threat_id>")
+@roles_required(config.ROLE_ADMIN, service=SERVICE)
+def delete_threat(threat_id):
+    """Delete a threat indicator (Security Administrator only).
+
+    Implemented by: Leen Abdallah
+    """
+    caller = g.current_user
+    threat_id = parse_id(threat_id, "threat id")
+
+    threat = repository.get_by_id(threat_id)
+    if threat is None:
+        raise ApiError("Threat not found", 404)
+
+    repository.delete_threat(threat_id)
+    log_event(caller["user_id"], "Threat deleted",
+              f"Threat {threat['threat_type']} '{threat['threat_value']}' "
+              f"(id {threat_id}) deleted", "Warning", SERVICE)
+    return success_response("Threat deleted successfully")
+
+
 if __name__ == "__main__":
     app.run(port=config.PORTS["threats"])
