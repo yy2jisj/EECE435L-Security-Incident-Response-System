@@ -1,0 +1,191 @@
+from flask import Flask, g, request
+
+from asset_service import repository as assets
+from common import config
+from common.audit import log_event
+from common.auth import deny, roles_required
+from common.db import get_connection
+from common.errors import ApiError, error_response, register_error_handlers, success_response
+from common.service_client import fetch_resource
+from common.validators import check_fields, choice, get_json_body
+from incident_service import repository
+from incident_service.models import (
+    NEXT_STATUS, STATUSES, Incident, incident_id, investigation_note, related_id,
+)
+from notification_service import repository as notifications
+from notification_service.models import Notification
+from user_service import repository as users
+
+SERVICE = "incidents"
+BASE_ROUTE = "/Youssef-Al-Hajj-Youness/incidents"
+
+app = Flask(__name__)
+register_error_handlers(app)
+
+
+class IncidentAccessError(ApiError):
+    """Defer permission logging until a write transaction has rolled back."""
+
+    def __init__(self, message):
+        super().__init__(message, 403)
+
+
+@app.errorhandler(IncidentAccessError)
+def handle_incident_access_error(error):
+    log_event(g.current_user["user_id"], "Unauthorized access attempt",
+              f"{request.method} {request.path}: {error.message}", "Warning", SERVICE)
+    return error_response(error.message, error.status_code)
+
+
+def find_incident(value, conn=None):
+    """Employees see their reports; analysts see their assigned incidents."""
+    item = repository.get_by_id(incident_id(value), conn)
+    caller = g.current_user
+    if caller["role"] == config.ROLE_USER:
+        if item is None or item["reporter_id"] != caller["user_id"]:
+            raise IncidentAccessError("You can only view your own submitted incidents")
+    if caller["role"] == config.ROLE_ANALYST:
+        if item is None or item["assigned_analyst_id"] != caller["user_id"]:
+            raise IncidentAccessError("You can only access incidents assigned to you")
+    if item is None:
+        raise ApiError("Incident not found", 404)
+    return item
+
+
+def validate_analyst(analyst):
+    if analyst is None:
+        raise ApiError("Analyst not found", 404)
+    if analyst["role"] != config.ROLE_ANALYST:
+        raise ApiError("Assigned user must have the Security Analyst role", 400)
+    if analyst["account_status"] != "Active":
+        raise ApiError("Assigned analyst must have an active account", 400)
+
+
+def check_analyst_via_api(analyst_id):
+    # Service 1 exposes its user directory to administrators, not an ID lookup.
+    directory = fetch_resource("users", "/users")
+    if not isinstance(directory, list) or any(
+        not isinstance(user, dict) or type(user.get("user_id")) is not int
+        or not isinstance(user.get("role"), str)
+        or not isinstance(user.get("account_status"), str)
+        for user in directory
+    ):
+        raise ApiError("The users service sent an invalid user directory", 503)
+    validate_analyst(next((user for user in directory if user["user_id"] == analyst_id), None))
+
+
+@app.post(BASE_ROUTE)
+@roles_required(config.ROLE_ADMIN, config.ROLE_USER, service=SERVICE)
+def create_incident():
+    """Report an incident. Implemented by: Youssef Al Hajj Youness."""
+    data = get_json_body()
+    check_fields(data, required=["title", "description", "category", "severity_level",
+                                 "reporter_id", "asset_id"])
+    incident = Incident(**data)
+    caller = g.current_user
+    if caller["role"] == config.ROLE_USER and incident.reporter_id != caller["user_id"]:
+        deny(caller, "You can only report incidents as yourself", SERVICE)
+
+    with get_connection() as conn:
+        conn.execute("BEGIN IMMEDIATE")
+        if users.get_by_id(incident.reporter_id, conn) is None:
+            raise ApiError("Reporter not found", 404)
+        if assets.get_by_id(incident.asset_id, conn) is None:
+            raise ApiError("Asset not found", 404)
+        new_id = repository.insert_incident(incident, conn)
+        log_event(caller["user_id"], "Incident created",
+                  f"Incident {new_id} reported by user {incident.reporter_id} "
+                  f"for asset {incident.asset_id}", "Information", SERVICE, conn)
+        item = repository.get_by_id(new_id, conn)
+    return success_response("Incident created successfully", item, 201)
+
+
+@app.get(BASE_ROUTE)
+@roles_required(config.ROLE_ADMIN, config.ROLE_AUDITOR, service=SERVICE)
+def get_all_incidents():
+    """Retrieve all incidents. Implemented by: Youssef Al Hajj Youness."""
+    return success_response("Incidents retrieved successfully", repository.get_all())
+
+
+@app.get(BASE_ROUTE + "/<item_id>")
+@roles_required(*config.ALL_ROLES, service=SERVICE)
+def get_incident(item_id):
+    """Retrieve an incident and its notes. Implemented by: Youssef Al Hajj Youness."""
+    return success_response("Incident retrieved successfully", find_incident(item_id))
+
+
+@app.put(BASE_ROUTE + "/<item_id>/assign")
+@roles_required(config.ROLE_ADMIN, service=SERVICE)
+def assign_incident(item_id):
+    """Assign and notify an analyst. Implemented by: Youssef Al Hajj Youness."""
+    data = get_json_body()
+    check_fields(data, required=["analyst_id"])
+    analyst_id = related_id(data["analyst_id"], "analyst_id")
+    find_incident(item_id)
+    # No write transaction may be held during the dependency's HTTP request.
+    check_analyst_via_api(analyst_id)
+    with get_connection() as conn:
+        conn.execute("BEGIN IMMEDIATE")
+        item = find_incident(item_id, conn)
+        # Recheck under the lock in case the shared user changed after the API call.
+        validate_analyst(users.get_by_id(analyst_id, conn))
+        if item["assigned_analyst_id"] != analyst_id:
+            repository.assign_analyst(item["incident_id"], analyst_id, conn)
+            notification = Notification(
+                analyst_id, f"Incident #{item['incident_id']} assigned",
+                f"You have been assigned incident #{item['incident_id']}: {item['title']}",
+                "Incident Assignment", item["severity_level"],
+            )
+            notification_id = notifications.insert_notification(
+                notification, conn, incident_id=item["incident_id"],
+            )
+            log_event(g.current_user["user_id"], "Incident assigned",
+                      f"Incident {item['incident_id']}: analyst {item['assigned_analyst_id']} "
+                      f"-> {analyst_id}", "Information", SERVICE, conn)
+            log_event(g.current_user["user_id"], "Notification created",
+                      f"Notification {notification_id} created for user {analyst_id}",
+                      "Information", "notifications", conn)
+        updated = repository.get_by_id(item["incident_id"], conn)
+    return success_response("Incident assigned successfully", updated)
+
+
+@app.put(BASE_ROUTE + "/<item_id>/status")
+@roles_required(config.ROLE_ADMIN, config.ROLE_ANALYST, service=SERVICE)
+def update_incident_status(item_id):
+    """Advance one lifecycle step. Implemented by: Youssef Al Hajj Youness."""
+    data = get_json_body()
+    check_fields(data, required=["status"])
+    status = choice(data["status"], "status", STATUSES)
+    with get_connection() as conn:
+        conn.execute("BEGIN IMMEDIATE")
+        item = find_incident(item_id, conn)
+        if NEXT_STATUS.get(item["status"]) != status:
+            raise ApiError(f"Cannot change incident status from {item['status']} to {status}", 409)
+        repository.update_status(item["incident_id"], status, conn)
+        log_event(g.current_user["user_id"], "Incident status updated",
+                  f"Incident {item['incident_id']}: {item['status']} -> {status}",
+                  "Information", SERVICE, conn)
+        updated = repository.get_by_id(item["incident_id"], conn)
+    return success_response("Incident status updated successfully", updated)
+
+
+@app.post(BASE_ROUTE + "/<item_id>/notes")
+@roles_required(config.ROLE_ADMIN, config.ROLE_ANALYST, service=SERVICE)
+def add_investigation_note(item_id):
+    """Add a note as the caller. Implemented by: Youssef Al Hajj Youness."""
+    data = get_json_body()
+    check_fields(data, required=["note_content"])
+    content = investigation_note(data["note_content"])
+    with get_connection() as conn:
+        conn.execute("BEGIN IMMEDIATE")
+        item = find_incident(item_id, conn)
+        note = repository.insert_note(item["incident_id"], g.current_user["user_id"],
+                                      content, conn)
+        log_event(g.current_user["user_id"], "Investigation note added",
+                  f"Note {note['note_id']} added to incident {item['incident_id']}",
+                  "Information", SERVICE, conn)
+    return success_response("Investigation note added successfully", note, 201)
+
+
+if __name__ == "__main__":
+    app.run(port=config.PORTS[SERVICE])

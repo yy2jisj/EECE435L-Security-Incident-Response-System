@@ -15,14 +15,16 @@ def _clean(text):
     return text[:MAX_TEXT_LENGTH]
 
 
-def log_event(user_id, action, description, severity="Information", service="unknown"):
-    """Record a security event in the audit log. Never raises an error.
+def log_event(user_id, action, description, severity="Information", service="unknown", conn=None):
+    """Record a security event, optionally inside a caller's transaction.
 
     :param user_id: ID of the user who did it, or ``None`` if unknown.
     :param action: short name, for example ``"Failed login"``.
     :param description: what happened.
     :param severity: Information, Warning, Error or Critical.
     :param service: name of the service writing the log.
+    :param conn: shared transaction; failures propagate so its changes roll back.
+        Standalone logging remains best effort and never raises.
     """
     if severity not in SEVERITIES:
         severity = "Information"
@@ -30,7 +32,9 @@ def log_event(user_id, action, description, severity="Information", service="unk
         execute(
             "INSERT INTO logs (user_id, action, description, severity_level, "
             "related_service) VALUES (?, ?, ?, ?, ?)",
-            (user_id, _clean(action), _clean(description), severity, _clean(service)),
+            (user_id, _clean(action), _clean(description), severity, _clean(service)), conn,
         )
     except Exception:
+        if conn is not None:
+            raise
         logger.exception("Could not write audit log entry")

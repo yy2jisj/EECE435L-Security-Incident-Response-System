@@ -1,0 +1,104 @@
+"""Read-only database queries used by the reports.
+
+Users, assets, incidents and threats are collected from their own services
+(see ``sources.py``). The vulnerability and audit logging services are not
+available yet, so their data is read from their tables here. When those
+services exist, only this file needs to change.
+"""
+from common.db import fetch_all, fetch_one
+
+# allowed values of the vulnerabilities table (see schema.sql)
+VULNERABILITY_SEVERITIES = ("Low", "Medium", "High", "Critical")
+VULNERABILITY_STATUSES = ("Open", "Under Investigation", "In Progress", "Resolved", "Closed")
+
+# the actions the user service writes to the audit log for logins
+LOGIN_SUCCESS_ACTION = "Successful login"
+LOGIN_FAILURE_ACTION = "Failed login"
+
+TOP_ACTION_LIMIT = 5
+CRITICAL_VULNERABILITY_LIMIT = 10
+
+
+def count_by(table, column, categories, where="", params=()):
+    """Count the rows of a table for each value of a column.
+
+    Every known category is listed, with 0 when there are no rows, so the
+    report always has the same shape. Values not in ``categories`` are added
+    at the end so no row is ever left out of the totals.
+
+    :param table: table name (from our own code, never from a request).
+    :param column: the column to group by (from our own code).
+    :param categories: the expected values, in the order to show them.
+    :param where: optional SQL condition, for example ``"WHERE x = ?"``.
+    :param params: values for the placeholders in ``where``.
+    :return: dictionary of value -> number of rows.
+    """
+    rows = fetch_all(
+        f"SELECT {column} AS name, COUNT(*) AS total FROM {table} {where} "
+        f"GROUP BY {column}", params)
+    found = {row["name"]: row["total"] for row in rows}
+    counts = {category: found.pop(category, 0) for category in categories}
+    counts.update(found)
+    return counts
+
+
+def _count(query, params=()):
+    return fetch_one(query, params)["total"]
+
+
+# ---- vulnerabilities ----
+def count_vulnerabilities():
+    return _count("SELECT COUNT(*) AS total FROM vulnerabilities")
+
+
+def count_critical_vulnerabilities():
+    return _count(
+        "SELECT COUNT(*) AS total FROM vulnerabilities WHERE severity_level = 'Critical'")
+
+
+def vulnerabilities_by_severity():
+    return count_by("vulnerabilities", "severity_level", VULNERABILITY_SEVERITIES)
+
+
+def vulnerabilities_by_status():
+    return count_by("vulnerabilities", "status", VULNERABILITY_STATUSES)
+
+
+def critical_vulnerabilities(limit=CRITICAL_VULNERABILITY_LIMIT):
+    """Return the critical vulnerabilities with the highest CVSS score first."""
+    return fetch_all(
+        "SELECT vulnerability_id, title, cve_id, cvss_score, status, asset_id "
+        "FROM vulnerabilities WHERE severity_level = 'Critical' "
+        "ORDER BY cvss_score DESC, vulnerability_id LIMIT ?", (limit,))
+
+
+# ---- activity (audit logs) ----
+def count_activities():
+    """Count every record in the audit log."""
+    return _count("SELECT COUNT(*) AS total FROM logs")
+
+
+def count_log_action(action):
+    return _count("SELECT COUNT(*) AS total FROM logs WHERE action = ?", (action,))
+
+
+def count_successful_logins():
+    return count_log_action(LOGIN_SUCCESS_ACTION)
+
+
+def count_failed_logins():
+    return count_log_action(LOGIN_FAILURE_ACTION)
+
+
+def count_login_attempts():
+    """Count successful and failed login attempts together."""
+    return _count(
+        "SELECT COUNT(*) AS total FROM logs WHERE action IN (?, ?)",
+        (LOGIN_SUCCESS_ACTION, LOGIN_FAILURE_ACTION))
+
+
+def most_performed_actions(limit=TOP_ACTION_LIMIT):
+    """Return the most frequent actions, most frequent first (ties by name)."""
+    return fetch_all(
+        "SELECT action, COUNT(*) AS total FROM logs "
+        "GROUP BY action ORDER BY total DESC, action LIMIT ?", (limit,))
