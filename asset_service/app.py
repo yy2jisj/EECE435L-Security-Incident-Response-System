@@ -28,7 +28,7 @@ def check_owner_exists(owner_id):
         raise ValidationError("owner_id does not match any existing user")
 
 
-@app.post("/assets")
+@app.post("/assets/AdamYahya")
 @roles_required(config.ROLE_ADMIN, service=SERVICE)
 def add_asset():
     """Add a new asset (Security Administrator only).
@@ -59,7 +59,7 @@ def add_asset():
                             repository.get_by_id(new_id), 201)
 
 
-@app.get("/assets/search")
+@app.get("/assets/search/AdamYahya")
 @roles_required(config.ROLE_ADMIN, config.ROLE_ANALYST, config.ROLE_AUDITOR,
                 service=SERVICE)
 def search_assets():
@@ -88,7 +88,7 @@ def search_assets():
     return success_response(f"{len(assets)} asset(s) found", assets)
 
 
-@app.get("/assets")
+@app.get("/assets/AdamYahya")
 @roles_required(config.ROLE_ADMIN, config.ROLE_AUDITOR, service=SERVICE)
 def get_all_assets():
     """Return every asset (Security Administrator and Auditor only).
@@ -98,7 +98,7 @@ def get_all_assets():
     return success_response("Assets retrieved successfully", repository.get_all())
 
 
-@app.get("/assets/<asset_id>")
+@app.get("/assets/<asset_id>/AdamYahya")
 @roles_required(config.ROLE_ADMIN, config.ROLE_ANALYST, config.ROLE_AUDITOR,
                 service=SERVICE)
 def get_asset(asset_id):
@@ -115,7 +115,7 @@ def get_asset(asset_id):
     return success_response("Asset retrieved successfully", asset)
 
 
-@app.put("/assets/<asset_id>")
+@app.put("/assets/<asset_id>/AdamYahya")
 @roles_required(config.ROLE_ADMIN, service=SERVICE)
 def update_asset(asset_id):
     """Update asset_name, owner_id, department, criticality_level and/or status.
@@ -153,7 +153,7 @@ def update_asset(asset_id):
     return success_response("Asset updated successfully", repository.get_by_id(asset_id))
 
 
-@app.delete("/assets/<asset_id>")
+@app.delete("/assets/<asset_id>/AdamYahya")
 @roles_required(config.ROLE_ADMIN, service=SERVICE)
 def delete_asset(asset_id):
     """Delete an asset (Security Administrator only).

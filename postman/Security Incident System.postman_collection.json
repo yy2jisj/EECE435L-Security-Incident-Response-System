@@ -1,10 +1,10 @@
 {
   "info": {
-    "_postman_id": "c82043a1-0995-4486-8227-dc41b06bf36a",
+    "_postman_id": "56444096-31f1-41bf-9109-995507c15375",
     "name": "Security Incident System",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
     "_exporter_id": "58859283",
-    "_collection_link": "https://go.postman.co/collection/58859283-c82043a1-0995-4486-8227-dc41b06bf36a?source=collection_link"
+    "_collection_link": "https://go.postman.co/collection/58859283-56444096-31f1-41bf-9109-995507c15375?source=collection_link"
   },
   "item": [
     {
@@ -25,13 +25,14 @@
               }
             },
             "url": {
-              "raw": "{{baseURL}}/users/login",
+              "raw": "{{baseURL}}/users/login/AdamYahya",
               "host": [
                 "{{baseURL}}"
               ],
               "path": [
                 "users",
-                "login"
+                "login",
+                "AdamYahya"
               ]
             },
             "description": "Logs in the admin and returns a token. Used by: all roles. Implemented by: Adam Yahya"
@@ -52,13 +53,14 @@
                   }
                 },
                 "url": {
-                  "raw": "{{baseURL}}/users/login",
+                  "raw": "{{baseURL}}/users/login/AdamYahya",
                   "host": [
                     "{{baseURL}}"
                   ],
                   "path": [
                     "users",
-                    "login"
+                    "login",
+                    "AdamYahya"
                   ]
                 }
               },
@@ -88,7 +90,7 @@
                 }
               ],
               "cookie": [],
-              "body": "{\n  \"data\": {\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwicm9sZSI6IlNlY3VyaXR5IEFkbWluaXN0cmF0b3IiLCJpYXQiOjE3OTIwNjAwNTksImV4cCI6MTc5MjA2MzY1OX0.2jyxX0EC7teTnqQBCORljBePJy0158JsV_K18FfiIMs\",\n    \"token_type\": \"Bearer\",\n    \"user\": {\n      \"account_status\": \"Active\",\n      \"created_at\": \"2026-10-15 10:14:48\",\n      \"department\": \"IT Security\",\n      \"email\": \"admin@example.com\",\n      \"full_name\": \"System Administrator\",\n      \"last_login\": \"2026-10-15 10:27:39\",\n      \"role\": \"Security Administrator\",\n      \"user_id\": 1,\n      \"username\": \"admin\"\n    }\n  },\n  \"message\": \"Login successful\",\n  \"status\": \"success\"\n}"
+              "body": "{\n  \"data\": {\n    \"token\": \"{{json_web_token_0qdl}}\",\n    \"token_type\": \"Bearer\",\n    \"user\": {\n      \"account_status\": \"Active\",\n      \"created_at\": \"2026-10-15 10:14:48\",\n      \"department\": \"IT Security\",\n      \"email\": \"admin@example.com\",\n      \"full_name\": \"System Administrator\",\n      \"last_login\": \"2026-10-15 10:27:39\",\n      \"role\": \"Security Administrator\",\n      \"user_id\": 1,\n      \"username\": \"admin\"\n    }\n  },\n  \"message\": \"Login successful\",\n  \"status\": \"success\"\n}"
             }
           ]
         },
@@ -99,7 +101,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\"username\": \"admin\", \"password\": \"admin12345\"}",
+              "raw": "{\"username\": \"admin\", \"password\": \"admin15\"}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -107,13 +109,14 @@
               }
             },
             "url": {
-              "raw": "{{baseURL}}/users/login",
+              "raw": "{{baseURL}}/users/login/AdamYahya",
               "host": [
                 "{{baseURL}}"
               ],
               "path": [
                 "users",
-                "login"
+                "login",
+                "AdamYahya"
               ]
             },
             "description": "Login with a wrong password. Returns 401 “Invalid username or password”. Implemented by: Adam Yahya"
@@ -134,13 +137,14 @@
                   }
                 },
                 "url": {
-                  "raw": "{{baseURL}}/users/login",
+                  "raw": "{{baseURL}}/users/login/AdamYahya",
                   "host": [
                     "{{baseURL}}"
                   ],
                   "path": [
                     "users",
-                    "login"
+                    "login",
+                    "AdamYahya"
                   ]
                 }
               },
@@ -182,7 +186,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "{{json_web_token_0u3y}}",
+                  "value": "{{admin}}",
                   "type": "string"
                 }
               ]
@@ -191,7 +195,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\"full_name\":\"Adam Yahya\",\"username\":\"adam.yahya\",\"email\":\"adam.yahya@example.com\",\"password\":\"Passw0rd123\",\"department\":\"Finance\"}",
+              "raw": "{\"full_name\": \"Jad\", \"username\": \"jad\", \"email\": \"jad@example.com\", \"password\": \"Jad12345\", \"department\": \"Security\", \"role\": \"Security Analyst\"}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -199,13 +203,14 @@
               }
             },
             "url": {
-              "raw": "{{baseURL}}/users/register",
+              "raw": "{{baseURL}}/users/register/AdamYahya",
               "host": [
                 "{{baseURL}}"
               ],
               "path": [
                 "users",
-                "register"
+                "register",
+                "AdamYahya"
               ]
             },
             "description": "Creates a new account (Regular User by default). Returns 201, or 409 for a duplicate username, or 400 for invalid input. Implemented by: Adam Yahya"
@@ -226,13 +231,14 @@
                   }
                 },
                 "url": {
-                  "raw": "{{baseURL}}/users/register",
+                  "raw": "{{baseURL}}/users/register/AdamYahya",
                   "host": [
                     "{{baseURL}}"
                   ],
                   "path": [
                     "users",
-                    "register"
+                    "register",
+                    "AdamYahya"
                   ]
                 }
               },
@@ -273,7 +279,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\"username\":\"youssef.younnes\",\"password\":\"Passw0rd123\"}",
+              "raw": "{\"username\": \"jad\", \"password\": \"Jad12345\"}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -281,13 +287,14 @@
               }
             },
             "url": {
-              "raw": "{{baseURL}}/users/login",
+              "raw": "{{baseURL}}/users/login/AdamYahya",
               "host": [
                 "{{baseURL}}"
               ],
               "path": [
                 "users",
-                "login"
+                "login",
+                "AdamYahya"
               ]
             },
             "description": "Logs in yy123 (a Regular User) and returns a token. Implemented by: Adam Yahya"
@@ -308,13 +315,14 @@
                   }
                 },
                 "url": {
-                  "raw": "{{baseURL}}/users/login",
+                  "raw": "{{baseURL}}/users/login/AdamYahya",
                   "host": [
                     "{{baseURL}}"
                   ],
                   "path": [
                     "users",
-                    "login"
+                    "login",
+                    "AdamYahya"
                   ]
                 }
               },
@@ -344,7 +352,7 @@
                 }
               ],
               "cookie": [],
-              "body": "{\n  \"data\": {\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyIiwicm9sZSI6IlJlZ3VsYXIgVXNlciIsImlhdCI6MTc5MjA2MTMwNywiZXhwIjoxNzkyMDY0OTA3fQ.SN1745BCPAwcmY_D2fPzqMGSO-ozY_QJSNA8XId9ebg\",\n    \"token_type\": \"Bearer\",\n    \"user\": {\n      \"account_status\": \"Active\",\n      \"created_at\": \"2026-10-15 10:32:40\",\n      \"department\": \"HR\",\n      \"email\": \"yy@example.com\",\n      \"full_name\": \"Youssef Al Hajj Younness\",\n      \"last_login\": \"2026-10-15 10:48:27\",\n      \"role\": \"Regular User\",\n      \"user_id\": 2,\n      \"username\": \"yy123\"\n    }\n  },\n  \"message\": \"Login successful\",\n  \"status\": \"success\"\n}"
+              "body": "{\n  \"data\": {\n    \"token\": \"{{json_web_token_1103}}\",\n    \"token_type\": \"Bearer\",\n    \"user\": {\n      \"account_status\": \"Active\",\n      \"created_at\": \"2026-10-15 10:32:40\",\n      \"department\": \"HR\",\n      \"email\": \"yy@example.com\",\n      \"full_name\": \"Youssef Al Hajj Younness\",\n      \"last_login\": \"2026-10-15 10:48:27\",\n      \"role\": \"Regular User\",\n      \"user_id\": 2,\n      \"username\": \"yy123\"\n    }\n  },\n  \"message\": \"Login successful\",\n  \"status\": \"success\"\n}"
             }
           ]
         },
@@ -356,32 +364,24 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "{{json_web_token_1103}}",
+                  "value": "{{yy}}",
                   "type": "string"
                 }
               ]
             },
             "method": "GET",
             "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
             "url": {
-              "raw": "{{baseURL}}/users",
+              "raw": "{{baseURL}}/users/AdamYahya",
               "host": [
                 "{{baseURL}}"
               ],
               "path": [
-                "users"
+                "users",
+                "AdamYahya"
               ]
             },
-            "description": "GET /users with a Regular User token. Returns 403 because only Administrators and Auditors may list users. Implemented by: Adam Yahya"
+            "description": "GET /users/AdamYahya with a Regular User token. Returns 403 because only Administrators and Auditors may list users. Implemented by: Adam Yahya"
           },
           "response": [
             {
@@ -389,22 +389,14 @@
               "originalRequest": {
                 "method": "GET",
                 "header": [],
-                "body": {
-                  "mode": "raw",
-                  "raw": "",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                },
                 "url": {
-                  "raw": "{{baseURL}}/users",
+                  "raw": "{{baseURL}}/users/AdamYahya",
                   "host": [
                     "{{baseURL}}"
                   ],
                   "path": [
-                    "users"
+                    "users",
+                    "AdamYahya"
                   ]
                 }
               },
@@ -446,7 +438,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "{{json_web_token_1103}}",
+                  "value": "{{yy}}",
                   "type": "string"
                 }
               ]
@@ -454,16 +446,17 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{baseURL}}/users/yy123",
+              "raw": "{{baseURL}}/users/yy123/AdamYahya",
               "host": [
                 "{{baseURL}}"
               ],
               "path": [
                 "users",
-                "yy123"
+                "yy123",
+                "AdamYahya"
               ]
             },
-            "description": "GET /users/{username} for the caller’s own record. Returns 200. Implemented by: Adam Yahya"
+            "description": "GET /users/{username}/AdamYahya for the caller’s own record. Returns 200. Implemented by: Adam Yahya"
           },
           "response": [
             {
@@ -472,13 +465,14 @@
                 "method": "GET",
                 "header": [],
                 "url": {
-                  "raw": "{{baseURL}}/users/yy123",
+                  "raw": "{{baseURL}}/users/yy123/AdamYahya",
                   "host": [
                     "{{baseURL}}"
                   ],
                   "path": [
                     "users",
-                    "yy123"
+                    "yy123",
+                    "AdamYahya"
                   ]
                 }
               },
@@ -520,32 +514,24 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "{{json_web_token_0dxg}}",
+                  "value": "{{admin}}",
                   "type": "string"
                 }
               ]
             },
             "method": "GET",
             "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\"department\": \"Finance\"}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
             "url": {
-              "raw": "{{baseURL}}/users",
+              "raw": "{{baseURL}}/users/AdamYahya",
               "host": [
                 "{{baseURL}}"
               ],
               "path": [
-                "users"
+                "users",
+                "AdamYahya"
               ]
             },
-            "description": "GET /users with the admin token. Returns 200 with all users. Implemented by: Adam Yahya"
+            "description": "GET /users/AdamYahya with the admin token. Returns 200 with all users. Implemented by: Adam Yahya"
           },
           "response": [
             {
@@ -553,22 +539,14 @@
               "originalRequest": {
                 "method": "GET",
                 "header": [],
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\"department\": \"Finance\"}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                },
                 "url": {
-                  "raw": "{{baseURL}}/users",
+                  "raw": "{{baseURL}}/users/AdamYahya",
                   "host": [
                     "{{baseURL}}"
                   ],
                   "path": [
-                    "users"
+                    "users",
+                    "AdamYahya"
                   ]
                 }
               },
@@ -610,728 +588,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "{{json_web_token_03ru}}",
-                  "type": "string"
-                }
-              ]
-            },
-            "method": "DELETE",
-            "header": [],
-            "url": {
-              "raw": "{{baseURL}}/users/2",
-              "host": [
-                "{{baseURL}}"
-              ],
-              "path": [
-                "users",
-                "2"
-              ]
-            },
-            "description": "DELETE /users/{id}. Security Administrator only. Returns 200, or 403 for other roles. Implemented by: Adam Yahya"
-          },
-          "response": []
-        },
-        {
-          "name": "Get nobody as admin",
-          "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{json_web_token_03ru}}",
-                  "type": "string"
-                }
-              ]
-            },
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{baseURL}}/users/nobody",
-              "host": [
-                "{{baseURL}}"
-              ],
-              "path": [
-                "users",
-                "nobody"
-              ]
-            },
-            "description": "GET /users/nobody with the admin token. Returns 404 “User not found”. Implemented by: Adam Yahya"
-          },
-          "response": []
-        },
-        {
-          "name": "Change Department",
-          "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{json_web_token_0qvv}}",
-                  "type": "string"
-                }
-              ]
-            },
-            "method": "PUT",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\"department\": \"Finance\"}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "{{baseURL}}/users/1",
-              "host": [
-                "{{baseURL}}"
-              ],
-              "path": [
-                "users",
-                "1"
-              ]
-            },
-            "description": "PUT /users/{id}. Updates full_name, email or department. Admin may update anyone; a Regular User only themselves (403 otherwise). Implemented by: Adam Yahya"
-          },
-          "response": []
-        }
-      ]
-    },
-    {
-      "name": "Service 2",
-      "item": [
-        {
-          "name": "Create web server",
-          "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{json_web_token_0zp4}}",
-                  "type": "string"
-                }
-              ]
-            },
-            "method": "POST",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\"asset_name\":\"Web Server 01\",\"asset_type\":\"Server\",\"ip_address\":\"10.0.0.5\",\"operating_system\":\"Ubuntu 22.04\",\"department\":\"IT\",\"owner_id\":1,\"location\":\"Data Center A\",\"criticality_level\":\"High\"}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "{{assetsURL}}/assets",
-              "host": [
-                "{{assetsURL}}"
-              ],
-              "path": [
-                "assets"
-              ]
-            },
-            "description": "POST /assets. Creates a new asset (a High criticality Server). Only a Security Administrator may create assets. Required: asset_name, asset_type, ip_address, department, owner_id, criticality_level. Returns 201 with the new asset. Implemented by: Adam Yahya"
-          },
-          "response": []
-        },
-        {
-          "name": "create hr db",
-          "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{json_web_token_0zp4}}",
-                  "type": "string"
-                }
-              ]
-            },
-            "method": "POST",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\"asset_name\":\"HR Database\",\"asset_type\":\"Database\",\"ip_address\":\"10.0.0.9\",\"operating_system\":\"PostgreSQL 15\",\"department\":\"HR\",\"owner_id\":1,\"location\":\"Data Center A\",\"criticality_level\":\"Critical\"}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "{{assetsURL}}/assets",
-              "host": [
-                "{{assetsURL}}"
-              ],
-              "path": [
-                "assets"
-              ]
-            },
-            "description": "POST /assets. Creates a new asset (a Critical Database). Security Administrator only. Returns 201 with the new asset. Implemented by: Adam Yahya"
-          },
-          "response": []
-        },
-        {
-          "name": "create laptop",
-          "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{json_web_token_0zp4}}",
-                  "type": "string"
-                }
-              ]
-            },
-            "method": "POST",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\"asset_name\":\"Finance Laptop 07\",\"asset_type\":\"Workstation\",\"ip_address\":\"192.168.1.23\",\"operating_system\":\"Windows 11\",\"department\":\"Finance\",\"owner_id\":1,\"location\":\"Office 3F\",\"criticality_level\":\"Medium\"}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "{{assetsURL}}/assets",
-              "host": [
-                "{{assetsURL}}"
-              ],
-              "path": [
-                "assets"
-              ]
-            },
-            "description": "POST /assets. Creates a new asset (a Medium criticality Workstation). Security Administrator only. Returns 201 with the new asset. Implemented by: Adam Yahya"
-          },
-          "response": []
-        },
-        {
-          "name": "create router",
-          "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{json_web_token_0zp4}}",
-                  "type": "string"
-                }
-              ]
-            },
-            "method": "POST",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\"asset_name\":\"Core Router\",\"asset_type\":\"Network Device\",\"ip_address\":\"192.168.1.1\",\"department\":\"IT\",\"owner_id\":1,\"location\":\"Server Room\",\"criticality_level\":\"High\",\"status\":\"Under Maintenance\"}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "{{assetsURL}}/assets",
-              "host": [
-                "{{assetsURL}}"
-              ],
-              "path": [
-                "assets"
-              ]
-            },
-            "description": "POST /assets. Creates a new asset (a Network Device with status Under Maintenance). Optional fields such as operating_system are left out and stored as null. Security Administrator only. Returns 201. Implemented by: Adam Yahya"
-          },
-          "response": []
-        },
-        {
-          "name": "create marketing site",
-          "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{json_web_token_0zp4}}",
-                  "type": "string"
-                }
-              ]
-            },
-            "method": "POST",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\"asset_name\":\"Marketing Site\",\"asset_type\":\"Cloud Resource\",\"ip_address\":\"203.0.113.40\",\"department\":\"Marketing\",\"owner_id\":1,\"criticality_level\":\"Low\"}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "{{assetsURL}}/assets",
-              "host": [
-                "{{assetsURL}}"
-              ],
-              "path": [
-                "assets"
-              ]
-            },
-            "description": "POST /assets. Creates a new asset (a Low criticality Cloud Resource). Optional fields location and operating_system are left out. Security Administrator only. Returns 201. Implemented by: Adam Yahya"
-          },
-          "response": []
-        },
-        {
-          "name": "invalid IP",
-          "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{json_web_token_0zp4}}",
-                  "type": "string"
-                }
-              ]
-            },
-            "method": "POST",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\"asset_name\":\"Test Server\",\"asset_type\":\"Server\",\"ip_address\":\"999.1.1.1\",\"department\":\"IT\",\"owner_id\":1,\"criticality_level\":\"High\"}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "{{assetsURL}}/assets",
-              "host": [
-                "{{assetsURL}}"
-              ],
-              "path": [
-                "assets"
-              ]
-            },
-            "description": "POST /assets. Validation test: the ip_address 999.1.1.1 is not a valid IP address, so the asset is rejected with 400 and a clear message. Implemented by: Adam Yahya"
-          },
-          "response": []
-        },
-        {
-          "name": "invalid type",
-          "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{json_web_token_0zp4}}",
-                  "type": "string"
-                }
-              ]
-            },
-            "method": "POST",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\"asset_name\":\"Test Server\",\"asset_type\":\"Toaster\",\"ip_address\":\"10.0.0.50\",\"department\":\"IT\",\"owner_id\":1,\"criticality_level\":\"High\"}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "{{assetsURL}}/assets",
-              "host": [
-                "{{assetsURL}}"
-              ],
-              "path": [
-                "assets"
-              ]
-            },
-            "description": "POST /assets. Validation test: the asset_type Toaster is not one of the allowed types (Server, Workstation, Database, Application, Network Device, Cloud Resource), so the request is rejected with 400. Implemented by: Adam Yahya"
-          },
-          "response": []
-        },
-        {
-          "name": "no token",
-          "request": {
-            "auth": {
-              "type": "noauth"
-            },
-            "method": "POST",
-            "header": [],
-            "body": {
-              "mode": "urlencoded",
-              "urlencoded": []
-            },
-            "url": {
-              "raw": "{{assetsURL}}/assets",
-              "host": [
-                "{{assetsURL}}"
-              ],
-              "path": [
-                "assets"
-              ]
-            },
-            "description": "POST /assets. Authentication test: the request is sent with no Authorization header, so it is rejected with 401 (Authentication required). Implemented by: Adam Yahya"
-          },
-          "response": []
-        },
-        {
-          "name": "create regular user",
-          "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{json_web_token_113g}}",
-                  "type": "string"
-                }
-              ]
-            },
-            "method": "POST",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\"asset_name\":\"Test Server\",\"asset_type\":\"Server\",\"ip_address\":\"10.0.0.50\",\"department\":\"IT\",\"owner_id\":1,\"criticality_level\":\"High\"}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "{{assetsURL}}/assets",
-              "host": [
-                "{{assetsURL}}"
-              ],
-              "path": [
-                "assets"
-              ]
-            },
-            "description": "POST /assets. Authorization test: a Regular User token is valid but this role has no access to asset APIs, so the request is rejected with 403. The violation is written to the audit log. Implemented by: Adam Yahya"
-          },
-          "response": []
-        },
-        {
-          "name": "update asset 1",
-          "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{json_web_token_0zp4}}",
-                  "type": "string"
-                }
-              ]
-            },
-            "method": "PUT",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\"asset_name\":\"Web Server 01 (Primary)\",\"owner_id\":3,\"department\":\"Infrastructure\",\"criticality_level\":\"Critical\",\"status\":\"Under Maintenance\"}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "{{assetsURL}}/assets/1",
-              "host": [
-                "{{assetsURL}}"
-              ],
-              "path": [
-                "assets",
-                "1"
-              ]
-            },
-            "description": "PUT /assets/{id}. Updates asset_name, owner_id, department, criticality_level and/or status of an existing asset. Security Administrator only. The new owner must be an existing user. Returns 200 with the updated asset. Implemented by: Adam Yahya"
-          },
-          "response": []
-        },
-        {
-          "name": "get assset 1 after updaet",
-          "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{json_web_token_0zp4}}",
-                  "type": "string"
-                }
-              ]
-            },
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{assetsURL}}/assets/1",
-              "host": [
-                "{{assetsURL}}"
-              ],
-              "path": [
-                "assets",
-                "1"
-              ]
-            },
-            "description": "GET /assets/{id}. Returns one asset by id, including its owner name and its related_incidents and related_vulnerabilities lists. Allowed for Security Administrator, Security Analyst and Auditor. Used here to show the asset after the update. Implemented by: Adam Yahya"
-          },
-          "response": []
-        },
-        {
-          "name": "get all assets",
-          "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{json_web_token_0zp4}}",
-                  "type": "string"
-                }
-              ]
-            },
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{assetsURL}}/assets",
-              "host": [
-                "{{assetsURL}}"
-              ],
-              "path": [
-                "assets"
-              ]
-            },
-            "description": "GET /assets. Returns every registered asset with its details, criticality level and status. Allowed for Security Administrator and Auditor only (an Analyst gets 403). Implemented by: Adam Yahya"
-          },
-          "response": []
-        },
-        {
-          "name": "get asset that doesnt exist",
-          "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{json_web_token_0zp4}}",
-                  "type": "string"
-                }
-              ]
-            },
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{assetsURL}}/assets/9999",
-              "host": [
-                "{{assetsURL}}"
-              ],
-              "path": [
-                "assets",
-                "9999"
-              ]
-            },
-            "description": "GET /assets/{id}. Error test: asset 9999 does not exist, so the service returns 404 with the message Asset not found. Implemented by: Adam Yahya"
-          },
-          "response": []
-        },
-        {
-          "name": "search by name",
-          "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{json_web_token_0zp4}}",
-                  "type": "string"
-                }
-              ]
-            },
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{assetsURL}}/assets/search?asset_name=server",
-              "host": [
-                "{{assetsURL}}"
-              ],
-              "path": [
-                "assets",
-                "search"
-              ],
-              "query": [
-                {
-                  "key": "asset_name",
-                  "value": "server"
-                }
-              ]
-            },
-            "description": "GET /assets/search?asset_name=... Searches assets by name. The text can match part of the name and is not case sensitive. Allowed for Security Administrator, Security Analyst and Auditor. Implemented by: Adam Yahya"
-          },
-          "response": []
-        },
-        {
-          "name": "search by type",
-          "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{json_web_token_0zp4}}",
-                  "type": "string"
-                }
-              ]
-            },
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{assetsURL}}/assets/search?asset_type=Database",
-              "host": [
-                "{{assetsURL}}"
-              ],
-              "path": [
-                "assets",
-                "search"
-              ],
-              "query": [
-                {
-                  "key": "asset_type",
-                  "value": "Database"
-                }
-              ]
-            },
-            "description": "GET /assets/search?asset_type=... Searches assets by exact asset type (for example Database). Allowed for Security Administrator, Security Analyst and Auditor. Implemented by: Adam Yahya"
-          },
-          "response": []
-        },
-        {
-          "name": "search by IP",
-          "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{json_web_token_0zp4}}",
-                  "type": "string"
-                }
-              ]
-            },
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{assetsURL}}/assets/search?ip_address=192.168.1.23",
-              "host": [
-                "{{assetsURL}}"
-              ],
-              "path": [
-                "assets",
-                "search"
-              ],
-              "query": [
-                {
-                  "key": "ip_address",
-                  "value": "192.168.1.23"
-                }
-              ]
-            },
-            "description": "GET /assets/search?ip_address=... Searches assets by exact IP address. The address is validated first. Allowed for Security Administrator, Security Analyst and Auditor. Implemented by: Adam Yahya"
-          },
-          "response": []
-        },
-        {
-          "name": "serarch by department",
-          "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{json_web_token_0zp4}}",
-                  "type": "string"
-                }
-              ]
-            },
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{assetsURL}}/assets/search?department=IT",
-              "host": [
-                "{{assetsURL}}"
-              ],
-              "path": [
-                "assets",
-                "search"
-              ],
-              "query": [
-                {
-                  "key": "department",
-                  "value": "IT"
-                }
-              ]
-            },
-            "description": "GET /assets/search?department=... Searches assets by department. The text can match part of the department name. Allowed for Security Administrator, Security Analyst and Auditor. Implemented by: Adam Yahya"
-          },
-          "response": []
-        },
-        {
-          "name": "serarch by criticality",
-          "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{json_web_token_0zp4}}",
-                  "type": "string"
-                }
-              ]
-            },
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{assetsURL}}/assets/search?criticality_level=Critical",
-              "host": [
-                "{{assetsURL}}"
-              ],
-              "path": [
-                "assets",
-                "search"
-              ],
-              "query": [
-                {
-                  "key": "criticality_level",
-                  "value": "Critical"
-                }
-              ]
-            },
-            "description": "GET /assets/search?criticality_level=... Searches assets by exact criticality level (Low, Medium, High or Critical). Allowed for Security Administrator, Security Analyst and Auditor. Implemented by: Adam Yahya"
-          },
-          "response": []
-        },
-        {
-          "name": "delete asset 5",
-          "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{json_web_token_0zp4}}",
+                  "value": "{{admin}}",
                   "type": "string"
                 }
               ]
@@ -1348,16 +605,1386 @@
               }
             },
             "url": {
-              "raw": "{{assetsURL}}/assets/5",
+              "raw": "{{baseURL}}/users/2/AdamYahya",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "users",
+                "2",
+                "AdamYahya"
+              ]
+            },
+            "description": "DELETE /users/{id}/AdamYahya. Security Administrator only. Returns 200, or 403 for other roles. Implemented by: Adam Yahya"
+          },
+          "response": []
+        },
+        {
+          "name": "Get nobody as admin",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{admin}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseURL}}/users/nobody/AdamYahya",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "users",
+                "nobody",
+                "AdamYahya"
+              ]
+            },
+            "description": "GET /users/nobody/AdamYahya with the admin token. Returns 404 “User not found”. Implemented by: Adam Yahya"
+          },
+          "response": []
+        },
+        {
+          "name": "Change Department",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{yy}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"department\": \"Finance\"}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseURL}}/users/2/AdamYahya",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "users",
+                "2",
+                "AdamYahya"
+              ]
+            },
+            "description": "PUT /users/{id}/AdamYahya. Updates full_name, email or department. Admin may update anyone; a Regular User only themselves (403 otherwise). Implemented by: Adam Yahya"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Service 2",
+      "item": [
+        {
+          "name": "Create web server",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{admin}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"asset_name\":\"Web Server 01\",\"asset_type\":\"Server\",\"ip_address\":\"10.0.0.5\",\"operating_system\":\"Ubuntu 22.04\",\"department\":\"IT\",\"owner_id\":1,\"location\":\"Data Center A\",\"criticality_level\":\"High\"}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{assetsURL}}/assets/AdamYahya",
               "host": [
                 "{{assetsURL}}"
               ],
               "path": [
                 "assets",
-                "5"
+                "AdamYahya"
               ]
             },
-            "description": "DELETE /assets/{id}. Removes an asset. Security Administrator only: any other role gets 403 and the attempt is logged. Returns 200 on success, 404 if the asset does not exist, and 409 if incidents or vulnerabilities still reference it. Implemented by: Adam Yahya"
+            "description": "POST /assets/AdamYahya. Creates a new asset (a High criticality Server). Only a Security Administrator may create assets. Required: asset_name, asset_type, ip_address, department, owner_id, criticality_level. Returns 201 with the new asset. Implemented by: Adam Yahya"
+          },
+          "response": []
+        },
+        {
+          "name": "create hr db",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{admin}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"asset_name\":\"HR Database\",\"asset_type\":\"Database\",\"ip_address\":\"10.0.0.9\",\"operating_system\":\"PostgreSQL 15\",\"department\":\"HR\",\"owner_id\":1,\"location\":\"Data Center A\",\"criticality_level\":\"Critical\"}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{assetsURL}}/assets/AdamYahya",
+              "host": [
+                "{{assetsURL}}"
+              ],
+              "path": [
+                "assets",
+                "AdamYahya"
+              ]
+            },
+            "description": "POST /assets/AdamYahya. Creates a new asset (a Critical Database). Security Administrator only. Returns 201 with the new asset. Implemented by: Adam Yahya"
+          },
+          "response": []
+        },
+        {
+          "name": "create laptop",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{admin}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"asset_name\":\"Finance Laptop 07\",\"asset_type\":\"Workstation\",\"ip_address\":\"192.168.1.23\",\"operating_system\":\"Windows 11\",\"department\":\"Finance\",\"owner_id\":1,\"location\":\"Office 3F\",\"criticality_level\":\"Medium\"}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{assetsURL}}/assets/AdamYahya",
+              "host": [
+                "{{assetsURL}}"
+              ],
+              "path": [
+                "assets",
+                "AdamYahya"
+              ]
+            },
+            "description": "POST /assets/AdamYahya. Creates a new asset (a Medium criticality Workstation). Security Administrator only. Returns 201 with the new asset. Implemented by: Adam Yahya"
+          },
+          "response": []
+        },
+        {
+          "name": "create router",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{admin}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"asset_name\":\"Core Router\",\"asset_type\":\"Network Device\",\"ip_address\":\"192.168.1.1\",\"department\":\"IT\",\"owner_id\":1,\"location\":\"Server Room\",\"criticality_level\":\"High\",\"status\":\"Under Maintenance\"}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{assetsURL}}/assets/AdamYahya",
+              "host": [
+                "{{assetsURL}}"
+              ],
+              "path": [
+                "assets",
+                "AdamYahya"
+              ]
+            },
+            "description": "POST /assets/AdamYahya. Creates a new asset (a Network Device with status Under Maintenance). Optional fields such as operating_system are left out and stored as null. Security Administrator only. Returns 201. Implemented by: Adam Yahya"
+          },
+          "response": []
+        },
+        {
+          "name": "create marketing site",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{admin}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"asset_name\":\"Marketing Site\",\"asset_type\":\"Cloud Resource\",\"ip_address\":\"203.0.113.40\",\"department\":\"Marketing\",\"owner_id\":1,\"criticality_level\":\"Low\"}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{assetsURL}}/assets/AdamYahya",
+              "host": [
+                "{{assetsURL}}"
+              ],
+              "path": [
+                "assets",
+                "AdamYahya"
+              ]
+            },
+            "description": "POST /assets/AdamYahya. Creates a new asset (a Low criticality Cloud Resource). Optional fields location and operating_system are left out. Security Administrator only. Returns 201. Implemented by: Adam Yahya"
+          },
+          "response": []
+        },
+        {
+          "name": "invalid IP",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{admin}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"asset_name\":\"Test Server\",\"asset_type\":\"Server\",\"ip_address\":\"999.1.1.1\",\"department\":\"IT\",\"owner_id\":1,\"criticality_level\":\"High\"}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{assetsURL}}/assets/AdamYahya",
+              "host": [
+                "{{assetsURL}}"
+              ],
+              "path": [
+                "assets",
+                "AdamYahya"
+              ]
+            },
+            "description": "POST /assets/AdamYahya. Validation test: the ip_address 999.1.1.1 is not a valid IP address, so the asset is rejected with 400 and a clear message. Implemented by: Adam Yahya"
+          },
+          "response": []
+        },
+        {
+          "name": "invalid type",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{admin}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"asset_name\":\"Test Server\",\"asset_type\":\"Toaster\",\"ip_address\":\"10.0.0.50\",\"department\":\"IT\",\"owner_id\":1,\"criticality_level\":\"High\"}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{assetsURL}}/assets/AdamYahya",
+              "host": [
+                "{{assetsURL}}"
+              ],
+              "path": [
+                "assets",
+                "AdamYahya"
+              ]
+            },
+            "description": "POST /assets/AdamYahya. Validation test: the asset_type Toaster is not one of the allowed types (Server, Workstation, Database, Application, Network Device, Cloud Resource), so the request is rejected with 400. Implemented by: Adam Yahya"
+          },
+          "response": []
+        },
+        {
+          "name": "no token",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": []
+            },
+            "url": {
+              "raw": "{{assetsURL}}/assets/AdamYahya",
+              "host": [
+                "{{assetsURL}}"
+              ],
+              "path": [
+                "assets",
+                "AdamYahya"
+              ]
+            },
+            "description": "POST /assets/AdamYahya. Authentication test: the request is sent with no Authorization header, so it is rejected with 401 (Authentication required). Implemented by: Adam Yahya"
+          },
+          "response": []
+        },
+        {
+          "name": "create regular user",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{yy}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"asset_name\":\"Test Server\",\"asset_type\":\"Server\",\"ip_address\":\"10.0.0.50\",\"department\":\"IT\",\"owner_id\":1,\"criticality_level\":\"High\"}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{assetsURL}}/assets/AdamYahya",
+              "host": [
+                "{{assetsURL}}"
+              ],
+              "path": [
+                "assets",
+                "AdamYahya"
+              ]
+            },
+            "description": "POST /assets/AdamYahya. Authorization test: a Regular User token is valid but this role has no access to asset APIs, so the request is rejected with 403. The violation is written to the audit log. Implemented by: Adam Yahya"
+          },
+          "response": []
+        },
+        {
+          "name": "update asset 1",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{admin}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"asset_name\":\"Web Server 01 (Primary)\",\"owner_id\":3,\"department\":\"Infrastructure\",\"criticality_level\":\"Critical\",\"status\":\"Under Maintenance\"}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{assetsURL}}/assets/1/AdamYahya",
+              "host": [
+                "{{assetsURL}}"
+              ],
+              "path": [
+                "assets",
+                "1",
+                "AdamYahya"
+              ]
+            },
+            "description": "PUT /assets/{id}/AdamYahya. Updates asset_name, owner_id, department, criticality_level and/or status of an existing asset. Security Administrator only. The new owner must be an existing user. Returns 200 with the updated asset. Implemented by: Adam Yahya"
+          },
+          "response": []
+        },
+        {
+          "name": "get assset 1 after updaet",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{admin}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{assetsURL}}/assets/1/AdamYahya",
+              "host": [
+                "{{assetsURL}}"
+              ],
+              "path": [
+                "assets",
+                "1",
+                "AdamYahya"
+              ]
+            },
+            "description": "GET /assets/{id}/AdamYahya. Returns one asset by id, including its owner name and its related_incidents and related_vulnerabilities lists. Allowed for Security Administrator, Security Analyst and Auditor. Used here to show the asset after the update. Implemented by: Adam Yahya"
+          },
+          "response": []
+        },
+        {
+          "name": "get all assets",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{admin}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{assetsURL}}/assets/AdamYahya",
+              "host": [
+                "{{assetsURL}}"
+              ],
+              "path": [
+                "assets",
+                "AdamYahya"
+              ]
+            },
+            "description": "GET /assets/AdamYahya. Returns every registered asset with its details, criticality level and status. Allowed for Security Administrator and Auditor only (an Analyst gets 403). Implemented by: Adam Yahya"
+          },
+          "response": []
+        },
+        {
+          "name": "get asset that doesnt exist",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{admin}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{assetsURL}}/assets/9999/AdamYahya",
+              "host": [
+                "{{assetsURL}}"
+              ],
+              "path": [
+                "assets",
+                "9999",
+                "AdamYahya"
+              ]
+            },
+            "description": "GET /assets/{id}/AdamYahya. Error test: asset 9999 does not exist, so the service returns 404 with the message Asset not found. Implemented by: Adam Yahya"
+          },
+          "response": []
+        },
+        {
+          "name": "search by name",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{admin}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{assetsURL}}/assets/search/AdamYahya?asset_name=server",
+              "host": [
+                "{{assetsURL}}"
+              ],
+              "path": [
+                "assets",
+                "search",
+                "AdamYahya"
+              ],
+              "query": [
+                {
+                  "key": "asset_name",
+                  "value": "server"
+                }
+              ]
+            },
+            "description": "GET /assets/search/AdamYahya?asset_name=... Searches assets by name. The text can match part of the name and is not case sensitive. Allowed for Security Administrator, Security Analyst and Auditor. Implemented by: Adam Yahya"
+          },
+          "response": []
+        },
+        {
+          "name": "search by type",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{admin}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{assetsURL}}/assets/search/AdamYahya?asset_type=Database",
+              "host": [
+                "{{assetsURL}}"
+              ],
+              "path": [
+                "assets",
+                "search",
+                "AdamYahya"
+              ],
+              "query": [
+                {
+                  "key": "asset_type",
+                  "value": "Database"
+                }
+              ]
+            },
+            "description": "GET /assets/search/AdamYahya?asset_type=... Searches assets by exact asset type (for example Database). Allowed for Security Administrator, Security Analyst and Auditor. Implemented by: Adam Yahya"
+          },
+          "response": []
+        },
+        {
+          "name": "search by IP",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{admin}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{assetsURL}}/assets/search/AdamYahya?ip_address=192.168.1.23",
+              "host": [
+                "{{assetsURL}}"
+              ],
+              "path": [
+                "assets",
+                "search",
+                "AdamYahya"
+              ],
+              "query": [
+                {
+                  "key": "ip_address",
+                  "value": "192.168.1.23"
+                }
+              ]
+            },
+            "description": "GET /assets/search/AdamYahya?ip_address=... Searches assets by exact IP address. The address is validated first. Allowed for Security Administrator, Security Analyst and Auditor. Implemented by: Adam Yahya"
+          },
+          "response": []
+        },
+        {
+          "name": "serarch by department",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{admin}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{assetsURL}}/assets/search/AdamYahya?department=IT",
+              "host": [
+                "{{assetsURL}}"
+              ],
+              "path": [
+                "assets",
+                "search",
+                "AdamYahya"
+              ],
+              "query": [
+                {
+                  "key": "department",
+                  "value": "IT"
+                }
+              ]
+            },
+            "description": "GET /assets/search/AdamYahya?department=... Searches assets by department. The text can match part of the department name. Allowed for Security Administrator, Security Analyst and Auditor. Implemented by: Adam Yahya"
+          },
+          "response": []
+        },
+        {
+          "name": "serarch by criticality",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{admin}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{assetsURL}}/assets/search/AdamYahya?criticality_level=Critical",
+              "host": [
+                "{{assetsURL}}"
+              ],
+              "path": [
+                "assets",
+                "search",
+                "AdamYahya"
+              ],
+              "query": [
+                {
+                  "key": "criticality_level",
+                  "value": "Critical"
+                }
+              ]
+            },
+            "description": "GET /assets/search/AdamYahya?criticality_level=... Searches assets by exact criticality level (Low, Medium, High or Critical). Allowed for Security Administrator, Security Analyst and Auditor. Implemented by: Adam Yahya"
+          },
+          "response": []
+        },
+        {
+          "name": "delete asset 5",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{admin}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{assetsURL}}/assets/5/AdamYahya",
+              "host": [
+                "{{assetsURL}}"
+              ],
+              "path": [
+                "assets",
+                "5",
+                "AdamYahya"
+              ]
+            },
+            "description": "DELETE /assets/{id}/AdamYahya. Removes an asset. Security Administrator only: any other role gets 403 and the attempt is logged. Returns 200 on success, 404 if the asset does not exist, and 409 if incidents or vulnerabilities still reference it. Implemented by: Adam Yahya"
+          },
+          "response": []
+        },
+        {
+          "name": "delete asset 4",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{yy}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{assetsURL}}/assets/5/AdamYahya",
+              "host": [
+                "{{assetsURL}}"
+              ],
+              "path": [
+                "assets",
+                "5",
+                "AdamYahya"
+              ]
+            },
+            "description": "DELETE /assets/{id}/AdamYahya. Removes an asset. Security Administrator only: any other role gets 403 and the attempt is logged. Returns 200 on success, 404 if the asset does not exist, and 409 if incidents or vulnerabilities still reference it. Implemented by: Adam Yahya"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Service 7",
+      "item": [
+        {
+          "name": "create vuln",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{admin}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"title\":\"Apache Remote Code Execution\",\"description\":\"Remote code execution flaw in the Apache web server\",\"cve_id\":\"CVE-2024-12345\",\"cvss_score\":9.8,\"severity_level\":\"Critical\",\"asset_id\":6,\"discovery_source\":\"Nessus Scan\"}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{vulnURL}}/vulnerabilities/AdamYahya",
+              "host": [
+                "{{vulnURL}}"
+              ],
+              "path": [
+                "vulnerabilities",
+                "AdamYahya"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "create vuln 2",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{admin}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"title\":\"SQL Injection in Login Form\",\"description\":\"Unsanitized input allows SQL injection in the HR login form\",\"cve_id\":\"CVE-2023-9999\",\"cvss_score\":5.5,\"severity_level\":\"Medium\",\"asset_id\":7,\"discovery_source\":\"Manual Penetration Test\"}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{vulnURL}}/vulnerabilities/AdamYahya",
+              "host": [
+                "{{vulnURL}}"
+              ],
+              "path": [
+                "vulnerabilities",
+                "AdamYahya"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "create vuln 3",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{admin}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"title\":\"Cross-Site Scripting in Search Page\",\"description\":\"Reflected XSS in the search page of the web server\",\"cve_id\":\"CVE-2022-1111\",\"cvss_score\":3.1,\"severity_level\":\"Low\",\"asset_id\":6,\"discovery_source\":\"OWASP ZAP\"}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{vulnURL}}/vulnerabilities/AdamYahya",
+              "host": [
+                "{{vulnURL}}"
+              ],
+              "path": [
+                "vulnerabilities",
+                "AdamYahya"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "invalid CVE",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{admin}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"title\":\"Test Vulnerability\",\"description\":\"Testing validation\",\"cve_id\":\"HELLO-123\",\"cvss_score\":5.0,\"severity_level\":\"Medium\",\"asset_id\":6,\"discovery_source\":\"Manual Test\"}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{vulnURL}}/vulnerabilities/AdamYahya",
+              "host": [
+                "{{vulnURL}}"
+              ],
+              "path": [
+                "vulnerabilities",
+                "AdamYahya"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get all vurnerablities",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{admin}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{vulnURL}}/vulnerabilities/AdamYahya",
+              "host": [
+                "{{vulnURL}}"
+              ],
+              "path": [
+                "vulnerabilities",
+                "AdamYahya"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get one vulnerability",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{admin}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{vulnURL}}/vulnerabilities/1/AdamYahya",
+              "host": [
+                "{{vulnURL}}"
+              ],
+              "path": [
+                "vulnerabilities",
+                "1",
+                "AdamYahya"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get vuln that doesnt exist",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{admin}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{vulnURL}}/vulnerabilities/9999/AdamYahya",
+              "host": [
+                "{{vulnURL}}"
+              ],
+              "path": [
+                "vulnerabilities",
+                "9999",
+                "AdamYahya"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "analyst cannot create",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{jad}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"title\":\"Test Vulnerability\",\"description\":\"Testing permissions\",\"cve_id\":\"CVE-2021-0001\",\"cvss_score\":5.0,\"severity_level\":\"Medium\",\"asset_id\":6,\"discovery_source\":\"Manual Test\"}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{vulnURL}}/vulnerabilities/AdamYahya",
+              "host": [
+                "{{vulnURL}}"
+              ],
+              "path": [
+                "vulnerabilities",
+                "AdamYahya"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "update vulnerability",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{jad}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"status\":\"Under Investigation\",\"description\":\"Remote code execution flaw in the Apache web server. Patch under review by the SOC team.\"}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{vulnURL}}/vulnerabilities/1/AdamYahya",
+              "host": [
+                "{{vulnURL}}"
+              ],
+              "path": [
+                "vulnerabilities",
+                "1",
+                "AdamYahya"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "invalid status jump",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{jad}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"status\":\"Resolved\"}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{vulnURL}}/vulnerabilities/1/AdamYahya",
+              "host": [
+                "{{vulnURL}}"
+              ],
+              "path": [
+                "vulnerabilities",
+                "1",
+                "AdamYahya"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get vuln 1 after update",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{jad}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{vulnURL}}/vulnerabilities/1/AdamYahya",
+              "host": [
+                "{{vulnURL}}"
+              ],
+              "path": [
+                "vulnerabilities",
+                "1",
+                "AdamYahya"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "search by CVE",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{admin}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{vulnURL}}/vulnerabilities/search/AdamYahya?cve_id=CVE-2024-12345",
+              "host": [
+                "{{vulnURL}}"
+              ],
+              "path": [
+                "vulnerabilities",
+                "search",
+                "AdamYahya"
+              ],
+              "query": [
+                {
+                  "key": "cve_id",
+                  "value": "CVE-2024-12345"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "search by severity",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{admin}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{vulnURL}}/vulnerabilities/search/AdamYahya?severity_level=Critical",
+              "host": [
+                "{{vulnURL}}"
+              ],
+              "path": [
+                "vulnerabilities",
+                "search",
+                "AdamYahya"
+              ],
+              "query": [
+                {
+                  "key": "severity_level",
+                  "value": "Critical"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "search by asset",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{admin}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{vulnURL}}/vulnerabilities/search/AdamYahya?asset_id=6",
+              "host": [
+                "{{vulnURL}}"
+              ],
+              "path": [
+                "vulnerabilities",
+                "search",
+                "AdamYahya"
+              ],
+              "query": [
+                {
+                  "key": "asset_id",
+                  "value": "6"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "search by status",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{admin}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{vulnURL}}/vulnerabilities/search/AdamYahya?status=Open",
+              "host": [
+                "{{vulnURL}}"
+              ],
+              "path": [
+                "vulnerabilities",
+                "search",
+                "AdamYahya"
+              ],
+              "query": [
+                {
+                  "key": "status",
+                  "value": "Open"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "delete as analyst",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{jad}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{vulnURL}}/vulnerabilities/3/AdamYahya",
+              "host": [
+                "{{vulnURL}}"
+              ],
+              "path": [
+                "vulnerabilities",
+                "3",
+                "AdamYahya"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "delete as admin",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{admin}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{vulnURL}}/vulnerabilities/3/AdamYahya",
+              "host": [
+                "{{vulnURL}}"
+              ],
+              "path": [
+                "vulnerabilities",
+                "3",
+                "AdamYahya"
+              ]
+            }
           },
           "response": []
         }
@@ -1366,121 +1993,16 @@
   ],
   "variable": [
     {
-      "key": "json_web_token_1103",
+      "key": "admin",
       "secret": true
     },
     {
-      "key": "json_web_token_0qvv",
+      "key": "yy",
       "secret": true
     },
     {
-      "key": "json_web_token_03ru",
+      "key": "jad",
       "secret": true
-    },
-    {
-      "key": "json_web_token_0dxg",
-      "secret": true
-    },
-    {
-      "key": "json_web_token_0u3y",
-      "secret": true
-    },
-    {
-      "key": "json_web_token_0zp4",
-      "secret": true
-    },
-    {
-      "key": "json_web_token_113g",
-      "secret": true
-    },
-    {
-      "key": "json_web_token_0rs7",
-      "secret": true
-    },
-    {
-      "key": "baseURL",
-      "value": "http://127.0.0.1:5001",
-      "type": "string"
-    },
-    {
-      "key": "notificationURL",
-      "value": "http://127.0.0.1:5008",
-      "type": "string"
-    },
-    {
-      "key": "invalidToken",
-      "value": "invalid-token",
-      "type": "string"
-    },
-    {
-      "key": "recipientUsername",
-      "value": "s8_employee",
-      "type": "string"
-    },
-    {
-      "key": "analystUsername",
-      "value": "s8_analyst",
-      "type": "string"
-    },
-    {
-      "key": "auditorUsername",
-      "value": "s8_auditor",
-      "type": "string"
-    },
-    {
-      "key": "adminPassword",
-      "value": "",
-      "type": "string"
-    },
-    {
-      "key": "recipientPassword",
-      "value": "",
-      "type": "string"
-    },
-    {
-      "key": "analystPassword",
-      "value": "",
-      "type": "string"
-    },
-    {
-      "key": "auditorPassword",
-      "value": "",
-      "type": "string"
-    },
-    {
-      "key": "adminToken",
-      "value": "",
-      "type": "string"
-    },
-    {
-      "key": "employeeToken",
-      "value": "",
-      "type": "string"
-    },
-    {
-      "key": "analystToken",
-      "value": "",
-      "type": "string"
-    },
-    {
-      "key": "auditorToken",
-      "value": "",
-      "type": "string"
-    },
-    {
-      "key": "recipientId",
-      "value": "",
-      "type": "string"
-    },
-    {
-      "key": "emptyUserId",
-      "value": "",
-      "type": "string"
-    },
-    {
-      "key": "notificationId",
-      "value": "",
-      "type": "string"
     }
   ]
 }

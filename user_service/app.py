@@ -37,7 +37,7 @@ def check_can_assign_role(role):
     return caller["user_id"]
 
 
-@app.post("/users/register")
+@app.post("/users/register/AdamYahya")
 def register():
     """Create a new user account
 
@@ -73,7 +73,7 @@ def register():
                             repository.get_by_id(new_id), 201)
 
 
-@app.post("/users/login")
+@app.post("/users/login/AdamYahya")
 def login():
     """Log in with a username or email and a password, and return a token.
 
@@ -115,7 +115,7 @@ def login():
     })
 
 
-@app.get("/users")
+@app.get("/users/AdamYahya")
 @roles_required(config.ROLE_ADMIN, config.ROLE_AUDITOR, service=SERVICE)
 def get_all_users():
     """Return every registered user (Security Administrator and Auditor only).
@@ -125,7 +125,7 @@ def get_all_users():
     return success_response("Users retrieved successfully", repository.get_all())
 
 
-@app.get("/users/<username>")
+@app.get("/users/<username>/AdamYahya")
 def get_user(username):
     """Return one user by username.
 
@@ -149,7 +149,7 @@ def get_user(username):
     return success_response("User retrieved successfully", user)
 
 
-@app.put("/users/<user_id>")
+@app.put("/users/<user_id>/AdamYahya")
 def update_user(user_id):
     """Update full_name, email and/or department of a user.
 
@@ -194,7 +194,7 @@ def update_user(user_id):
     return success_response("User updated successfully", repository.get_by_id(user_id))
 
 
-@app.delete("/users/<user_id>")
+@app.delete("/users/<user_id>/AdamYahya")
 @roles_required(config.ROLE_ADMIN, service=SERVICE)
 def delete_user(user_id):
     """Delete a user account (Security Administrator only).
