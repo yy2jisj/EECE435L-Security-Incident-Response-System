@@ -7,19 +7,21 @@ from common.audit import log_event
 from common.auth import roles_required
 from common.errors import ApiError, register_error_handlers, success_response
 from common.validators import (
-    check_fields, choice, clean_text, get_json_body, parse_id, read_filters,
+    check_fields, choice, clean_text, get_json_body, read_filters,
 )
 from threat_service import repository
 from threat_service.models import SEVERITY_LEVELS, THREAT_TYPES, Threat
+from threat_service.models import threat_id as threat_id_from_url
 
 SERVICE = "threats"
+BASE_ROUTE = "/leen-abdallah/threats"
 SEARCH_PARAMETERS = ("threat_type", "threat_value", "severity_level", "source")
 
 app = Flask(__name__)
 register_error_handlers(app)
 
 
-@app.post("/threats")
+@app.post(BASE_ROUTE)
 @roles_required(config.ROLE_ADMIN, service=SERVICE)
 def add_threat():
     """Add a new threat indicator (Security Administrator only).
@@ -55,7 +57,7 @@ def add_threat():
                             repository.get_by_id(new_id), 201)
 
 
-@app.get("/threats/search")
+@app.get(BASE_ROUTE + "/search")
 @roles_required(config.ROLE_ADMIN, config.ROLE_ANALYST, service=SERVICE)
 def search_threats():
     """Search threats by type, value, severity level or source.
@@ -81,7 +83,7 @@ def search_threats():
     return success_response(f"{len(threats)} threat(s) found", threats)
 
 
-@app.get("/threats")
+@app.get(BASE_ROUTE)
 @roles_required(config.ROLE_ADMIN, config.ROLE_ANALYST, config.ROLE_AUDITOR,
                 service=SERVICE)
 def get_all_threats():
@@ -92,7 +94,7 @@ def get_all_threats():
     return success_response("Threats retrieved successfully", repository.get_all())
 
 
-@app.get("/threats/<threat_id>")
+@app.get(BASE_ROUTE + "/<threat_id>")
 @roles_required(config.ROLE_ADMIN, config.ROLE_ANALYST, config.ROLE_AUDITOR,
                 service=SERVICE)
 def get_threat(threat_id):
@@ -100,14 +102,14 @@ def get_threat(threat_id):
 
     Implemented by: Leen Abdallah
     """
-    threat_id = parse_id(threat_id, "threat id")
+    threat_id = threat_id_from_url(threat_id)
     threat = repository.get_by_id(threat_id)
     if threat is None:
         raise ApiError("Threat not found", 404)
     return success_response("Threat retrieved successfully", threat)
 
 
-@app.put("/threats/<threat_id>")
+@app.put(BASE_ROUTE + "/<threat_id>")
 @roles_required(config.ROLE_ADMIN, service=SERVICE)
 def update_threat(threat_id):
     """Update the description, severity level and/or source of a threat.
@@ -118,7 +120,7 @@ def update_threat(threat_id):
     Implemented by: Leen Abdallah
     """
     caller = g.current_user
-    threat_id = parse_id(threat_id, "threat id")
+    threat_id = threat_id_from_url(threat_id)
 
     data = get_json_body()
     check_fields(data, allowed=["description", "severity_level", "source"])
@@ -143,7 +145,7 @@ def update_threat(threat_id):
     return success_response("Threat updated successfully", repository.get_by_id(threat_id))
 
 
-@app.delete("/threats/<threat_id>")
+@app.delete(BASE_ROUTE + "/<threat_id>")
 @roles_required(config.ROLE_ADMIN, service=SERVICE)
 def delete_threat(threat_id):
     """Delete a threat indicator (Security Administrator only).
@@ -151,7 +153,7 @@ def delete_threat(threat_id):
     Implemented by: Leen Abdallah
     """
     caller = g.current_user
-    threat_id = parse_id(threat_id, "threat id")
+    threat_id = threat_id_from_url(threat_id)
 
     threat = repository.get_by_id(threat_id)
     if threat is None:

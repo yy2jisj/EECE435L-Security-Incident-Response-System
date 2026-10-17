@@ -34,9 +34,13 @@ def get_all():
 
 
 def find_duplicate(threat_type, threat_value):
-    """Return the existing threat with this type and value, or None."""
+    """Return the existing threat with this type and value, or None.
+
+    The value is compared ignoring upper and lower case, so "Trojan.X" and
+    "trojan.x" count as the same indicator.
+    """
     return fetch_one(
-        SELECT_THREAT + " WHERE threat_type = ? AND threat_value = ?",
+        SELECT_THREAT + " WHERE threat_type = ? AND LOWER(threat_value) = LOWER(?)",
         (threat_type, threat_value),
     )
 
