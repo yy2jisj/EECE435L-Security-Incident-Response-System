@@ -9,8 +9,8 @@ from common.errors import ApiError
 from common.service_client import fetch_resource
 
 # the list endpoint of each service (see the BASE_ROUTE of that service)
-USERS_PATH = "/users"
-ASSETS_PATH = "/assets"
+USERS_PATH = "/users/AdamYahya"
+ASSETS_PATH = "/assets/AdamYahya"
 INCIDENTS_PATH = "/Youssef-Al-Hajj-Youness/incidents"
 THREATS_PATH = "/leen-abdallah/threats"
 

@@ -168,6 +168,6 @@ class IncidentApiTests(ApiTestCase):
         self.assertEqual(saved["status"], "Closed")
         self.assertEqual(saved["resolution_date"], resolution_date)
         self.assertEqual(saved["investigation_notes"], [note.get_json()["data"]])
-        asset = self.assets.get(f"/assets/{self.asset_id}", headers=self.analyst)
+        asset = self.assets.get(f"/assets/{self.asset_id}/AdamYahya", headers=self.analyst)
         self.assertEqual(asset.status_code, 200)
         self.assertEqual(asset.get_json()["data"]["related_incidents"][0]["incident_id"], self.incident_id)

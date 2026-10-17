@@ -47,7 +47,7 @@ class ReportApiTests(ApiTestCase):
 
     def add_assets(self):
         self.create_asset()                       # a High criticality Server
-        response = assets_app.test_client().post("/assets", headers=self.admin, json={
+        response = assets_app.test_client().post("/assets/AdamYahya", headers=self.admin, json={
             "asset_name": "Core DB", "asset_type": "Database", "ip_address": "192.0.2.20",
             "department": "Security", "owner_id": self.reporter_id,
             "criticality_level": "Critical"})
@@ -165,7 +165,7 @@ class ReportApiTests(ApiTestCase):
                          [9.8, 9.1])
 
     def test_activity_report_matches_the_logs(self):
-        self.users.post("/users/login", json={"username": "admin", "password": "wrong"})
+        self.users.post("/users/login/AdamYahya", json={"username": "admin", "password": "wrong"})
         data = self.data("activity")
         stored = fetch_one("SELECT COUNT(*) AS total FROM logs")["total"]
         failed = fetch_one(

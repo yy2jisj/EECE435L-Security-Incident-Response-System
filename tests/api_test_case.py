@@ -37,14 +37,14 @@ class ApiTestCase(unittest.TestCase):
         self.auditor_id, self.auditor = self.register("auditor", config.ROLE_AUDITOR)
 
     def login(self, username, password):
-        response = self.users.post("/users/login", json={"username": username, "password": password})
+        response = self.users.post("/users/login/AdamYahya", json={"username": username, "password": password})
         self.assertEqual(response.status_code, 200, response.get_json())
         data = response.get_json()["data"]
         return data["user"]["user_id"], {"Authorization": "Bearer " + data["token"]}
 
     def register(self, username, role):
         password = "TemporaryFixture435!"
-        response = self.users.post("/users/register", headers=self.admin, json={
+        response = self.users.post("/users/register/AdamYahya", headers=self.admin, json={
             "full_name": "Fixture User", "username": username,
             "email": username + "@example.test", "password": password,
             "department": "Security", "role": role,
@@ -54,7 +54,7 @@ class ApiTestCase(unittest.TestCase):
 
     def create_asset(self):
         self.assets = assets_app.test_client()
-        response = self.assets.post("/assets", headers=self.admin, json={
+        response = self.assets.post("/assets/AdamYahya", headers=self.admin, json={
             "asset_name": "Fixture server", "asset_type": "Server",
             "ip_address": "192.0.2.10", "department": "Security",
             "owner_id": self.reporter_id, "criticality_level": "High",

@@ -31,12 +31,12 @@ class NotificationApiTests(unittest.TestCase):
         self.directory.cleanup()
 
     def login(self, username, password):
-        response = self.users.post("/users/login", json={"username": username, "password": password})
+        response = self.users.post("/users/login/AdamYahya", json={"username": username, "password": password})
         self.assertEqual(response.status_code, 200)
         return {"Authorization": "Bearer " + response.get_json()["data"]["token"]}
 
     def register(self, username, role):
-        response = self.users.post("/users/register", headers=self.admin, json={
+        response = self.users.post("/users/register/AdamYahya", headers=self.admin, json={
             "full_name": "Test User", "username": username, "email": username + "@example.com",
             "password": "TestPassword435!", "department": "IT", "role": role})
         self.assertEqual(response.status_code, 201)
@@ -143,7 +143,7 @@ class NotificationApiTests(unittest.TestCase):
         self.assertEqual(self.client.get(path, headers=self.admin).status_code, 200)
         self.assertEqual(self.client.delete(path, headers=self.admin).status_code, 200)
         self.assertEqual(self.client.get(path, headers=self.admin).status_code, 404)
-        self.assertEqual(self.users.get("/users/employee", headers=self.employee).status_code, 200)
+        self.assertEqual(self.users.get("/users/employee/AdamYahya", headers=self.employee).status_code, 200)
 
 
 if __name__ == "__main__":
