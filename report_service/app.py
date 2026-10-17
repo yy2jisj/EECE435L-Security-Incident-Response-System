@@ -5,7 +5,7 @@ from flask import Flask
 from common import config
 from common.auth import roles_required
 from common.errors import register_error_handlers, success_response
-from report_service import repository
+from report_service import repository, sources, statistics
 
 SERVICE = "reports"
 BASE_ROUTE = "/leen-abdallah/reports"
@@ -31,14 +31,16 @@ def summary_report():
 
     Implemented by: Leen Abdallah
     """
+    incidents = sources.get_incidents()
+    threats = sources.get_threats()
     data = {
         "generated_at": generated_at(),
-        "users": repository.count_users(),
-        "assets": repository.count_assets(),
-        "total_incidents": repository.count_incidents(),
-        "open_incidents": repository.count_open_incidents(),
-        "total_threats": repository.count_threats(),
-        "critical_threats": repository.count_critical_threats(),
+        "users": len(sources.get_users()),
+        "assets": len(sources.get_assets()),
+        "total_incidents": len(incidents),
+        "open_incidents": statistics.count_open_incidents(incidents),
+        "total_threats": len(threats),
+        "critical_threats": statistics.count_critical_threats(threats),
     }
     return success_response("Security summary report generated successfully", data)
 
@@ -50,12 +52,13 @@ def incident_report():
 
     Implemented by: Leen Abdallah
     """
+    incidents = sources.get_incidents()
     data = {
         "generated_at": generated_at(),
-        "total_incidents": repository.count_incidents(),
-        "open_incidents": repository.count_open_incidents(),
-        "incidents_by_severity": repository.incidents_by_severity(),
-        "incidents_by_status": repository.incidents_by_status(),
+        "total_incidents": len(incidents),
+        "open_incidents": statistics.count_open_incidents(incidents),
+        "incidents_by_severity": statistics.incidents_by_severity(incidents),
+        "incidents_by_status": statistics.incidents_by_status(incidents),
     }
     return success_response("Incident report generated successfully", data)
 
@@ -67,12 +70,13 @@ def asset_report():
 
     Implemented by: Leen Abdallah
     """
+    assets = sources.get_assets()
     data = {
         "generated_at": generated_at(),
-        "total_assets": repository.count_assets(),
-        "critical_assets": repository.count_critical_assets(),
-        "assets_by_type": repository.assets_by_type(),
-        "assets_by_criticality": repository.assets_by_criticality(),
+        "total_assets": len(assets),
+        "critical_assets": statistics.count_critical_assets(assets),
+        "assets_by_type": statistics.assets_by_type(assets),
+        "assets_by_criticality": statistics.assets_by_criticality(assets),
     }
     return success_response("Asset report generated successfully", data)
 
@@ -84,13 +88,14 @@ def threat_report():
 
     Implemented by: Leen Abdallah
     """
+    threats = sources.get_threats()
     data = {
         "generated_at": generated_at(),
-        "total_threats": repository.count_threats(),
-        "critical_threats": repository.count_critical_threats(),
-        "threats_by_severity": repository.threats_by_severity(),
-        "threats_by_type": repository.threats_by_type(),
-        "recent_threats": repository.recent_threats(),
+        "total_threats": len(threats),
+        "critical_threats": statistics.count_critical_threats(threats),
+        "threats_by_severity": statistics.threats_by_severity(threats),
+        "threats_by_type": statistics.threats_by_type(threats),
+        "recent_threats": statistics.recent_threats(threats),
     }
     return success_response("Threat report generated successfully", data)
 
