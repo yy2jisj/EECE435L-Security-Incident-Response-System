@@ -1571,15 +1571,16 @@
                   }
                 },
                 "url": {
-                  "raw": "{{threatsURL}}/threats",
+                  "raw": "{{threatsURL}}/leen-abdallah/threats",
                   "host": [
                     "{{threatsURL}}"
                   ],
                   "path": [
+                    "leen-abdallah",
                     "threats"
                   ]
                 },
-                "description": "POST /threats. Adds a High severity IP Address threat. Admin only. Returns 201. Implemented by: Leen Abdallah"
+                "description": "POST /leen-abdallah/threats. Adds a High severity IP Address threat. Admin only. Returns 201. Implemented by: Leen Abdallah"
               },
               "response": []
             },
@@ -1619,15 +1620,16 @@
                   }
                 },
                 "url": {
-                  "raw": "{{threatsURL}}/threats",
+                  "raw": "{{threatsURL}}/leen-abdallah/threats",
                   "host": [
                     "{{threatsURL}}"
                   ],
                   "path": [
+                    "leen-abdallah",
                     "threats"
                   ]
                 },
-                "description": "POST /threats. Adds a Critical severity Domain threat. Returns 201. Implemented by: Leen Abdallah"
+                "description": "POST /leen-abdallah/threats. Adds a Critical severity Domain threat. Returns 201. Implemented by: Leen Abdallah"
               },
               "response": []
             },
@@ -1667,15 +1669,16 @@
                   }
                 },
                 "url": {
-                  "raw": "{{threatsURL}}/threats",
+                  "raw": "{{threatsURL}}/leen-abdallah/threats",
                   "host": [
                     "{{threatsURL}}"
                   ],
                   "path": [
+                    "leen-abdallah",
                     "threats"
                   ]
                 },
-                "description": "POST /threats. Adds a Low severity File Hash (MD5) threat. Returns 201. Implemented by: Leen Abdallah"
+                "description": "POST /leen-abdallah/threats. Adds a Low severity File Hash (MD5) threat. Returns 201. Implemented by: Leen Abdallah"
               },
               "response": []
             },
@@ -1715,15 +1718,16 @@
                   }
                 },
                 "url": {
-                  "raw": "{{threatsURL}}/threats",
+                  "raw": "{{threatsURL}}/leen-abdallah/threats",
                   "host": [
                     "{{threatsURL}}"
                   ],
                   "path": [
+                    "leen-abdallah",
                     "threats"
                   ]
                 },
-                "description": "POST /threats. Adds a Medium severity Malware Signature threat. Returns 201. Implemented by: Leen Abdallah"
+                "description": "POST /leen-abdallah/threats. Adds a Medium severity Malware Signature threat. Returns 201. Implemented by: Leen Abdallah"
               },
               "response": []
             },
@@ -1764,15 +1768,16 @@
                   }
                 },
                 "url": {
-                  "raw": "{{threatsURL}}/threats",
+                  "raw": "{{threatsURL}}/leen-abdallah/threats",
                   "host": [
                     "{{threatsURL}}"
                   ],
                   "path": [
+                    "leen-abdallah",
                     "threats"
                   ]
                 },
-                "description": "POST /threats. Adds a Medium severity Other indicator (used by the delete tests). Returns 201. Implemented by: Leen Abdallah"
+                "description": "POST /leen-abdallah/threats. Adds a Medium severity Other indicator (used by the delete tests). Returns 201. Implemented by: Leen Abdallah"
               },
               "response": []
             },
@@ -1812,15 +1817,16 @@
                   }
                 },
                 "url": {
-                  "raw": "{{threatsURL}}/threats",
+                  "raw": "{{threatsURL}}/leen-abdallah/threats",
                   "host": [
                     "{{threatsURL}}"
                   ],
                   "path": [
+                    "leen-abdallah",
                     "threats"
                   ]
                 },
-                "description": "POST /threats. Same type and value as an existing threat. Returns 409. Implemented by: Leen Abdallah"
+                "description": "POST /leen-abdallah/threats. Same type and value as an existing threat. Returns 409. Implemented by: Leen Abdallah"
               },
               "response": []
             },
@@ -1860,15 +1866,16 @@
                   }
                 },
                 "url": {
-                  "raw": "{{threatsURL}}/threats",
+                  "raw": "{{threatsURL}}/leen-abdallah/threats",
                   "host": [
                     "{{threatsURL}}"
                   ],
                   "path": [
+                    "leen-abdallah",
                     "threats"
                   ]
                 },
-                "description": "POST /threats. IP threat with an invalid IP address. Returns 400. Implemented by: Leen Abdallah"
+                "description": "POST /leen-abdallah/threats. IP threat with an invalid IP address. Returns 400. Implemented by: Leen Abdallah"
               },
               "response": []
             },
@@ -1908,15 +1915,16 @@
                   }
                 },
                 "url": {
-                  "raw": "{{threatsURL}}/threats",
+                  "raw": "{{threatsURL}}/leen-abdallah/threats",
                   "host": [
                     "{{threatsURL}}"
                   ],
                   "path": [
+                    "leen-abdallah",
                     "threats"
                   ]
                 },
-                "description": "POST /threats. Domain threat with an invalid domain. Returns 400. Implemented by: Leen Abdallah"
+                "description": "POST /leen-abdallah/threats. Domain threat with an invalid domain. Returns 400. Implemented by: Leen Abdallah"
               },
               "response": []
             },
@@ -1956,15 +1964,16 @@
                   }
                 },
                 "url": {
-                  "raw": "{{threatsURL}}/threats",
+                  "raw": "{{threatsURL}}/leen-abdallah/threats",
                   "host": [
                     "{{threatsURL}}"
                   ],
                   "path": [
+                    "leen-abdallah",
                     "threats"
                   ]
                 },
-                "description": "POST /threats. File hash threat that is not 32, 40 or 64 hex characters. Returns 400. Implemented by: Leen Abdallah"
+                "description": "POST /leen-abdallah/threats. File hash threat that is not 32, 40 or 64 hex characters. Returns 400. Implemented by: Leen Abdallah"
               },
               "response": []
             },
@@ -2004,15 +2013,16 @@
                   }
                 },
                 "url": {
-                  "raw": "{{threatsURL}}/threats",
+                  "raw": "{{threatsURL}}/leen-abdallah/threats",
                   "host": [
                     "{{threatsURL}}"
                   ],
                   "path": [
+                    "leen-abdallah",
                     "threats"
                   ]
                 },
-                "description": "POST /threats. Unsupported threat type. Returns 400. Implemented by: Leen Abdallah"
+                "description": "POST /leen-abdallah/threats. Unsupported threat type. Returns 400. Implemented by: Leen Abdallah"
               },
               "response": []
             },
@@ -2052,15 +2062,16 @@
                   }
                 },
                 "url": {
-                  "raw": "{{threatsURL}}/threats",
+                  "raw": "{{threatsURL}}/leen-abdallah/threats",
                   "host": [
                     "{{threatsURL}}"
                   ],
                   "path": [
+                    "leen-abdallah",
                     "threats"
                   ]
                 },
-                "description": "POST /threats. Unsupported severity level. Returns 400. Implemented by: Leen Abdallah"
+                "description": "POST /leen-abdallah/threats. Unsupported severity level. Returns 400. Implemented by: Leen Abdallah"
               },
               "response": []
             },
@@ -2100,15 +2111,16 @@
                   }
                 },
                 "url": {
-                  "raw": "{{threatsURL}}/threats",
+                  "raw": "{{threatsURL}}/leen-abdallah/threats",
                   "host": [
                     "{{threatsURL}}"
                   ],
                   "path": [
+                    "leen-abdallah",
                     "threats"
                   ]
                 },
-                "description": "POST /threats. Required fields missing. Returns 400. Implemented by: Leen Abdallah"
+                "description": "POST /leen-abdallah/threats. Required fields missing. Returns 400. Implemented by: Leen Abdallah"
               },
               "response": []
             },
@@ -2148,15 +2160,16 @@
                   }
                 },
                 "url": {
-                  "raw": "{{threatsURL}}/threats",
+                  "raw": "{{threatsURL}}/leen-abdallah/threats",
                   "host": [
                     "{{threatsURL}}"
                   ],
                   "path": [
+                    "leen-abdallah",
                     "threats"
                   ]
                 },
-                "description": "POST /threats. Analysts cannot add threats. Returns 403 and the attempt is logged. Implemented by: Leen Abdallah"
+                "description": "POST /leen-abdallah/threats. Analysts cannot add threats. Returns 403 and the attempt is logged. Implemented by: Leen Abdallah"
               },
               "response": []
             },
@@ -2196,15 +2209,16 @@
                   }
                 },
                 "url": {
-                  "raw": "{{threatsURL}}/threats",
+                  "raw": "{{threatsURL}}/leen-abdallah/threats",
                   "host": [
                     "{{threatsURL}}"
                   ],
                   "path": [
+                    "leen-abdallah",
                     "threats"
                   ]
                 },
-                "description": "POST /threats. Auditors cannot add threats. Returns 403. Implemented by: Leen Abdallah"
+                "description": "POST /leen-abdallah/threats. Auditors cannot add threats. Returns 403. Implemented by: Leen Abdallah"
               },
               "response": []
             },
@@ -2244,15 +2258,16 @@
                   }
                 },
                 "url": {
-                  "raw": "{{threatsURL}}/threats",
+                  "raw": "{{threatsURL}}/leen-abdallah/threats",
                   "host": [
                     "{{threatsURL}}"
                   ],
                   "path": [
+                    "leen-abdallah",
                     "threats"
                   ]
                 },
-                "description": "POST /threats. Regular users have no threat access. Returns 403. Implemented by: Leen Abdallah"
+                "description": "POST /leen-abdallah/threats. Regular users have no threat access. Returns 403. Implemented by: Leen Abdallah"
               },
               "response": []
             },
@@ -2282,15 +2297,16 @@
                   }
                 },
                 "url": {
-                  "raw": "{{threatsURL}}/threats",
+                  "raw": "{{threatsURL}}/leen-abdallah/threats",
                   "host": [
                     "{{threatsURL}}"
                   ],
                   "path": [
+                    "leen-abdallah",
                     "threats"
                   ]
                 },
-                "description": "POST /threats. No token. Returns 401. Implemented by: Leen Abdallah"
+                "description": "POST /leen-abdallah/threats. No token. Returns 401. Implemented by: Leen Abdallah"
               },
               "response": []
             }
@@ -2326,15 +2342,16 @@
                   ]
                 },
                 "url": {
-                  "raw": "{{threatsURL}}/threats",
+                  "raw": "{{threatsURL}}/leen-abdallah/threats",
                   "host": [
                     "{{threatsURL}}"
                   ],
                   "path": [
+                    "leen-abdallah",
                     "threats"
                   ]
                 },
-                "description": "GET /threats. Returns every threat. Admin, Analyst and Auditor allowed. Implemented by: Leen Abdallah"
+                "description": "GET /leen-abdallah/threats. Returns every threat. Admin, Analyst and Auditor allowed. Implemented by: Leen Abdallah"
               },
               "response": []
             },
@@ -2365,15 +2382,16 @@
                   ]
                 },
                 "url": {
-                  "raw": "{{threatsURL}}/threats",
+                  "raw": "{{threatsURL}}/leen-abdallah/threats",
                   "host": [
                     "{{threatsURL}}"
                   ],
                   "path": [
+                    "leen-abdallah",
                     "threats"
                   ]
                 },
-                "description": "GET /threats. Analyst may read all threats. Implemented by: Leen Abdallah"
+                "description": "GET /leen-abdallah/threats. Analyst may read all threats. Implemented by: Leen Abdallah"
               },
               "response": []
             },
@@ -2404,15 +2422,16 @@
                   ]
                 },
                 "url": {
-                  "raw": "{{threatsURL}}/threats",
+                  "raw": "{{threatsURL}}/leen-abdallah/threats",
                   "host": [
                     "{{threatsURL}}"
                   ],
                   "path": [
+                    "leen-abdallah",
                     "threats"
                   ]
                 },
-                "description": "GET /threats. Auditor may read all threats. Implemented by: Leen Abdallah"
+                "description": "GET /leen-abdallah/threats. Auditor may read all threats. Implemented by: Leen Abdallah"
               },
               "response": []
             },
@@ -2443,15 +2462,16 @@
                   ]
                 },
                 "url": {
-                  "raw": "{{threatsURL}}/threats",
+                  "raw": "{{threatsURL}}/leen-abdallah/threats",
                   "host": [
                     "{{threatsURL}}"
                   ],
                   "path": [
+                    "leen-abdallah",
                     "threats"
                   ]
                 },
-                "description": "GET /threats. Regular users are refused. Returns 403. Implemented by: Leen Abdallah"
+                "description": "GET /leen-abdallah/threats. Regular users are refused. Returns 403. Implemented by: Leen Abdallah"
               },
               "response": []
             }
@@ -2487,16 +2507,17 @@
                   ]
                 },
                 "url": {
-                  "raw": "{{threatsURL}}/threats/{{threatId}}",
+                  "raw": "{{threatsURL}}/leen-abdallah/threats/{{threatId}}",
                   "host": [
                     "{{threatsURL}}"
                   ],
                   "path": [
+                    "leen-abdallah",
                     "threats",
                     "{{threatId}}"
                   ]
                 },
-                "description": "GET /threats/{id}. Returns one threat. Implemented by: Leen Abdallah"
+                "description": "GET /leen-abdallah/threats/{id}. Returns one threat. Implemented by: Leen Abdallah"
               },
               "response": []
             },
@@ -2527,16 +2548,17 @@
                   ]
                 },
                 "url": {
-                  "raw": "{{threatsURL}}/threats/{{threatId}}",
+                  "raw": "{{threatsURL}}/leen-abdallah/threats/{{threatId}}",
                   "host": [
                     "{{threatsURL}}"
                   ],
                   "path": [
+                    "leen-abdallah",
                     "threats",
                     "{{threatId}}"
                   ]
                 },
-                "description": "GET /threats/{id}. Auditor may read a threat. Implemented by: Leen Abdallah"
+                "description": "GET /leen-abdallah/threats/{id}. Auditor may read a threat. Implemented by: Leen Abdallah"
               },
               "response": []
             },
@@ -2567,16 +2589,17 @@
                   ]
                 },
                 "url": {
-                  "raw": "{{threatsURL}}/threats/999999",
+                  "raw": "{{threatsURL}}/leen-abdallah/threats/999999",
                   "host": [
                     "{{threatsURL}}"
                   ],
                   "path": [
+                    "leen-abdallah",
                     "threats",
                     "999999"
                   ]
                 },
-                "description": "GET /threats/{id}. Unknown id returns 404. Implemented by: Leen Abdallah"
+                "description": "GET /leen-abdallah/threats/{id}. Unknown id returns 404. Implemented by: Leen Abdallah"
               },
               "response": []
             },
@@ -2607,16 +2630,17 @@
                   ]
                 },
                 "url": {
-                  "raw": "{{threatsURL}}/threats/abc",
+                  "raw": "{{threatsURL}}/leen-abdallah/threats/abc",
                   "host": [
                     "{{threatsURL}}"
                   ],
                   "path": [
+                    "leen-abdallah",
                     "threats",
                     "abc"
                   ]
                 },
-                "description": "GET /threats/{id}. Non-numeric id returns 400. Implemented by: Leen Abdallah"
+                "description": "GET /leen-abdallah/threats/{id}. Non-numeric id returns 400. Implemented by: Leen Abdallah"
               },
               "response": []
             },
@@ -2647,16 +2671,17 @@
                   ]
                 },
                 "url": {
-                  "raw": "{{threatsURL}}/threats/{{threatId}}",
+                  "raw": "{{threatsURL}}/leen-abdallah/threats/{{threatId}}",
                   "host": [
                     "{{threatsURL}}"
                   ],
                   "path": [
+                    "leen-abdallah",
                     "threats",
                     "{{threatId}}"
                   ]
                 },
-                "description": "GET /threats/{id}. Regular users are refused. Returns 403. Implemented by: Leen Abdallah"
+                "description": "GET /leen-abdallah/threats/{id}. Regular users are refused. Returns 403. Implemented by: Leen Abdallah"
               },
               "response": []
             }
@@ -2692,16 +2717,23 @@
                   ]
                 },
                 "url": {
-                  "raw": "{{threatsURL}}/threats/search?threat_type=Domain",
+                  "raw": "{{threatsURL}}/leen-abdallah/threats/search?threat_type=Domain",
                   "host": [
                     "{{threatsURL}}"
                   ],
                   "path": [
+                    "leen-abdallah",
                     "threats",
-                    "search?threat_type=Domain"
+                    "search"
+                  ],
+                  "query": [
+                    {
+                      "key": "threat_type",
+                      "value": "Domain"
+                    }
                   ]
                 },
-                "description": "GET /threats/search. Admin and Analyst only. Filters by threat_type. Implemented by: Leen Abdallah"
+                "description": "GET /leen-abdallah/threats/search. Admin and Analyst only. Filters by threat_type. Implemented by: Leen Abdallah"
               },
               "response": []
             },
@@ -2732,16 +2764,23 @@
                   ]
                 },
                 "url": {
-                  "raw": "{{threatsURL}}/threats/search?threat_value=192.168",
+                  "raw": "{{threatsURL}}/leen-abdallah/threats/search?threat_value=192.168",
                   "host": [
                     "{{threatsURL}}"
                   ],
                   "path": [
+                    "leen-abdallah",
                     "threats",
-                    "search?threat_value=192.168"
+                    "search"
+                  ],
+                  "query": [
+                    {
+                      "key": "threat_value",
+                      "value": "192.168"
+                    }
                   ]
                 },
-                "description": "GET /threats/search. Admin and Analyst only. Partial match on threat_value. Implemented by: Leen Abdallah"
+                "description": "GET /leen-abdallah/threats/search. Admin and Analyst only. Partial match on threat_value. Implemented by: Leen Abdallah"
               },
               "response": []
             },
@@ -2772,16 +2811,23 @@
                   ]
                 },
                 "url": {
-                  "raw": "{{threatsURL}}/threats/search?severity_level=High",
+                  "raw": "{{threatsURL}}/leen-abdallah/threats/search?severity_level=High",
                   "host": [
                     "{{threatsURL}}"
                   ],
                   "path": [
+                    "leen-abdallah",
                     "threats",
-                    "search?severity_level=High"
+                    "search"
+                  ],
+                  "query": [
+                    {
+                      "key": "severity_level",
+                      "value": "High"
+                    }
                   ]
                 },
-                "description": "GET /threats/search. Admin and Analyst only. Filters by severity_level. Implemented by: Leen Abdallah"
+                "description": "GET /leen-abdallah/threats/search. Admin and Analyst only. Filters by severity_level. Implemented by: Leen Abdallah"
               },
               "response": []
             },
@@ -2812,16 +2858,23 @@
                   ]
                 },
                 "url": {
-                  "raw": "{{threatsURL}}/threats/search?source=virus",
+                  "raw": "{{threatsURL}}/leen-abdallah/threats/search?source=virus",
                   "host": [
                     "{{threatsURL}}"
                   ],
                   "path": [
+                    "leen-abdallah",
                     "threats",
-                    "search?source=virus"
+                    "search"
+                  ],
+                  "query": [
+                    {
+                      "key": "source",
+                      "value": "virus"
+                    }
                   ]
                 },
-                "description": "GET /threats/search. Admin and Analyst only. Partial match on source. Implemented by: Leen Abdallah"
+                "description": "GET /leen-abdallah/threats/search. Admin and Analyst only. Partial match on source. Implemented by: Leen Abdallah"
               },
               "response": []
             },
@@ -2852,16 +2905,27 @@
                   ]
                 },
                 "url": {
-                  "raw": "{{threatsURL}}/threats/search?threat_type=Domain&severity_level=Critical",
+                  "raw": "{{threatsURL}}/leen-abdallah/threats/search?threat_type=Domain&severity_level=Critical",
                   "host": [
                     "{{threatsURL}}"
                   ],
                   "path": [
+                    "leen-abdallah",
                     "threats",
-                    "search?threat_type=Domain&severity_level=Critical"
+                    "search"
+                  ],
+                  "query": [
+                    {
+                      "key": "threat_type",
+                      "value": "Domain"
+                    },
+                    {
+                      "key": "severity_level",
+                      "value": "Critical"
+                    }
                   ]
                 },
-                "description": "GET /threats/search. Admin and Analyst only. Combines two filters. Implemented by: Leen Abdallah"
+                "description": "GET /leen-abdallah/threats/search. Admin and Analyst only. Combines two filters. Implemented by: Leen Abdallah"
               },
               "response": []
             },
@@ -2892,16 +2956,17 @@
                   ]
                 },
                 "url": {
-                  "raw": "{{threatsURL}}/threats/search",
+                  "raw": "{{threatsURL}}/leen-abdallah/threats/search",
                   "host": [
                     "{{threatsURL}}"
                   ],
                   "path": [
+                    "leen-abdallah",
                     "threats",
                     "search"
                   ]
                 },
-                "description": "GET /threats/search. Admin and Analyst only. At least one filter is required. Returns 400. Implemented by: Leen Abdallah"
+                "description": "GET /leen-abdallah/threats/search. Admin and Analyst only. At least one filter is required. Returns 400. Implemented by: Leen Abdallah"
               },
               "response": []
             },
@@ -2932,16 +2997,23 @@
                   ]
                 },
                 "url": {
-                  "raw": "{{threatsURL}}/threats/search?severity_level=x",
+                  "raw": "{{threatsURL}}/leen-abdallah/threats/search?severity_level=x",
                   "host": [
                     "{{threatsURL}}"
                   ],
                   "path": [
+                    "leen-abdallah",
                     "threats",
-                    "search?severity_level=x"
+                    "search"
+                  ],
+                  "query": [
+                    {
+                      "key": "severity_level",
+                      "value": "x"
+                    }
                   ]
                 },
-                "description": "GET /threats/search. Admin and Analyst only. Invalid filter value. Returns 400. Implemented by: Leen Abdallah"
+                "description": "GET /leen-abdallah/threats/search. Admin and Analyst only. Invalid filter value. Returns 400. Implemented by: Leen Abdallah"
               },
               "response": []
             },
@@ -2972,16 +3044,23 @@
                   ]
                 },
                 "url": {
-                  "raw": "{{threatsURL}}/threats/search?source=a",
+                  "raw": "{{threatsURL}}/leen-abdallah/threats/search?source=a",
                   "host": [
                     "{{threatsURL}}"
                   ],
                   "path": [
+                    "leen-abdallah",
                     "threats",
-                    "search?source=a"
+                    "search"
+                  ],
+                  "query": [
+                    {
+                      "key": "source",
+                      "value": "a"
+                    }
                   ]
                 },
-                "description": "GET /threats/search. Admin and Analyst only. Auditors cannot search. Returns 403. Implemented by: Leen Abdallah"
+                "description": "GET /leen-abdallah/threats/search. Admin and Analyst only. Auditors cannot search. Returns 403. Implemented by: Leen Abdallah"
               },
               "response": []
             },
@@ -3012,16 +3091,23 @@
                   ]
                 },
                 "url": {
-                  "raw": "{{threatsURL}}/threats/search?source=a",
+                  "raw": "{{threatsURL}}/leen-abdallah/threats/search?source=a",
                   "host": [
                     "{{threatsURL}}"
                   ],
                   "path": [
+                    "leen-abdallah",
                     "threats",
-                    "search?source=a"
+                    "search"
+                  ],
+                  "query": [
+                    {
+                      "key": "source",
+                      "value": "a"
+                    }
                   ]
                 },
-                "description": "GET /threats/search. Admin and Analyst only. Regular users are refused. Returns 403. Implemented by: Leen Abdallah"
+                "description": "GET /leen-abdallah/threats/search. Admin and Analyst only. Regular users are refused. Returns 403. Implemented by: Leen Abdallah"
               },
               "response": []
             }
@@ -3057,11 +3143,12 @@
                   ]
                 },
                 "url": {
-                  "raw": "{{threatsURL}}/threats/{{threatId}}",
+                  "raw": "{{threatsURL}}/leen-abdallah/threats/{{threatId}}",
                   "host": [
                     "{{threatsURL}}"
                   ],
                   "path": [
+                    "leen-abdallah",
                     "threats",
                     "{{threatId}}"
                   ]
@@ -3106,16 +3193,17 @@
                   }
                 },
                 "url": {
-                  "raw": "{{threatsURL}}/threats/{{threatId}}",
+                  "raw": "{{threatsURL}}/leen-abdallah/threats/{{threatId}}",
                   "host": [
                     "{{threatsURL}}"
                   ],
                   "path": [
+                    "leen-abdallah",
                     "threats",
                     "{{threatId}}"
                   ]
                 },
-                "description": "PUT /threats/{id}. Admin only. Updates all three updatable fields. Implemented by: Leen Abdallah"
+                "description": "PUT /leen-abdallah/threats/{id}. Admin only. Updates all three updatable fields. Implemented by: Leen Abdallah"
               },
               "response": []
             },
@@ -3146,11 +3234,12 @@
                   ]
                 },
                 "url": {
-                  "raw": "{{threatsURL}}/threats/{{threatId}}",
+                  "raw": "{{threatsURL}}/leen-abdallah/threats/{{threatId}}",
                   "host": [
                     "{{threatsURL}}"
                   ],
                   "path": [
+                    "leen-abdallah",
                     "threats",
                     "{{threatId}}"
                   ]
@@ -3195,16 +3284,17 @@
                   }
                 },
                 "url": {
-                  "raw": "{{threatsURL}}/threats/{{threatId}}",
+                  "raw": "{{threatsURL}}/leen-abdallah/threats/{{threatId}}",
                   "host": [
                     "{{threatsURL}}"
                   ],
                   "path": [
+                    "leen-abdallah",
                     "threats",
                     "{{threatId}}"
                   ]
                 },
-                "description": "PUT /threats/{id}. Admin only. Partial update. Implemented by: Leen Abdallah"
+                "description": "PUT /leen-abdallah/threats/{id}. Admin only. Partial update. Implemented by: Leen Abdallah"
               },
               "response": []
             },
@@ -3244,16 +3334,17 @@
                   }
                 },
                 "url": {
-                  "raw": "{{threatsURL}}/threats/{{threatId}}",
+                  "raw": "{{threatsURL}}/leen-abdallah/threats/{{threatId}}",
                   "host": [
                     "{{threatsURL}}"
                   ],
                   "path": [
+                    "leen-abdallah",
                     "threats",
                     "{{threatId}}"
                   ]
                 },
-                "description": "PUT /threats/{id}. Admin only. Type and value cannot be changed. Returns 400. Implemented by: Leen Abdallah"
+                "description": "PUT /leen-abdallah/threats/{id}. Admin only. Type and value cannot be changed. Returns 400. Implemented by: Leen Abdallah"
               },
               "response": []
             },
@@ -3293,16 +3384,17 @@
                   }
                 },
                 "url": {
-                  "raw": "{{threatsURL}}/threats/{{threatId}}",
+                  "raw": "{{threatsURL}}/leen-abdallah/threats/{{threatId}}",
                   "host": [
                     "{{threatsURL}}"
                   ],
                   "path": [
+                    "leen-abdallah",
                     "threats",
                     "{{threatId}}"
                   ]
                 },
-                "description": "PUT /threats/{id}. Admin only. Invalid severity. Returns 400. Implemented by: Leen Abdallah"
+                "description": "PUT /leen-abdallah/threats/{id}. Admin only. Invalid severity. Returns 400. Implemented by: Leen Abdallah"
               },
               "response": []
             },
@@ -3342,16 +3434,17 @@
                   }
                 },
                 "url": {
-                  "raw": "{{threatsURL}}/threats/999999",
+                  "raw": "{{threatsURL}}/leen-abdallah/threats/999999",
                   "host": [
                     "{{threatsURL}}"
                   ],
                   "path": [
+                    "leen-abdallah",
                     "threats",
                     "999999"
                   ]
                 },
-                "description": "PUT /threats/{id}. Admin only. Unknown id returns 404. Implemented by: Leen Abdallah"
+                "description": "PUT /leen-abdallah/threats/{id}. Admin only. Unknown id returns 404. Implemented by: Leen Abdallah"
               },
               "response": []
             },
@@ -3391,16 +3484,17 @@
                   }
                 },
                 "url": {
-                  "raw": "{{threatsURL}}/threats/{{threatId}}",
+                  "raw": "{{threatsURL}}/leen-abdallah/threats/{{threatId}}",
                   "host": [
                     "{{threatsURL}}"
                   ],
                   "path": [
+                    "leen-abdallah",
                     "threats",
                     "{{threatId}}"
                   ]
                 },
-                "description": "PUT /threats/{id}. Admin only. Analysts cannot update. Returns 403. Implemented by: Leen Abdallah"
+                "description": "PUT /leen-abdallah/threats/{id}. Admin only. Analysts cannot update. Returns 403. Implemented by: Leen Abdallah"
               },
               "response": []
             },
@@ -3440,16 +3534,17 @@
                   }
                 },
                 "url": {
-                  "raw": "{{threatsURL}}/threats/{{threatId}}",
+                  "raw": "{{threatsURL}}/leen-abdallah/threats/{{threatId}}",
                   "host": [
                     "{{threatsURL}}"
                   ],
                   "path": [
+                    "leen-abdallah",
                     "threats",
                     "{{threatId}}"
                   ]
                 },
-                "description": "PUT /threats/{id}. Admin only. Regular users cannot update. Returns 403. Implemented by: Leen Abdallah"
+                "description": "PUT /leen-abdallah/threats/{id}. Admin only. Regular users cannot update. Returns 403. Implemented by: Leen Abdallah"
               },
               "response": []
             }
@@ -3485,16 +3580,17 @@
                   ]
                 },
                 "url": {
-                  "raw": "{{threatsURL}}/threats/{{deleteThreatId}}",
+                  "raw": "{{threatsURL}}/leen-abdallah/threats/{{deleteThreatId}}",
                   "host": [
                     "{{threatsURL}}"
                   ],
                   "path": [
+                    "leen-abdallah",
                     "threats",
                     "{{deleteThreatId}}"
                   ]
                 },
-                "description": "DELETE /threats/{id}. Admin only. Analysts cannot delete. Returns 403 and the attempt is logged. Implemented by: Leen Abdallah"
+                "description": "DELETE /leen-abdallah/threats/{id}. Admin only. Analysts cannot delete. Returns 403 and the attempt is logged. Implemented by: Leen Abdallah"
               },
               "response": []
             },
@@ -3525,16 +3621,17 @@
                   ]
                 },
                 "url": {
-                  "raw": "{{threatsURL}}/threats/{{deleteThreatId}}",
+                  "raw": "{{threatsURL}}/leen-abdallah/threats/{{deleteThreatId}}",
                   "host": [
                     "{{threatsURL}}"
                   ],
                   "path": [
+                    "leen-abdallah",
                     "threats",
                     "{{deleteThreatId}}"
                   ]
                 },
-                "description": "DELETE /threats/{id}. Admin only. Auditors cannot delete. Returns 403. Implemented by: Leen Abdallah"
+                "description": "DELETE /leen-abdallah/threats/{id}. Admin only. Auditors cannot delete. Returns 403. Implemented by: Leen Abdallah"
               },
               "response": []
             },
@@ -3565,16 +3662,17 @@
                   ]
                 },
                 "url": {
-                  "raw": "{{threatsURL}}/threats/{{deleteThreatId}}",
+                  "raw": "{{threatsURL}}/leen-abdallah/threats/{{deleteThreatId}}",
                   "host": [
                     "{{threatsURL}}"
                   ],
                   "path": [
+                    "leen-abdallah",
                     "threats",
                     "{{deleteThreatId}}"
                   ]
                 },
-                "description": "DELETE /threats/{id}. Admin only. Regular users cannot delete. Returns 403. Implemented by: Leen Abdallah"
+                "description": "DELETE /leen-abdallah/threats/{id}. Admin only. Regular users cannot delete. Returns 403. Implemented by: Leen Abdallah"
               },
               "response": []
             },
@@ -3595,16 +3693,17 @@
                 "method": "DELETE",
                 "header": [],
                 "url": {
-                  "raw": "{{threatsURL}}/threats/{{deleteThreatId}}",
+                  "raw": "{{threatsURL}}/leen-abdallah/threats/{{deleteThreatId}}",
                   "host": [
                     "{{threatsURL}}"
                   ],
                   "path": [
+                    "leen-abdallah",
                     "threats",
                     "{{deleteThreatId}}"
                   ]
                 },
-                "description": "DELETE /threats/{id}. Admin only. No token. Returns 401. Implemented by: Leen Abdallah"
+                "description": "DELETE /leen-abdallah/threats/{id}. Admin only. No token. Returns 401. Implemented by: Leen Abdallah"
               },
               "response": []
             },
@@ -3635,16 +3734,17 @@
                   ]
                 },
                 "url": {
-                  "raw": "{{threatsURL}}/threats/{{deleteThreatId}}",
+                  "raw": "{{threatsURL}}/leen-abdallah/threats/{{deleteThreatId}}",
                   "host": [
                     "{{threatsURL}}"
                   ],
                   "path": [
+                    "leen-abdallah",
                     "threats",
                     "{{deleteThreatId}}"
                   ]
                 },
-                "description": "DELETE /threats/{id}. Admin only. Deletes the threat. Returns 200. Implemented by: Leen Abdallah"
+                "description": "DELETE /leen-abdallah/threats/{id}. Admin only. Deletes the threat. Returns 200. Implemented by: Leen Abdallah"
               },
               "response": []
             },
@@ -3675,11 +3775,12 @@
                   ]
                 },
                 "url": {
-                  "raw": "{{threatsURL}}/threats/{{deleteThreatId}}",
+                  "raw": "{{threatsURL}}/leen-abdallah/threats/{{deleteThreatId}}",
                   "host": [
                     "{{threatsURL}}"
                   ],
                   "path": [
+                    "leen-abdallah",
                     "threats",
                     "{{deleteThreatId}}"
                   ]
@@ -3715,16 +3816,17 @@
                   ]
                 },
                 "url": {
-                  "raw": "{{threatsURL}}/threats/{{deleteThreatId}}",
+                  "raw": "{{threatsURL}}/leen-abdallah/threats/{{deleteThreatId}}",
                   "host": [
                     "{{threatsURL}}"
                   ],
                   "path": [
+                    "leen-abdallah",
                     "threats",
                     "{{deleteThreatId}}"
                   ]
                 },
-                "description": "DELETE /threats/{id}. Admin only. Returns 404. Implemented by: Leen Abdallah"
+                "description": "DELETE /leen-abdallah/threats/{id}. Admin only. Returns 404. Implemented by: Leen Abdallah"
               },
               "response": []
             }
@@ -3937,16 +4039,17 @@
                   ]
                 },
                 "url": {
-                  "raw": "{{reportsURL}}/reports/summary",
+                  "raw": "{{reportsURL}}/leen-abdallah/reports/summary",
                   "host": [
                     "{{reportsURL}}"
                   ],
                   "path": [
+                    "leen-abdallah",
                     "reports",
                     "summary"
                   ]
                 },
-                "description": "GET /reports/summary. Overview of users, assets, incidents and threats. Allowed: returns 200 with the report. Implemented by: Leen Abdallah"
+                "description": "GET /leen-abdallah/reports/summary. Overview of users, assets, incidents and threats. Allowed: returns 200 with the report. Implemented by: Leen Abdallah"
               },
               "response": []
             },
@@ -3984,16 +4087,17 @@
                   ]
                 },
                 "url": {
-                  "raw": "{{reportsURL}}/reports/summary",
+                  "raw": "{{reportsURL}}/leen-abdallah/reports/summary",
                   "host": [
                     "{{reportsURL}}"
                   ],
                   "path": [
+                    "leen-abdallah",
                     "reports",
                     "summary"
                   ]
                 },
-                "description": "GET /reports/summary. Overview of users, assets, incidents and threats. Allowed: returns 200 with the report. Implemented by: Leen Abdallah"
+                "description": "GET /leen-abdallah/reports/summary. Overview of users, assets, incidents and threats. Allowed: returns 200 with the report. Implemented by: Leen Abdallah"
               },
               "response": []
             },
@@ -4024,16 +4128,17 @@
                   ]
                 },
                 "url": {
-                  "raw": "{{reportsURL}}/reports/summary",
+                  "raw": "{{reportsURL}}/leen-abdallah/reports/summary",
                   "host": [
                     "{{reportsURL}}"
                   ],
                   "path": [
+                    "leen-abdallah",
                     "reports",
                     "summary"
                   ]
                 },
-                "description": "GET /reports/summary. Overview of users, assets, incidents and threats. Not allowed for this role: returns 403 and the attempt is written to the audit log. Implemented by: Leen Abdallah"
+                "description": "GET /leen-abdallah/reports/summary. Overview of users, assets, incidents and threats. Not allowed for this role: returns 403 and the attempt is written to the audit log. Implemented by: Leen Abdallah"
               },
               "response": []
             },
@@ -4064,16 +4169,17 @@
                   ]
                 },
                 "url": {
-                  "raw": "{{reportsURL}}/reports/summary",
+                  "raw": "{{reportsURL}}/leen-abdallah/reports/summary",
                   "host": [
                     "{{reportsURL}}"
                   ],
                   "path": [
+                    "leen-abdallah",
                     "reports",
                     "summary"
                   ]
                 },
-                "description": "GET /reports/summary. Overview of users, assets, incidents and threats. Not allowed for this role: returns 403 and the attempt is written to the audit log. Implemented by: Leen Abdallah"
+                "description": "GET /leen-abdallah/reports/summary. Overview of users, assets, incidents and threats. Not allowed for this role: returns 403 and the attempt is written to the audit log. Implemented by: Leen Abdallah"
               },
               "response": []
             },
@@ -4094,16 +4200,17 @@
                 "method": "GET",
                 "header": [],
                 "url": {
-                  "raw": "{{reportsURL}}/reports/summary",
+                  "raw": "{{reportsURL}}/leen-abdallah/reports/summary",
                   "host": [
                     "{{reportsURL}}"
                   ],
                   "path": [
+                    "leen-abdallah",
                     "reports",
                     "summary"
                   ]
                 },
-                "description": "GET /reports/summary. No token: returns 401. Implemented by: Leen Abdallah"
+                "description": "GET /leen-abdallah/reports/summary. No token: returns 401. Implemented by: Leen Abdallah"
               },
               "response": []
             },
@@ -4134,16 +4241,17 @@
                   ]
                 },
                 "url": {
-                  "raw": "{{reportsURL}}/reports/summary",
+                  "raw": "{{reportsURL}}/leen-abdallah/reports/summary",
                   "host": [
                     "{{reportsURL}}"
                   ],
                   "path": [
+                    "leen-abdallah",
                     "reports",
                     "summary"
                   ]
                 },
-                "description": "GET /reports/summary. Invalid token: returns 401. Implemented by: Leen Abdallah"
+                "description": "GET /leen-abdallah/reports/summary. Invalid token: returns 401. Implemented by: Leen Abdallah"
               },
               "response": []
             }
@@ -4186,16 +4294,17 @@
                   ]
                 },
                 "url": {
-                  "raw": "{{reportsURL}}/reports/incidents",
+                  "raw": "{{reportsURL}}/leen-abdallah/reports/incidents",
                   "host": [
                     "{{reportsURL}}"
                   ],
                   "path": [
+                    "leen-abdallah",
                     "reports",
                     "incidents"
                   ]
                 },
-                "description": "GET /reports/incidents. Total incidents, incidents by severity and by status. Allowed: returns 200 with the report. Implemented by: Leen Abdallah"
+                "description": "GET /leen-abdallah/reports/incidents. Total incidents, incidents by severity and by status. Allowed: returns 200 with the report. Implemented by: Leen Abdallah"
               },
               "response": []
             },
@@ -4233,16 +4342,17 @@
                   ]
                 },
                 "url": {
-                  "raw": "{{reportsURL}}/reports/incidents",
+                  "raw": "{{reportsURL}}/leen-abdallah/reports/incidents",
                   "host": [
                     "{{reportsURL}}"
                   ],
                   "path": [
+                    "leen-abdallah",
                     "reports",
                     "incidents"
                   ]
                 },
-                "description": "GET /reports/incidents. Total incidents, incidents by severity and by status. Allowed: returns 200 with the report. Implemented by: Leen Abdallah"
+                "description": "GET /leen-abdallah/reports/incidents. Total incidents, incidents by severity and by status. Allowed: returns 200 with the report. Implemented by: Leen Abdallah"
               },
               "response": []
             },
@@ -4273,16 +4383,17 @@
                   ]
                 },
                 "url": {
-                  "raw": "{{reportsURL}}/reports/incidents",
+                  "raw": "{{reportsURL}}/leen-abdallah/reports/incidents",
                   "host": [
                     "{{reportsURL}}"
                   ],
                   "path": [
+                    "leen-abdallah",
                     "reports",
                     "incidents"
                   ]
                 },
-                "description": "GET /reports/incidents. Total incidents, incidents by severity and by status. Not allowed for this role: returns 403 and the attempt is written to the audit log. Implemented by: Leen Abdallah"
+                "description": "GET /leen-abdallah/reports/incidents. Total incidents, incidents by severity and by status. Not allowed for this role: returns 403 and the attempt is written to the audit log. Implemented by: Leen Abdallah"
               },
               "response": []
             },
@@ -4313,16 +4424,17 @@
                   ]
                 },
                 "url": {
-                  "raw": "{{reportsURL}}/reports/incidents",
+                  "raw": "{{reportsURL}}/leen-abdallah/reports/incidents",
                   "host": [
                     "{{reportsURL}}"
                   ],
                   "path": [
+                    "leen-abdallah",
                     "reports",
                     "incidents"
                   ]
                 },
-                "description": "GET /reports/incidents. Total incidents, incidents by severity and by status. Not allowed for this role: returns 403 and the attempt is written to the audit log. Implemented by: Leen Abdallah"
+                "description": "GET /leen-abdallah/reports/incidents. Total incidents, incidents by severity and by status. Not allowed for this role: returns 403 and the attempt is written to the audit log. Implemented by: Leen Abdallah"
               },
               "response": []
             },
@@ -4343,16 +4455,17 @@
                 "method": "GET",
                 "header": [],
                 "url": {
-                  "raw": "{{reportsURL}}/reports/incidents",
+                  "raw": "{{reportsURL}}/leen-abdallah/reports/incidents",
                   "host": [
                     "{{reportsURL}}"
                   ],
                   "path": [
+                    "leen-abdallah",
                     "reports",
                     "incidents"
                   ]
                 },
-                "description": "GET /reports/incidents. No token: returns 401. Implemented by: Leen Abdallah"
+                "description": "GET /leen-abdallah/reports/incidents. No token: returns 401. Implemented by: Leen Abdallah"
               },
               "response": []
             },
@@ -4383,16 +4496,17 @@
                   ]
                 },
                 "url": {
-                  "raw": "{{reportsURL}}/reports/incidents",
+                  "raw": "{{reportsURL}}/leen-abdallah/reports/incidents",
                   "host": [
                     "{{reportsURL}}"
                   ],
                   "path": [
+                    "leen-abdallah",
                     "reports",
                     "incidents"
                   ]
                 },
-                "description": "GET /reports/incidents. Invalid token: returns 401. Implemented by: Leen Abdallah"
+                "description": "GET /leen-abdallah/reports/incidents. Invalid token: returns 401. Implemented by: Leen Abdallah"
               },
               "response": []
             }
@@ -4435,16 +4549,17 @@
                   ]
                 },
                 "url": {
-                  "raw": "{{reportsURL}}/reports/assets",
+                  "raw": "{{reportsURL}}/leen-abdallah/reports/assets",
                   "host": [
                     "{{reportsURL}}"
                   ],
                   "path": [
+                    "leen-abdallah",
                     "reports",
                     "assets"
                   ]
                 },
-                "description": "GET /reports/assets. Total assets, critical assets and assets by type. Allowed: returns 200 with the report. Implemented by: Leen Abdallah"
+                "description": "GET /leen-abdallah/reports/assets. Total assets, critical assets and assets by type. Allowed: returns 200 with the report. Implemented by: Leen Abdallah"
               },
               "response": []
             },
@@ -4482,16 +4597,17 @@
                   ]
                 },
                 "url": {
-                  "raw": "{{reportsURL}}/reports/assets",
+                  "raw": "{{reportsURL}}/leen-abdallah/reports/assets",
                   "host": [
                     "{{reportsURL}}"
                   ],
                   "path": [
+                    "leen-abdallah",
                     "reports",
                     "assets"
                   ]
                 },
-                "description": "GET /reports/assets. Total assets, critical assets and assets by type. Allowed: returns 200 with the report. Implemented by: Leen Abdallah"
+                "description": "GET /leen-abdallah/reports/assets. Total assets, critical assets and assets by type. Allowed: returns 200 with the report. Implemented by: Leen Abdallah"
               },
               "response": []
             },
@@ -4522,16 +4638,17 @@
                   ]
                 },
                 "url": {
-                  "raw": "{{reportsURL}}/reports/assets",
+                  "raw": "{{reportsURL}}/leen-abdallah/reports/assets",
                   "host": [
                     "{{reportsURL}}"
                   ],
                   "path": [
+                    "leen-abdallah",
                     "reports",
                     "assets"
                   ]
                 },
-                "description": "GET /reports/assets. Total assets, critical assets and assets by type. Not allowed for this role: returns 403 and the attempt is written to the audit log. Implemented by: Leen Abdallah"
+                "description": "GET /leen-abdallah/reports/assets. Total assets, critical assets and assets by type. Not allowed for this role: returns 403 and the attempt is written to the audit log. Implemented by: Leen Abdallah"
               },
               "response": []
             },
@@ -4562,16 +4679,17 @@
                   ]
                 },
                 "url": {
-                  "raw": "{{reportsURL}}/reports/assets",
+                  "raw": "{{reportsURL}}/leen-abdallah/reports/assets",
                   "host": [
                     "{{reportsURL}}"
                   ],
                   "path": [
+                    "leen-abdallah",
                     "reports",
                     "assets"
                   ]
                 },
-                "description": "GET /reports/assets. Total assets, critical assets and assets by type. Not allowed for this role: returns 403 and the attempt is written to the audit log. Implemented by: Leen Abdallah"
+                "description": "GET /leen-abdallah/reports/assets. Total assets, critical assets and assets by type. Not allowed for this role: returns 403 and the attempt is written to the audit log. Implemented by: Leen Abdallah"
               },
               "response": []
             },
@@ -4592,16 +4710,17 @@
                 "method": "GET",
                 "header": [],
                 "url": {
-                  "raw": "{{reportsURL}}/reports/assets",
+                  "raw": "{{reportsURL}}/leen-abdallah/reports/assets",
                   "host": [
                     "{{reportsURL}}"
                   ],
                   "path": [
+                    "leen-abdallah",
                     "reports",
                     "assets"
                   ]
                 },
-                "description": "GET /reports/assets. No token: returns 401. Implemented by: Leen Abdallah"
+                "description": "GET /leen-abdallah/reports/assets. No token: returns 401. Implemented by: Leen Abdallah"
               },
               "response": []
             },
@@ -4632,16 +4751,17 @@
                   ]
                 },
                 "url": {
-                  "raw": "{{reportsURL}}/reports/assets",
+                  "raw": "{{reportsURL}}/leen-abdallah/reports/assets",
                   "host": [
                     "{{reportsURL}}"
                   ],
                   "path": [
+                    "leen-abdallah",
                     "reports",
                     "assets"
                   ]
                 },
-                "description": "GET /reports/assets. Invalid token: returns 401. Implemented by: Leen Abdallah"
+                "description": "GET /leen-abdallah/reports/assets. Invalid token: returns 401. Implemented by: Leen Abdallah"
               },
               "response": []
             }
@@ -4685,16 +4805,17 @@
                   ]
                 },
                 "url": {
-                  "raw": "{{reportsURL}}/reports/threats",
+                  "raw": "{{reportsURL}}/leen-abdallah/reports/threats",
                   "host": [
                     "{{reportsURL}}"
                   ],
                   "path": [
+                    "leen-abdallah",
                     "reports",
                     "threats"
                   ]
                 },
-                "description": "GET /reports/threats. Total threats, threats by severity and type, and recent threats. Allowed: returns 200 with the report. Implemented by: Leen Abdallah"
+                "description": "GET /leen-abdallah/reports/threats. Total threats, threats by severity and type, and recent threats. Allowed: returns 200 with the report. Implemented by: Leen Abdallah"
               },
               "response": []
             },
@@ -4733,16 +4854,17 @@
                   ]
                 },
                 "url": {
-                  "raw": "{{reportsURL}}/reports/threats",
+                  "raw": "{{reportsURL}}/leen-abdallah/reports/threats",
                   "host": [
                     "{{reportsURL}}"
                   ],
                   "path": [
+                    "leen-abdallah",
                     "reports",
                     "threats"
                   ]
                 },
-                "description": "GET /reports/threats. Total threats, threats by severity and type, and recent threats. Allowed: returns 200 with the report. Implemented by: Leen Abdallah"
+                "description": "GET /leen-abdallah/reports/threats. Total threats, threats by severity and type, and recent threats. Allowed: returns 200 with the report. Implemented by: Leen Abdallah"
               },
               "response": []
             },
@@ -4773,16 +4895,17 @@
                   ]
                 },
                 "url": {
-                  "raw": "{{reportsURL}}/reports/threats",
+                  "raw": "{{reportsURL}}/leen-abdallah/reports/threats",
                   "host": [
                     "{{reportsURL}}"
                   ],
                   "path": [
+                    "leen-abdallah",
                     "reports",
                     "threats"
                   ]
                 },
-                "description": "GET /reports/threats. Total threats, threats by severity and type, and recent threats. Not allowed for this role: returns 403 and the attempt is written to the audit log. Implemented by: Leen Abdallah"
+                "description": "GET /leen-abdallah/reports/threats. Total threats, threats by severity and type, and recent threats. Not allowed for this role: returns 403 and the attempt is written to the audit log. Implemented by: Leen Abdallah"
               },
               "response": []
             },
@@ -4813,16 +4936,17 @@
                   ]
                 },
                 "url": {
-                  "raw": "{{reportsURL}}/reports/threats",
+                  "raw": "{{reportsURL}}/leen-abdallah/reports/threats",
                   "host": [
                     "{{reportsURL}}"
                   ],
                   "path": [
+                    "leen-abdallah",
                     "reports",
                     "threats"
                   ]
                 },
-                "description": "GET /reports/threats. Total threats, threats by severity and type, and recent threats. Not allowed for this role: returns 403 and the attempt is written to the audit log. Implemented by: Leen Abdallah"
+                "description": "GET /leen-abdallah/reports/threats. Total threats, threats by severity and type, and recent threats. Not allowed for this role: returns 403 and the attempt is written to the audit log. Implemented by: Leen Abdallah"
               },
               "response": []
             },
@@ -4843,16 +4967,17 @@
                 "method": "GET",
                 "header": [],
                 "url": {
-                  "raw": "{{reportsURL}}/reports/threats",
+                  "raw": "{{reportsURL}}/leen-abdallah/reports/threats",
                   "host": [
                     "{{reportsURL}}"
                   ],
                   "path": [
+                    "leen-abdallah",
                     "reports",
                     "threats"
                   ]
                 },
-                "description": "GET /reports/threats. No token: returns 401. Implemented by: Leen Abdallah"
+                "description": "GET /leen-abdallah/reports/threats. No token: returns 401. Implemented by: Leen Abdallah"
               },
               "response": []
             },
@@ -4883,16 +5008,17 @@
                   ]
                 },
                 "url": {
-                  "raw": "{{reportsURL}}/reports/threats",
+                  "raw": "{{reportsURL}}/leen-abdallah/reports/threats",
                   "host": [
                     "{{reportsURL}}"
                   ],
                   "path": [
+                    "leen-abdallah",
                     "reports",
                     "threats"
                   ]
                 },
-                "description": "GET /reports/threats. Invalid token: returns 401. Implemented by: Leen Abdallah"
+                "description": "GET /leen-abdallah/reports/threats. Invalid token: returns 401. Implemented by: Leen Abdallah"
               },
               "response": []
             }
@@ -4936,16 +5062,17 @@
                   ]
                 },
                 "url": {
-                  "raw": "{{reportsURL}}/reports/vulnerabilities",
+                  "raw": "{{reportsURL}}/leen-abdallah/reports/vulnerabilities",
                   "host": [
                     "{{reportsURL}}"
                   ],
                   "path": [
+                    "leen-abdallah",
                     "reports",
                     "vulnerabilities"
                   ]
                 },
-                "description": "GET /reports/vulnerabilities. Total vulnerabilities, by severity and status, and critical vulnerabilities. Allowed: returns 200 with the report. Implemented by: Leen Abdallah"
+                "description": "GET /leen-abdallah/reports/vulnerabilities. Total vulnerabilities, by severity and status, and critical vulnerabilities. Allowed: returns 200 with the report. Implemented by: Leen Abdallah"
               },
               "response": []
             },
@@ -4984,16 +5111,17 @@
                   ]
                 },
                 "url": {
-                  "raw": "{{reportsURL}}/reports/vulnerabilities",
+                  "raw": "{{reportsURL}}/leen-abdallah/reports/vulnerabilities",
                   "host": [
                     "{{reportsURL}}"
                   ],
                   "path": [
+                    "leen-abdallah",
                     "reports",
                     "vulnerabilities"
                   ]
                 },
-                "description": "GET /reports/vulnerabilities. Total vulnerabilities, by severity and status, and critical vulnerabilities. Allowed: returns 200 with the report. Implemented by: Leen Abdallah"
+                "description": "GET /leen-abdallah/reports/vulnerabilities. Total vulnerabilities, by severity and status, and critical vulnerabilities. Allowed: returns 200 with the report. Implemented by: Leen Abdallah"
               },
               "response": []
             },
@@ -5024,16 +5152,17 @@
                   ]
                 },
                 "url": {
-                  "raw": "{{reportsURL}}/reports/vulnerabilities",
+                  "raw": "{{reportsURL}}/leen-abdallah/reports/vulnerabilities",
                   "host": [
                     "{{reportsURL}}"
                   ],
                   "path": [
+                    "leen-abdallah",
                     "reports",
                     "vulnerabilities"
                   ]
                 },
-                "description": "GET /reports/vulnerabilities. Total vulnerabilities, by severity and status, and critical vulnerabilities. Not allowed for this role: returns 403 and the attempt is written to the audit log. Implemented by: Leen Abdallah"
+                "description": "GET /leen-abdallah/reports/vulnerabilities. Total vulnerabilities, by severity and status, and critical vulnerabilities. Not allowed for this role: returns 403 and the attempt is written to the audit log. Implemented by: Leen Abdallah"
               },
               "response": []
             },
@@ -5064,16 +5193,17 @@
                   ]
                 },
                 "url": {
-                  "raw": "{{reportsURL}}/reports/vulnerabilities",
+                  "raw": "{{reportsURL}}/leen-abdallah/reports/vulnerabilities",
                   "host": [
                     "{{reportsURL}}"
                   ],
                   "path": [
+                    "leen-abdallah",
                     "reports",
                     "vulnerabilities"
                   ]
                 },
-                "description": "GET /reports/vulnerabilities. Total vulnerabilities, by severity and status, and critical vulnerabilities. Not allowed for this role: returns 403 and the attempt is written to the audit log. Implemented by: Leen Abdallah"
+                "description": "GET /leen-abdallah/reports/vulnerabilities. Total vulnerabilities, by severity and status, and critical vulnerabilities. Not allowed for this role: returns 403 and the attempt is written to the audit log. Implemented by: Leen Abdallah"
               },
               "response": []
             },
@@ -5094,16 +5224,17 @@
                 "method": "GET",
                 "header": [],
                 "url": {
-                  "raw": "{{reportsURL}}/reports/vulnerabilities",
+                  "raw": "{{reportsURL}}/leen-abdallah/reports/vulnerabilities",
                   "host": [
                     "{{reportsURL}}"
                   ],
                   "path": [
+                    "leen-abdallah",
                     "reports",
                     "vulnerabilities"
                   ]
                 },
-                "description": "GET /reports/vulnerabilities. No token: returns 401. Implemented by: Leen Abdallah"
+                "description": "GET /leen-abdallah/reports/vulnerabilities. No token: returns 401. Implemented by: Leen Abdallah"
               },
               "response": []
             },
@@ -5134,16 +5265,17 @@
                   ]
                 },
                 "url": {
-                  "raw": "{{reportsURL}}/reports/vulnerabilities",
+                  "raw": "{{reportsURL}}/leen-abdallah/reports/vulnerabilities",
                   "host": [
                     "{{reportsURL}}"
                   ],
                   "path": [
+                    "leen-abdallah",
                     "reports",
                     "vulnerabilities"
                   ]
                 },
-                "description": "GET /reports/vulnerabilities. Invalid token: returns 401. Implemented by: Leen Abdallah"
+                "description": "GET /leen-abdallah/reports/vulnerabilities. Invalid token: returns 401. Implemented by: Leen Abdallah"
               },
               "response": []
             }
@@ -5186,16 +5318,17 @@
                   ]
                 },
                 "url": {
-                  "raw": "{{reportsURL}}/reports/activity",
+                  "raw": "{{reportsURL}}/leen-abdallah/reports/activity",
                   "host": [
                     "{{reportsURL}}"
                   ],
                   "path": [
+                    "leen-abdallah",
                     "reports",
                     "activity"
                   ]
                 },
-                "description": "GET /reports/activity. Total activities, login attempts, failed logins and most performed actions. Allowed: returns 200 with the report. Implemented by: Leen Abdallah"
+                "description": "GET /leen-abdallah/reports/activity. Total activities, login attempts, failed logins and most performed actions. Allowed: returns 200 with the report. Implemented by: Leen Abdallah"
               },
               "response": []
             },
@@ -5233,16 +5366,17 @@
                   ]
                 },
                 "url": {
-                  "raw": "{{reportsURL}}/reports/activity",
+                  "raw": "{{reportsURL}}/leen-abdallah/reports/activity",
                   "host": [
                     "{{reportsURL}}"
                   ],
                   "path": [
+                    "leen-abdallah",
                     "reports",
                     "activity"
                   ]
                 },
-                "description": "GET /reports/activity. Total activities, login attempts, failed logins and most performed actions. Allowed: returns 200 with the report. Implemented by: Leen Abdallah"
+                "description": "GET /leen-abdallah/reports/activity. Total activities, login attempts, failed logins and most performed actions. Allowed: returns 200 with the report. Implemented by: Leen Abdallah"
               },
               "response": []
             },
@@ -5273,16 +5407,17 @@
                   ]
                 },
                 "url": {
-                  "raw": "{{reportsURL}}/reports/activity",
+                  "raw": "{{reportsURL}}/leen-abdallah/reports/activity",
                   "host": [
                     "{{reportsURL}}"
                   ],
                   "path": [
+                    "leen-abdallah",
                     "reports",
                     "activity"
                   ]
                 },
-                "description": "GET /reports/activity. Total activities, login attempts, failed logins and most performed actions. Not allowed for this role: returns 403 and the attempt is written to the audit log. Implemented by: Leen Abdallah"
+                "description": "GET /leen-abdallah/reports/activity. Total activities, login attempts, failed logins and most performed actions. Not allowed for this role: returns 403 and the attempt is written to the audit log. Implemented by: Leen Abdallah"
               },
               "response": []
             },
@@ -5313,16 +5448,17 @@
                   ]
                 },
                 "url": {
-                  "raw": "{{reportsURL}}/reports/activity",
+                  "raw": "{{reportsURL}}/leen-abdallah/reports/activity",
                   "host": [
                     "{{reportsURL}}"
                   ],
                   "path": [
+                    "leen-abdallah",
                     "reports",
                     "activity"
                   ]
                 },
-                "description": "GET /reports/activity. Total activities, login attempts, failed logins and most performed actions. Not allowed for this role: returns 403 and the attempt is written to the audit log. Implemented by: Leen Abdallah"
+                "description": "GET /leen-abdallah/reports/activity. Total activities, login attempts, failed logins and most performed actions. Not allowed for this role: returns 403 and the attempt is written to the audit log. Implemented by: Leen Abdallah"
               },
               "response": []
             },
@@ -5343,16 +5479,17 @@
                 "method": "GET",
                 "header": [],
                 "url": {
-                  "raw": "{{reportsURL}}/reports/activity",
+                  "raw": "{{reportsURL}}/leen-abdallah/reports/activity",
                   "host": [
                     "{{reportsURL}}"
                   ],
                   "path": [
+                    "leen-abdallah",
                     "reports",
                     "activity"
                   ]
                 },
-                "description": "GET /reports/activity. No token: returns 401. Implemented by: Leen Abdallah"
+                "description": "GET /leen-abdallah/reports/activity. No token: returns 401. Implemented by: Leen Abdallah"
               },
               "response": []
             },
@@ -5383,16 +5520,17 @@
                   ]
                 },
                 "url": {
-                  "raw": "{{reportsURL}}/reports/activity",
+                  "raw": "{{reportsURL}}/leen-abdallah/reports/activity",
                   "host": [
                     "{{reportsURL}}"
                   ],
                   "path": [
+                    "leen-abdallah",
                     "reports",
                     "activity"
                   ]
                 },
-                "description": "GET /reports/activity. Invalid token: returns 401. Implemented by: Leen Abdallah"
+                "description": "GET /leen-abdallah/reports/activity. Invalid token: returns 401. Implemented by: Leen Abdallah"
               },
               "response": []
             }
@@ -5428,16 +5566,17 @@
                   ]
                 },
                 "url": {
-                  "raw": "{{reportsURL}}/reports/summary",
+                  "raw": "{{reportsURL}}/leen-abdallah/reports/summary",
                   "host": [
                     "{{reportsURL}}"
                   ],
                   "path": [
+                    "leen-abdallah",
                     "reports",
                     "summary"
                   ]
                 },
-                "description": "POST /reports/summary. Reports are read-only, so any method other than GET returns 405. Implemented by: Leen Abdallah"
+                "description": "POST /leen-abdallah/reports/summary. Reports are read-only, so any method other than GET returns 405. Implemented by: Leen Abdallah"
               },
               "response": []
             },
@@ -5468,16 +5607,17 @@
                   ]
                 },
                 "url": {
-                  "raw": "{{reportsURL}}/reports/unknown",
+                  "raw": "{{reportsURL}}/leen-abdallah/reports/unknown",
                   "host": [
                     "{{reportsURL}}"
                   ],
                   "path": [
+                    "leen-abdallah",
                     "reports",
                     "unknown"
                   ]
                 },
-                "description": "GET /reports/unknown. A report that does not exist returns 404. Implemented by: Leen Abdallah"
+                "description": "GET /leen-abdallah/reports/unknown. A report that does not exist returns 404. Implemented by: Leen Abdallah"
               },
               "response": []
             }

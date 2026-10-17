@@ -9,6 +9,9 @@ from threat_service.app import app
 from user_service.app import app as users_app
 
 
+ROOT = "/leen-abdallah/threats"
+
+
 class ThreatApiTests(unittest.TestCase):
     def setUp(self):
         self.directory = tempfile.TemporaryDirectory()
@@ -45,7 +48,7 @@ class ThreatApiTests(unittest.TestCase):
         return self.login(username, "TestPassword435!")
 
     def add(self, **changes):
-        response = self.client.post("/threats", headers=self.admin,
+        response = self.client.post(ROOT, headers=self.admin,
                                     json={**self.body, **changes})
         self.assertEqual(response.status_code, 201)
         return response.get_json()["data"]
@@ -56,6 +59,13 @@ class ThreatApiTests(unittest.TestCase):
                  severity_level="Critical", source="OSINT feed")
         self.add(threat_type="File Hash", threat_value="d41d8cd98f00b204e9800998ecf8427e",
                  severity_level="Low", source="VirusTotal")
+
+    def test_routes_live_under_the_student_name(self):
+        rules = [rule.rule for rule in app.url_map.iter_rules() if rule.endpoint != "static"]
+        self.assertEqual(len(rules), 6)
+        self.assertTrue(all(rule.startswith(ROOT) for rule in rules))
+        for path in ("/threats", "/threats/1", "/threats/search?source=a"):
+            self.assertEqual(self.client.get(path, headers=self.admin).status_code, 404)
 
     # ---- add ----
     def test_admin_adds_threat(self):
@@ -69,11 +79,11 @@ class ThreatApiTests(unittest.TestCase):
 
     def test_duplicate_threat_is_rejected(self):
         self.add()
-        response = self.client.post("/threats", headers=self.admin, json=self.body)
+        response = self.client.post(ROOT, headers=self.admin, json=self.body)
         self.assertEqual(response.status_code, 409)
         # same value with different case still counts as the same domain
         self.add(threat_type="Domain", threat_value="evil.com")
-        duplicate = self.client.post("/threats", headers=self.admin, json={
+        duplicate = self.client.post(ROOT, headers=self.admin, json={
             **self.body, "threat_type": "Domain", "threat_value": "EVIL.com"})
         self.assertEqual(duplicate.status_code, 409)
         # the same value under another type is a different indicator
@@ -82,23 +92,23 @@ class ThreatApiTests(unittest.TestCase):
     def test_free_text_duplicates_ignore_case(self):
         self.add(threat_type="Malware Signature", threat_value="Trojan.X")
         for value in ("trojan.x", "TROJAN.X"):
-            response = self.client.post("/threats", headers=self.admin, json={
+            response = self.client.post(ROOT, headers=self.admin, json={
                 **self.body, "threat_type": "Malware Signature", "threat_value": value})
             self.assertEqual(response.status_code, 409, msg=value)
-        self.assertEqual(len(self.client.get("/threats", headers=self.admin).get_json()["data"]), 1)
+        self.assertEqual(len(self.client.get(ROOT, headers=self.admin).get_json()["data"]), 1)
 
     def test_out_of_range_ids_are_rejected(self):
         too_big = str(2 ** 63)
         for response in (
-            self.client.get(f"/threats/{too_big}", headers=self.admin),
-            self.client.put(f"/threats/{too_big}", headers=self.admin, json={"source": "x"}),
-            self.client.delete(f"/threats/{too_big}", headers=self.admin),
-            self.client.get("/threats/" + "9" * 40, headers=self.admin),
+            self.client.get(f"{ROOT}/{too_big}", headers=self.admin),
+            self.client.put(f"{ROOT}/{too_big}", headers=self.admin, json={"source": "x"}),
+            self.client.delete(f"{ROOT}/{too_big}", headers=self.admin),
+            self.client.get(ROOT + "/" + "9" * 40, headers=self.admin),
         ):
             self.assertEqual(response.status_code, 400)
         # the largest valid number is simply "not found"
         self.assertEqual(
-            self.client.get(f"/threats/{2 ** 63 - 1}", headers=self.admin).status_code, 404)
+            self.client.get(f"{ROOT}/{2 ** 63 - 1}", headers=self.admin).status_code, 404)
 
     def test_add_validation(self):
         bad_bodies = [
@@ -111,53 +121,53 @@ class ThreatApiTests(unittest.TestCase):
             {"extra_field": "x"},
         ]
         for changes in bad_bodies:
-            response = self.client.post("/threats", headers=self.admin,
+            response = self.client.post(ROOT, headers=self.admin,
                                         json={**self.body, **changes})
             self.assertEqual(response.status_code, 400, msg=changes)
         missing = dict(self.body)
         del missing["source"]
         self.assertEqual(
-            self.client.post("/threats", headers=self.admin, json=missing).status_code, 400)
+            self.client.post(ROOT, headers=self.admin, json=missing).status_code, 400)
         self.assertEqual(
-            self.client.post("/threats", headers=self.admin, json={}).status_code, 400)
-        self.assertEqual(self.client.get("/threats", headers=self.admin).get_json()["data"], [])
+            self.client.post(ROOT, headers=self.admin, json={}).status_code, 400)
+        self.assertEqual(self.client.get(ROOT, headers=self.admin).get_json()["data"], [])
 
     def test_only_admin_can_add(self):
         for headers in (self.analyst, self.auditor, self.employee):
-            response = self.client.post("/threats", headers=headers, json=self.body)
+            response = self.client.post(ROOT, headers=headers, json=self.body)
             self.assertEqual(response.status_code, 403)
-        self.assertEqual(self.client.post("/threats", json=self.body).status_code, 401)
+        self.assertEqual(self.client.post(ROOT, json=self.body).status_code, 401)
         bad_token = {"Authorization": "Bearer garbage"}
         self.assertEqual(
-            self.client.post("/threats", headers=bad_token, json=self.body).status_code, 401)
+            self.client.post(ROOT, headers=bad_token, json=self.body).status_code, 401)
 
     # ---- read ----
     def test_get_all_roles(self):
         self.add_samples()
         for headers in (self.admin, self.analyst, self.auditor):
-            response = self.client.get("/threats", headers=headers)
+            response = self.client.get(ROOT, headers=headers)
             self.assertEqual(response.status_code, 200)
             self.assertEqual(len(response.get_json()["data"]), 3)
-        self.assertEqual(self.client.get("/threats", headers=self.employee).status_code, 403)
-        self.assertEqual(self.client.get("/threats").status_code, 401)
+        self.assertEqual(self.client.get(ROOT, headers=self.employee).status_code, 403)
+        self.assertEqual(self.client.get(ROOT).status_code, 401)
 
     def test_get_one(self):
         threat = self.add()
         for headers in (self.admin, self.analyst, self.auditor):
-            response = self.client.get(f"/threats/{threat['threat_id']}", headers=headers)
+            response = self.client.get(f"{ROOT}/{threat['threat_id']}", headers=headers)
             self.assertEqual(response.status_code, 200)
             self.assertEqual(response.get_json()["data"], threat)
         self.assertEqual(
-            self.client.get(f"/threats/{threat['threat_id']}",
+            self.client.get(f"{ROOT}/{threat['threat_id']}",
                             headers=self.employee).status_code, 403)
-        self.assertEqual(self.client.get("/threats/999", headers=self.admin).status_code, 404)
+        self.assertEqual(self.client.get(ROOT + "/999", headers=self.admin).status_code, 404)
         for bad_id in ("abc", "0", "-1"):
             self.assertEqual(
-                self.client.get(f"/threats/{bad_id}", headers=self.admin).status_code, 400)
+                self.client.get(f"{ROOT}/{bad_id}", headers=self.admin).status_code, 400)
 
     # ---- search ----
     def search(self, query, headers=None):
-        return self.client.get("/threats/search?" + query, headers=headers or self.admin)
+        return self.client.get(ROOT + "/search?" + query, headers=headers or self.admin)
 
     def test_search_filters(self):
         self.add_samples()
@@ -193,7 +203,7 @@ class ThreatApiTests(unittest.TestCase):
     # ---- update ----
     def test_update_threat(self):
         threat = self.add()
-        path = f"/threats/{threat['threat_id']}"
+        path = f"{ROOT}/{threat['threat_id']}"
         response = self.client.put(path, headers=self.admin, json={
             "description": "Updated", "severity_level": "critical", "source": "New source"})
         self.assertEqual(response.status_code, 200)
@@ -212,7 +222,7 @@ class ThreatApiTests(unittest.TestCase):
 
     def test_update_validation(self):
         threat = self.add()
-        path = f"/threats/{threat['threat_id']}"
+        path = f"{ROOT}/{threat['threat_id']}"
         for body in ({"threat_type": "Domain"}, {"threat_value": "1.1.1.1"},
                      {"severity_level": "Urgent"}, {"description": ""},
                      {"source": " "}, {}):
@@ -221,15 +231,15 @@ class ThreatApiTests(unittest.TestCase):
         unchanged = self.client.get(path, headers=self.admin).get_json()["data"]
         self.assertEqual(unchanged, threat)
         self.assertEqual(
-            self.client.put("/threats/999", headers=self.admin,
+            self.client.put(ROOT + "/999", headers=self.admin,
                             json={"source": "x"}).status_code, 404)
         self.assertEqual(
-            self.client.put("/threats/abc", headers=self.admin,
+            self.client.put(ROOT + "/abc", headers=self.admin,
                             json={"source": "x"}).status_code, 400)
 
     def test_only_admin_can_update(self):
         threat = self.add()
-        path = f"/threats/{threat['threat_id']}"
+        path = f"{ROOT}/{threat['threat_id']}"
         for headers in (self.analyst, self.auditor, self.employee):
             response = self.client.put(path, headers=headers, json={"source": "x"})
             self.assertEqual(response.status_code, 403)
@@ -240,16 +250,16 @@ class ThreatApiTests(unittest.TestCase):
     # ---- delete ----
     def test_admin_deletes_threat(self):
         threat = self.add()
-        path = f"/threats/{threat['threat_id']}"
+        path = f"{ROOT}/{threat['threat_id']}"
         self.assertEqual(self.client.delete(path, headers=self.admin).status_code, 200)
         self.assertEqual(self.client.get(path, headers=self.admin).status_code, 404)
         self.assertEqual(self.client.delete(path, headers=self.admin).status_code, 404)
         self.assertEqual(
-            self.client.delete("/threats/abc", headers=self.admin).status_code, 400)
+            self.client.delete(ROOT + "/abc", headers=self.admin).status_code, 400)
 
     def test_only_admin_can_delete(self):
         threat = self.add()
-        path = f"/threats/{threat['threat_id']}"
+        path = f"{ROOT}/{threat['threat_id']}"
         for headers in (self.analyst, self.auditor, self.employee):
             self.assertEqual(self.client.delete(path, headers=headers).status_code, 403)
         self.assertEqual(self.client.delete(path).status_code, 401)
@@ -258,7 +268,7 @@ class ThreatApiTests(unittest.TestCase):
     # ---- audit trail ----
     def test_actions_are_audit_logged(self):
         threat = self.add()
-        path = f"/threats/{threat['threat_id']}"
+        path = f"{ROOT}/{threat['threat_id']}"
         self.client.put(path, headers=self.admin, json={"source": "x"})
         self.client.delete(path, headers=self.employee)
         self.client.delete(path, headers=self.admin)

@@ -14,13 +14,14 @@ from threat_service.models import SEVERITY_LEVELS, THREAT_TYPES, Threat
 from threat_service.models import threat_id as threat_id_from_url
 
 SERVICE = "threats"
+BASE_ROUTE = "/leen-abdallah/threats"
 SEARCH_PARAMETERS = ("threat_type", "threat_value", "severity_level", "source")
 
 app = Flask(__name__)
 register_error_handlers(app)
 
 
-@app.post("/threats")
+@app.post(BASE_ROUTE)
 @roles_required(config.ROLE_ADMIN, service=SERVICE)
 def add_threat():
     """Add a new threat indicator (Security Administrator only).
@@ -56,7 +57,7 @@ def add_threat():
                             repository.get_by_id(new_id), 201)
 
 
-@app.get("/threats/search")
+@app.get(BASE_ROUTE + "/search")
 @roles_required(config.ROLE_ADMIN, config.ROLE_ANALYST, service=SERVICE)
 def search_threats():
     """Search threats by type, value, severity level or source.
@@ -82,7 +83,7 @@ def search_threats():
     return success_response(f"{len(threats)} threat(s) found", threats)
 
 
-@app.get("/threats")
+@app.get(BASE_ROUTE)
 @roles_required(config.ROLE_ADMIN, config.ROLE_ANALYST, config.ROLE_AUDITOR,
                 service=SERVICE)
 def get_all_threats():
@@ -93,7 +94,7 @@ def get_all_threats():
     return success_response("Threats retrieved successfully", repository.get_all())
 
 
-@app.get("/threats/<threat_id>")
+@app.get(BASE_ROUTE + "/<threat_id>")
 @roles_required(config.ROLE_ADMIN, config.ROLE_ANALYST, config.ROLE_AUDITOR,
                 service=SERVICE)
 def get_threat(threat_id):
@@ -108,7 +109,7 @@ def get_threat(threat_id):
     return success_response("Threat retrieved successfully", threat)
 
 
-@app.put("/threats/<threat_id>")
+@app.put(BASE_ROUTE + "/<threat_id>")
 @roles_required(config.ROLE_ADMIN, service=SERVICE)
 def update_threat(threat_id):
     """Update the description, severity level and/or source of a threat.
@@ -144,7 +145,7 @@ def update_threat(threat_id):
     return success_response("Threat updated successfully", repository.get_by_id(threat_id))
 
 
-@app.delete("/threats/<threat_id>")
+@app.delete(BASE_ROUTE + "/<threat_id>")
 @roles_required(config.ROLE_ADMIN, service=SERVICE)
 def delete_threat(threat_id):
     """Delete a threat indicator (Security Administrator only).

@@ -8,6 +8,7 @@ from common.errors import register_error_handlers, success_response
 from report_service import repository
 
 SERVICE = "reports"
+BASE_ROUTE = "/leen-abdallah/reports"
 
 app = Flask(__name__)
 register_error_handlers(app)
@@ -23,7 +24,7 @@ def generated_at():
     return datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S")
 
 
-@app.get("/reports/summary")
+@app.get(BASE_ROUTE + "/summary")
 @report_access
 def summary_report():
     """Overview of the current security status.
@@ -42,7 +43,7 @@ def summary_report():
     return success_response("Security summary report generated successfully", data)
 
 
-@app.get("/reports/incidents")
+@app.get(BASE_ROUTE + "/incidents")
 @report_access
 def incident_report():
     """Incident statistics: total, by severity and by status.
@@ -59,7 +60,7 @@ def incident_report():
     return success_response("Incident report generated successfully", data)
 
 
-@app.get("/reports/assets")
+@app.get(BASE_ROUTE + "/assets")
 @report_access
 def asset_report():
     """Asset statistics: total, critical assets and assets by type.
@@ -76,7 +77,7 @@ def asset_report():
     return success_response("Asset report generated successfully", data)
 
 
-@app.get("/reports/threats")
+@app.get(BASE_ROUTE + "/threats")
 @report_access
 def threat_report():
     """Threat intelligence statistics: total, by severity, by type and recent threats.
@@ -94,7 +95,7 @@ def threat_report():
     return success_response("Threat report generated successfully", data)
 
 
-@app.get("/reports/vulnerabilities")
+@app.get(BASE_ROUTE + "/vulnerabilities")
 @report_access
 def vulnerability_report():
     """Vulnerability statistics: total, by severity, by status and critical ones.
@@ -112,7 +113,7 @@ def vulnerability_report():
     return success_response("Vulnerability report generated successfully", data)
 
 
-@app.get("/reports/activity")
+@app.get(BASE_ROUTE + "/activity")
 @report_access
 def activity_report():
     """Security activity statistics taken from the audit logs.
