@@ -79,6 +79,27 @@ class ThreatApiTests(unittest.TestCase):
         # the same value under another type is a different indicator
         self.add(threat_type="Other", threat_value="192.168.1.5")
 
+    def test_free_text_duplicates_ignore_case(self):
+        self.add(threat_type="Malware Signature", threat_value="Trojan.X")
+        for value in ("trojan.x", "TROJAN.X"):
+            response = self.client.post("/threats", headers=self.admin, json={
+                **self.body, "threat_type": "Malware Signature", "threat_value": value})
+            self.assertEqual(response.status_code, 409, msg=value)
+        self.assertEqual(len(self.client.get("/threats", headers=self.admin).get_json()["data"]), 1)
+
+    def test_out_of_range_ids_are_rejected(self):
+        too_big = str(2 ** 63)
+        for response in (
+            self.client.get(f"/threats/{too_big}", headers=self.admin),
+            self.client.put(f"/threats/{too_big}", headers=self.admin, json={"source": "x"}),
+            self.client.delete(f"/threats/{too_big}", headers=self.admin),
+            self.client.get("/threats/" + "9" * 40, headers=self.admin),
+        ):
+            self.assertEqual(response.status_code, 400)
+        # the largest valid number is simply "not found"
+        self.assertEqual(
+            self.client.get(f"/threats/{2 ** 63 - 1}", headers=self.admin).status_code, 404)
+
     def test_add_validation(self):
         bad_bodies = [
             {"threat_value": "999.1.1.1"},

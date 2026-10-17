@@ -1,8 +1,10 @@
 import re
 
 from common.errors import ValidationError
-from common.validators import choice, clean_text, validate_ip
+from common.validators import choice, clean_text, parse_id, validate_ip
 
+# the largest number SQLite can store in an INTEGER column
+MAX_ID = 9223372036854775807
 THREAT_TYPES = ("IP Address", "Domain", "File Hash", "Malware Signature", "Other")
 SEVERITY_LEVELS = ("Low", "Medium", "High", "Critical")
 
@@ -12,6 +14,17 @@ DOMAIN_PATTERN = re.compile(
 )
 # MD5 (32), SHA-1 (40) and SHA-256 (64) written in hexadecimal
 HASH_PATTERN = re.compile(r"^(?:[a-f0-9]{32}|[a-f0-9]{40}|[a-f0-9]{64})$")
+
+
+def threat_id(value):
+    """Turn a threat ID taken from the URL into a positive integer the database can hold.
+
+    :raises ValidationError: if it is not a positive whole number or is too large.
+    """
+    number = parse_id(value, "threat id")
+    if number > MAX_ID:
+        raise ValidationError("threat id is too large")
+    return number
 
 
 def validate_domain(value):

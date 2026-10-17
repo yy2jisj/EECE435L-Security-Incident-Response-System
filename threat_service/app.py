@@ -7,10 +7,11 @@ from common.audit import log_event
 from common.auth import roles_required
 from common.errors import ApiError, register_error_handlers, success_response
 from common.validators import (
-    check_fields, choice, clean_text, get_json_body, parse_id, read_filters,
+    check_fields, choice, clean_text, get_json_body, read_filters,
 )
 from threat_service import repository
 from threat_service.models import SEVERITY_LEVELS, THREAT_TYPES, Threat
+from threat_service.models import threat_id as threat_id_from_url
 
 SERVICE = "threats"
 SEARCH_PARAMETERS = ("threat_type", "threat_value", "severity_level", "source")
@@ -100,7 +101,7 @@ def get_threat(threat_id):
 
     Implemented by: Leen Abdallah
     """
-    threat_id = parse_id(threat_id, "threat id")
+    threat_id = threat_id_from_url(threat_id)
     threat = repository.get_by_id(threat_id)
     if threat is None:
         raise ApiError("Threat not found", 404)
@@ -118,7 +119,7 @@ def update_threat(threat_id):
     Implemented by: Leen Abdallah
     """
     caller = g.current_user
-    threat_id = parse_id(threat_id, "threat id")
+    threat_id = threat_id_from_url(threat_id)
 
     data = get_json_body()
     check_fields(data, allowed=["description", "severity_level", "source"])
@@ -151,7 +152,7 @@ def delete_threat(threat_id):
     Implemented by: Leen Abdallah
     """
     caller = g.current_user
-    threat_id = parse_id(threat_id, "threat id")
+    threat_id = threat_id_from_url(threat_id)
 
     threat = repository.get_by_id(threat_id)
     if threat is None:
