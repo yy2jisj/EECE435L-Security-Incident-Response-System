@@ -16,11 +16,13 @@ COLLECTION = Path(__file__).resolve().parents[1] / "postman" / "Security Inciden
 class PostmanCollectionTests(ApiTestCase):
     def test_all_new_requests_execute_and_cover_every_implemented_api(self):
         collection = json.loads(COLLECTION.read_text(encoding="utf-8"))
-        folders = collection["item"][2:]
-        self.assertEqual([folder["name"] for folder in folders], [
+        names = [
             "Service 3 - Incident Management", "Service 8 - Notification Service",
             "Service 9 - Security Playbooks and Response Automation",
-        ])
+        ]
+        # pick these folders by name, so other services can add their own folders
+        folders = [folder for folder in collection["item"] if folder["name"] in names]
+        self.assertEqual([folder["name"] for folder in folders], names)
         variables = {item["key"]: item.get("value", "") for item in collection["variable"]}
         for key in ("admin_token", "analyst_token", "reporter_token", "auditor_token",
                     "reporter_id", "analyst_id", "asset_id", "incident_id",
