@@ -3731,6 +3731,578 @@
           ]
         }
       ]
+    },
+    {
+      "name": "Service 3 - Incident Management",
+      "description": "Incident reporting, scoped retrieval, HTTP-validated analyst assignment, lifecycle and investigation notes. Set actual IDs and role tokens before sending requests.",
+      "item": [
+        {
+          "name": "Create incident",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{reporter_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "url": "{{service3_base_url}}/Youssef-Al-Hajj-Youness/incidents",
+            "description": "Report an incident as a Regular User (or Administrator). All six body fields are required; use real reporter_id and asset_id. A Regular User must report as themselves. Returns 201 with an Open incident; copy data.incident_id into incident_id. Severity: Low, Medium, High or Critical. Missing reporter/asset returns 404. Requires a valid Service 1 Bearer token; missing/invalid authentication returns 401 and forbidden roles return 403. Invalid inputs return 400.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Suspicious server login\",\n  \"description\": \"Unexpected remote access detected on the monitored server.\",\n  \"category\": \"Unauthorized Access\",\n  \"severity_level\": \"{{severity_level}}\",\n  \"reporter_id\": {{reporter_id}},\n  \"asset_id\": {{asset_id}}\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "List incidents",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{auditor_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "url": "{{service3_base_url}}/Youssef-Al-Hajj-Youness/incidents",
+            "description": "Return all incident metadata (200). Administrator or Auditor only; an empty database returns data: []. Requires a valid Service 1 Bearer token; missing/invalid authentication returns 401 and forbidden roles return 403. Invalid inputs return 400."
+          },
+          "response": []
+        },
+        {
+          "name": "Retrieve incident and investigation notes",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{reporter_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "url": "{{service3_base_url}}/Youssef-Al-Hajj-Youness/incidents/{{incident_id}}",
+            "description": "Return one incident and its stored investigation_notes (200). Administrator/Auditor may read any; Regular User only their reports; Analyst only assigned incidents. Missing resources return 404 to Administrator/Auditor; inaccessible or missing resources return 403 to scoped users. Requires a valid Service 1 Bearer token; missing/invalid authentication returns 401 and forbidden roles return 403. Invalid inputs return 400."
+          },
+          "response": []
+        },
+        {
+          "name": "Assign analyst and create notification",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{admin_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "url": "{{service3_base_url}}/Youssef-Al-Hajj-Youness/incidents/{{incident_id}}/assign",
+            "description": "Administrator only. Service 3 forwards this Bearer token to Service 1 GET /users over real HTTP before starting a write transaction. Service 1 must be reachable at USERS_SERVICE_URL (default port 5001). Requires an existing Active Security Analyst: absent user 404, wrong role/inactive user 400, dependency unavailable/invalid response 503. Success 200 atomically updates assignment, creates an Incident Assignment notification and records audit entries. Repeating the same analyst produces no duplicate notification. Use Service 8 recipient history to obtain the generated notification_id. Requires a valid Service 1 Bearer token; missing/invalid authentication returns 401 and forbidden roles return 403. Invalid inputs return 400.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"analyst_id\": {{analyst_id}}\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Advance incident lifecycle",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{analyst_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "url": "{{service3_base_url}}/Youssef-Al-Hajj-Youness/incidents/{{incident_id}}/status",
+            "description": "Administrator or assigned Analyst. Returns 200 when advancing exactly one step: Open -> Under Investigation -> Mitigated -> Resolved -> Closed. Set incident_status to the next value for each call. Skipping/repeating/reversing a transition returns 409. Resolved sets resolution_date; Closed retains it. Requires a valid Service 1 Bearer token; missing/invalid authentication returns 401 and forbidden roles return 403. Invalid inputs return 400.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"{{incident_status}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Add investigation note",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{analyst_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "url": "{{service3_base_url}}/Youssef-Al-Hajj-Youness/incidents/{{incident_id}}/notes",
+            "description": "Administrator or assigned Analyst. Required nonblank note_content; returns 201 with server-generated note_id, caller analyst_id and timestamp. Retrieve the incident to see the persisted note. Requires a valid Service 1 Bearer token; missing/invalid authentication returns 401 and forbidden roles return 403. Invalid inputs return 400.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"note_content\": \"Reviewed access logs and identified the suspicious session.\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Service 8 - Notification Service",
+      "description": "Prefixed notification API: creation, recipient history, retrieval, read acknowledgement, search and administrator deletion. Samples target the analyst recipient.",
+      "item": [
+        {
+          "name": "Create notification",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{admin_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "url": "{{service8_base_url}}/Youssef-Al-Hajj-Youness/notifications",
+            "description": "Administrator only. All five fields are required. Returns 201 with Unread status and null read_date for the existing recipient (404 if absent). This sample targets analyst_id, so the Analyst token can retrieve and read it. Copy data.notification_id into notification_id. Types: Incident Assignment, Security Alert, System Notification, Threat Alert, Vulnerability Alert; severities Low, Medium, High, Critical. Requires a valid Service 1 Bearer token; missing/invalid authentication returns 401 and forbidden roles return 403. Invalid inputs return 400.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": {{analyst_id}},\n  \"title\": \"Security alert\",\n  \"message\": \"Review the suspicious login on the monitored server.\",\n  \"notification_type\": \"{{notification_type}}\",\n  \"severity_level\": \"{{severity_level}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Retrieve recipient history",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{analyst_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "url": "{{service8_base_url}}/Youssef-Al-Hajj-Youness/notifications/user/{{analyst_id}}",
+            "description": "Return the recipient notification history (200), including automatic Service 3 assignment notifications. An existing recipient with no notifications returns data: []; a nonexistent recipient returns 404 to an authorized caller. Regular Users and Analysts may read only their own history; Administrator/Auditor may read any. Copy the desired notification_id from this response. Requires a valid Service 1 Bearer token; missing/invalid authentication returns 401 and forbidden roles return 403. Invalid inputs return 400."
+          },
+          "response": []
+        },
+        {
+          "name": "Retrieve notification",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{analyst_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "url": "{{service8_base_url}}/Youssef-Al-Hajj-Youness/notifications/{{notification_id}}",
+            "description": "Return one notification (200), including status, created_at and read_date. Regular Users and Analysts may read only their own notifications; Administrator/Auditor may read any. Missing records return 404 to Administrator/Auditor; inaccessible or missing records return 403 to scoped users. Requires a valid Service 1 Bearer token; missing/invalid authentication returns 401 and forbidden roles return 403. Invalid inputs return 400."
+          },
+          "response": []
+        },
+        {
+          "name": "Mark notification as Read",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{analyst_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "url": "{{service8_base_url}}/Youssef-Al-Hajj-Youness/notifications/{{notification_id}}/read",
+            "description": "Administrator or owning Analyst/Regular User; Auditor is forbidden. No request body. Returns 200 with status Read and the first read_date; repeating the request preserves that timestamp. Requires a valid Service 1 Bearer token; missing/invalid authentication returns 401 and forbidden roles return 403. Invalid inputs return 400."
+          },
+          "response": []
+        },
+        {
+          "name": "Search notifications with combined filters",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{auditor_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "url": "{{service8_base_url}}/Youssef-Al-Hajj-Youness/notifications/search?user_id={{analyst_id}}&notification_type={{notification_type}}&severity_level={{severity_level}}&status={{notification_status}}",
+            "description": "Administrator, Analyst or Auditor. Combine recipient, type, severity and read status using AND; at least one filter is required. Returns 200 with matching notifications or data: []. Analysts are restricted to their own results. notification_status accepts Unread/Read. For automatic assignment notifications set notification_type to Incident Assignment. Empty, repeated, unknown or invalid filters return 400. Requires a valid Service 1 Bearer token; missing/invalid authentication returns 401 and forbidden roles return 403. Invalid inputs return 400."
+          },
+          "response": []
+        },
+        {
+          "name": "Delete notification",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{admin_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "url": "{{service8_base_url}}/Youssef-Al-Hajj-Youness/notifications/{{notification_id}}",
+            "description": "Administrator only. Returns 200; subsequent administrator retrieval returns 404. Deletion preserves the recipient user. Other roles receive 403. Requires a valid Service 1 Bearer token; missing/invalid authentication returns 401 and forbidden roles return 403. Invalid inputs return 400."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Service 9 - Security Playbooks and Response Automation",
+      "description": "Playbooks, ordered response actions, assignment/progress, execution history and deletion. These APIs record action execution; they do not run shell commands.",
+      "item": [
+        {
+          "name": "Create playbook",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{admin_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "url": "{{service9_base_url}}/Youssef-Al-Hajj-Youness/playbooks",
+            "description": "Administrator only. Four required body fields; returns 201 with server-controlled created_by/created_at and empty response_actions/action_history. Copy data.playbook_id into playbook_id. Create another playbook by changing the name/category/severity when needed. Requires a valid Service 1 Bearer token; missing/invalid authentication returns 401 and forbidden roles return 403. Invalid inputs return 400.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"playbook_name\": \"Unauthorized Access Response\",\n  \"description\": \"Contain, investigate and recover from unauthorized access.\",\n  \"incident_category\": \"Unauthorized Access\",\n  \"severity_level\": \"{{severity_level}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "List playbooks",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{analyst_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "url": "{{service9_base_url}}/Youssef-Al-Hajj-Youness/playbooks",
+            "description": "Administrator, Analyst or Auditor. Returns 200 with all playbook metadata, or data: [] when none exist. Requires a valid Service 1 Bearer token; missing/invalid authentication returns 401 and forbidden roles return 403. Invalid inputs return 400."
+          },
+          "response": []
+        },
+        {
+          "name": "Retrieve ordered actions and execution history",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{auditor_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "url": "{{service9_base_url}}/Youssef-Al-Hajj-Youness/playbooks/{{playbook_id}}",
+            "description": "Administrator, Analyst or Auditor. Returns 200 with metadata, response_actions sorted by step_number and chronological action_history snapshots. Missing playbook returns 404. Retrieve after status updates to inspect execution history. Requires a valid Service 1 Bearer token; missing/invalid authentication returns 401 and forbidden roles return 403. Invalid inputs return 400."
+          },
+          "response": []
+        },
+        {
+          "name": "Add ordered response action",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{analyst_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "url": "{{service9_base_url}}/Youssef-Al-Hajj-Youness/playbooks/{{playbook_id}}/actions",
+            "description": "Administrator or Analyst. Requires action_description and positive integer step_number, unique within this playbook (duplicate 409). Returns 201 with Pending status, no assignee and null completion_date; copy data.action_id into action_id. Change step_number and description for additional actions; retrieval sorts by step number, even if created out of order. Missing playbook returns 404. Requires a valid Service 1 Bearer token; missing/invalid authentication returns 401 and forbidden roles return 403. Invalid inputs return 400.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action_description\": \"Isolate the affected server and preserve access logs.\",\n  \"step_number\": {{step_number}}\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Assign action and update progress",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{analyst_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "url": "{{service9_base_url}}/Youssef-Al-Hajj-Youness/actions/{{action_id}}/status",
+            "description": "Administrator or Analyst. Returns 200; at least one of status, assigned_user_id or completion_date is required. This body assigns an existing Active analyst and applies action_status (Pending, In Progress or Completed). Set Completed to automatically record today in UTC, or add completion_date in YYYY-MM-DD format for an explicit nonfuture date. Explicit null date for Completed, future dates and dates on noncompleted actions return 400. assigned_user_id may be null to unassign; absent user returns 404. Reopening clears completion_date; unchanged updates preserve history. Missing action returns 404. Requires a valid Service 1 Bearer token; missing/invalid authentication returns 401 and forbidden roles return 403. Invalid inputs return 400.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"{{action_status}}\",\n  \"assigned_user_id\": {{analyst_id}}\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete playbook and live actions",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{admin_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "url": "{{service9_base_url}}/Youssef-Al-Hajj-Youness/playbooks/{{playbook_id}}",
+            "description": "Administrator only. Returns 200 and cascades deletion of live response actions. Execution history and audit records remain in the database. Subsequent playbook retrieval returns 404; other users/resources remain intact. Requires a valid Service 1 Bearer token; missing/invalid authentication returns 401 and forbidden roles return 403. Invalid inputs return 400."
+          },
+          "response": []
+        }
+      ]
     }
   ],
   "variable": [
@@ -3849,6 +4421,116 @@
     {
       "key": "notificationId",
       "value": "",
+      "type": "string"
+    },
+    {
+      "key": "service1_base_url",
+      "value": "http://127.0.0.1:5001",
+      "type": "string"
+    },
+    {
+      "key": "service2_base_url",
+      "value": "http://127.0.0.1:5002",
+      "type": "string"
+    },
+    {
+      "key": "service3_base_url",
+      "value": "http://127.0.0.1:5003",
+      "type": "string"
+    },
+    {
+      "key": "service8_base_url",
+      "value": "http://127.0.0.1:5008",
+      "type": "string"
+    },
+    {
+      "key": "service9_base_url",
+      "value": "http://127.0.0.1:5009",
+      "type": "string"
+    },
+    {
+      "key": "admin_token",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "analyst_token",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "reporter_token",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "auditor_token",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "reporter_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "analyst_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "asset_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "incident_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "notification_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "playbook_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "action_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "severity_level",
+      "value": "High",
+      "type": "string"
+    },
+    {
+      "key": "incident_status",
+      "value": "Under Investigation",
+      "type": "string"
+    },
+    {
+      "key": "action_status",
+      "value": "In Progress",
+      "type": "string"
+    },
+    {
+      "key": "notification_type",
+      "value": "Security Alert",
+      "type": "string"
+    },
+    {
+      "key": "notification_status",
+      "value": "Unread",
+      "type": "string"
+    },
+    {
+      "key": "step_number",
+      "value": "1",
       "type": "string"
     },
     {

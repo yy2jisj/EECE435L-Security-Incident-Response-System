@@ -12,6 +12,7 @@ from notification_service.models import (
 from user_service import repository as users
 
 SERVICE = "notifications"
+BASE_ROUTE = "/Youssef-Al-Hajj-Youness/notifications"
 OWNER_ROLES = (config.ROLE_USER, config.ROLE_ANALYST)
 
 app = Flask(__name__)
@@ -37,7 +38,7 @@ def find_notification(value):
     return item
 
 
-@app.post("/notifications")
+@app.post(BASE_ROUTE)
 @roles_required(config.ROLE_ADMIN, service=SERVICE)
 def create_notification():
     """Create an unread notification for an existing Service 1 user.
@@ -52,7 +53,7 @@ def create_notification():
     return success_response("Notification created successfully", repository.get_by_id(new_id), 201)
 
 
-@app.get("/notifications/user/<user_id>")
+@app.get(BASE_ROUTE + "/user/<user_id>")
 @roles_required(*config.ALL_ROLES, service=SERVICE)
 def get_user_notifications(user_id):
     """Return a recipient's notifications, including an empty history.
@@ -66,7 +67,7 @@ def get_user_notifications(user_id):
     return success_response("Notifications retrieved successfully", repository.get_for_user(user_id))
 
 
-@app.get("/notifications/<item_id>")
+@app.get(BASE_ROUTE + "/<item_id>")
 @roles_required(*config.ALL_ROLES, service=SERVICE)
 def get_notification(item_id):
     """Return one permitted notification.
@@ -76,7 +77,7 @@ def get_notification(item_id):
     return success_response("Notification retrieved successfully", find_notification(item_id))
 
 
-@app.put("/notifications/<item_id>/read")
+@app.put(BASE_ROUTE + "/<item_id>/read")
 @roles_required(config.ROLE_ADMIN, config.ROLE_ANALYST, config.ROLE_USER, service=SERVICE)
 def mark_notification_read(item_id):
     """Mark an accessible notification read; repeated calls keep its timestamp.
@@ -90,7 +91,7 @@ def mark_notification_read(item_id):
     return success_response("Notification marked as read", repository.get_by_id(item["notification_id"]))
 
 
-@app.get("/notifications/search")
+@app.get(BASE_ROUTE + "/search")
 @roles_required(config.ROLE_ADMIN, config.ROLE_ANALYST, config.ROLE_AUDITOR, service=SERVICE)
 def search_notifications():
     """Filter notifications by recipient, type, severity and/or read status.
@@ -115,7 +116,7 @@ def search_notifications():
     return success_response("Notifications retrieved successfully", repository.search(filters))
 
 
-@app.delete("/notifications/<item_id>")
+@app.delete(BASE_ROUTE + "/<item_id>")
 @roles_required(config.ROLE_ADMIN, service=SERVICE)
 def delete_notification(item_id):
     """Delete a notification as Security Administrator only.
