@@ -18,7 +18,12 @@ CLOSED_INCIDENT_STATUSES = ("Resolved", "Closed")
 VULNERABILITY_SEVERITIES = ("Low", "Medium", "High", "Critical")
 VULNERABILITY_STATUSES = ("Open", "Under Investigation", "In Progress", "Resolved", "Closed")
 
+# the actions the user service writes to the audit log for logins
+LOGIN_SUCCESS_ACTION = "Successful login"
+LOGIN_FAILURE_ACTION = "Failed login"
+
 RECENT_THREAT_LIMIT = 5
+TOP_ACTION_LIMIT = 5
 CRITICAL_VULNERABILITY_LIMIT = 10
 
 
@@ -139,3 +144,35 @@ def critical_vulnerabilities(limit=CRITICAL_VULNERABILITY_LIMIT):
         "SELECT vulnerability_id, title, cve_id, cvss_score, status, asset_id "
         "FROM vulnerabilities WHERE severity_level = 'Critical' "
         "ORDER BY cvss_score DESC, vulnerability_id LIMIT ?", (limit,))
+
+
+# ---- activity (audit logs) ----
+def count_activities():
+    """Count every record in the audit log."""
+    return _count("SELECT COUNT(*) AS total FROM logs")
+
+
+def count_log_action(action):
+    return _count("SELECT COUNT(*) AS total FROM logs WHERE action = ?", (action,))
+
+
+def count_successful_logins():
+    return count_log_action(LOGIN_SUCCESS_ACTION)
+
+
+def count_failed_logins():
+    return count_log_action(LOGIN_FAILURE_ACTION)
+
+
+def count_login_attempts():
+    """Count successful and failed login attempts together."""
+    return _count(
+        "SELECT COUNT(*) AS total FROM logs WHERE action IN (?, ?)",
+        (LOGIN_SUCCESS_ACTION, LOGIN_FAILURE_ACTION))
+
+
+def most_performed_actions(limit=TOP_ACTION_LIMIT):
+    """Return the most frequent actions, most frequent first (ties by name)."""
+    return fetch_all(
+        "SELECT action, COUNT(*) AS total FROM logs "
+        "GROUP BY action ORDER BY total DESC, action LIMIT ?", (limit,))
