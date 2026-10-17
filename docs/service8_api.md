@@ -41,12 +41,12 @@ Errors have `status: error` and a meaningful `message`.
 
 | Method and path | Required input | Success | Behavior |
 |---|---|---|---|
-| POST /notifications | JSON below | 201 | Create one Unread notification |
-| GET /notifications/user/{user_id} | Positive recipient ID | 200 | List; an existing user with no notifications returns `data: []` |
-| GET /notifications/{id} | Positive notification ID | 200 | Retrieve one permitted notification |
-| PUT /notifications/{id}/read | Positive ID; no body required | 200 | Set Read and first read timestamp |
-| GET /notifications/search | At least one filter below | 200 | Combine supplied filters using AND |
-| DELETE /notifications/{id} | Positive notification ID | 200 | Delete notification; preserve user |
+| POST /Youssef-Al-Hajj-Youness/notifications | JSON below | 201 | Create one Unread notification |
+| GET /Youssef-Al-Hajj-Youness/notifications/user/{user_id} | Positive recipient ID | 200 | List; an existing user with no notifications returns `data: []` |
+| GET /Youssef-Al-Hajj-Youness/notifications/{id} | Positive notification ID | 200 | Retrieve one permitted notification |
+| PUT /Youssef-Al-Hajj-Youness/notifications/{id}/read | Positive ID; no body required | 200 | Set Read and first read timestamp |
+| GET /Youssef-Al-Hajj-Youness/notifications/search | At least one filter below | 200 | Combine supplied filters using AND |
+| DELETE /Youssef-Al-Hajj-Youness/notifications/{id} | Positive notification ID | 200 | Delete notification; preserve user |
 
 Example POST body (use a real user ID):
 
@@ -72,7 +72,7 @@ the shared validator: case insensitive input, canonical stored spelling.
 
 Search parameters: `user_id`, `notification_type`, `severity_level`, `status`.
 Status accepts Unread or Read. Example:
-`/notifications/search?notification_type=Security%20Alert&status=Read`.
+`/Youssef-Al-Hajj-Youness/notifications/search?notification_type=Security%20Alert&status=Read`.
 Empty, repeated, unknown, or invalid filters return 400. A nonexistent filtered
 recipient returns 404 for an authorized caller. A valid search with no matches
 returns `data: []`.
@@ -100,10 +100,9 @@ implementation applies the narrower global scope. The live database role and
 account status are reloaded by the shared auth helper on each request;
 permission violations use its existing audit logger.
 
-Required paths are preserved. Every route docstring contains the responsible
-student's full name, following Service 1's precedent. The instructor's phrase
-“Each route … must include the Full student name” remains ambiguous about
-attribution placement; no name was inserted into the required API URLs.
+Every Service 8 API URL starts with `/Youssef-Al-Hajj-Youness/notifications`.
+Route docstrings also identify the responsible student. The old unprefixed
+notification URLs are no longer registered.
 
 ## Database and upgrade decisions
 
@@ -124,7 +123,9 @@ start Unread with NULL read_date. Repeated read requests preserve the first time
 
 User deletion keeps the pre-existing ON DELETE CASCADE behavior. Deleting a
 notification never deletes its user. The optional incident relationship remains
-ON DELETE SET NULL. No Service 3 or Service 9 routes are implemented.
+ON DELETE SET NULL. Service 3 incident assignment creates notifications within
+its shared database transaction; the public Service 8 API uses the full-name
+route prefix.
 
 ```mermaid
 erDiagram
