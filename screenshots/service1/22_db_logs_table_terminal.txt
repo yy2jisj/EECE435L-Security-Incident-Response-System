@@ -1,0 +1,139 @@
+aazelmac@Adams-MacBook-Air Lab6 % sqlite3 -header -column database/security_incident.db "SELECT log_id, user_id, action, description, severity_level, related_service, timestamp FROM logs;"
+log_id user_id     action       description    severity_level related_service      timestamp
+------ ------- -------------- ---------------- -------------- --------------- -------------------
+     1       1 Successful     'admin' logged   Information    users           2026-10-17 12:58:39
+               login          in
+
+     2       1 Successful     'admin' logged   Information    users           2026-10-17 13:00:01
+               login          in
+
+     3       1 Failed login   Failed login     Warning        users           2026-10-17 13:00:47
+                              attempt for
+                              'admin'
+
+     4       1 Successful     'admin' logged   Information    users           2026-10-17 13:11:21
+               login          in
+
+     5       1 Failed login   Failed login     Warning        users           2026-10-17 13:12:05
+                              attempt for
+                              'admin'
+
+     6         User created   Account 'yy123'  Information    users           2026-10-17 13:23:34
+                              created with
+                              role Regular
+                              User
+
+     7         Successful     'yy123' logged   Information    users           2026-10-17 13:29:28
+               login          in
+
+     8       1 Successful     'admin' logged   Information    users           2026-10-17 13:44:16
+               login          in
+
+     9         Successful     'yy123' logged   Information    users           2026-10-17 13:44:16
+               login          in
+
+    10         Successful     'yy123' logged   Information    users           2026-10-17 14:11:13
+               login          in
+
+    11         Unauthorized   DELETE /users/2/ Warning        users           2026-10-17 14:25:38
+               access attempt AdamYahya:
+                              Authentication
+                              required: send
+                              'Authorization:
+                              ...
+
+    12       3 User created   Account 'youssef Information    users           2026-10-17 14:26:21
+                              .younnes'
+                              created with
+                              role Regular
+                              User
+
+    13       4 User created   Account 'leen.   Information    users           2026-10-17 14:26:39
+                              abdallah'
+                              created with
+                              role Regular
+                              User
+
+    14       5 User created   Account 'adam.   Information    users           2026-10-17 14:26:56
+                              yahya' created
+                              with role
+                              Regular User
+
+    15         Unauthorized   POST /assets/    Warning        assets          2026-10-17 14:27:50
+               access attempt AdamYahya:
+                              Authentication
+                              required: send
+                              'Authorization:
+                              ...
+
+    16       1 Successful     'admin' logged   Information    users           2026-10-17 15:57:06
+               login          in
+
+    17         Successful     'yy123' logged   Information    users           2026-10-17 15:57:19
+               login          in
+
+    18         Unauthorized   GET /users/      Warning        users           2026-10-17 15:58:05
+               access attempt AdamYahya:
+                              Invalid
+                              authentication
+                              token
+
+    19         Unauthorized   GET /users/yy123 Warning        users           2026-10-17 15:58:22
+               access attempt /AdamYahya:
+                              Invalid
+                              authentication
+                              token
+
+    20       1 Successful     'admin' logged   Information    users           2026-10-17 15:58:45
+               login          in
+
+    21       1 Successful     'admin' logged   Information    users           2026-10-17 16:01:54
+               login          in
+
+    22         Successful     'yy123' logged   Information    users           2026-10-17 16:02:17
+               login          in
+
+    23         Unauthorized   GET /users/      Warning        users           2026-10-17 16:02:37
+               access attempt AdamYahya: User
+                              does not have
+                              permission to
+                              perform this
+                              ...
+
+    24         Unauthorized   PUT /users/1/    Warning        users           2026-10-17 16:03:53
+               access attempt AdamYahya: You
+                              can only update
+                              your own user
+                              information
+
+    25         User updated   User 2 updated   Information    users           2026-10-17 16:04:14
+                              fields:
+                              department
+
+    26         Unauthorized   PUT /users/1/    Warning        users           2026-10-17 16:04:20
+               access attempt AdamYahya: You
+                              can only update
+                              your own user
+                              information
+
+    27         User updated   User 2 updated   Information    users           2026-10-17 16:04:40
+                              fields:
+                              department
+
+    28         Unauthorized   DELETE /users/2/ Warning        users           2026-10-17 16:05:58
+               access attempt AdamYahya: User
+                              does not have
+                              permission to
+                              perform this
+                              ...
+
+    29         Unauthorized   DELETE /users/2/ Warning        users           2026-10-17 16:07:12
+               access attempt AdamYahya: User
+                              does not have
+                              permission to
+                              perform this
+                              ...
+
+    30       1 User deleted   Account 'yy123'  Warning        users           2026-10-17 16:07:50
+                              (id 2) deleted
+aazelmac@Adams-MacBook-Air Lab6 %
