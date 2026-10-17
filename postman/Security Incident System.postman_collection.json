@@ -1989,20 +1989,6 @@
           "response": []
         }
       ]
-    }
-  ],
-  "variable": [
-    {
-      "key": "admin",
-      "secret": true
-    },
-    {
-      "key": "yy",
-      "secret": true
-    },
-    {
-      "key": "jad",
-      "secret": true
     },
     {
       "name": "Service 4 – Threat Intelligence",
@@ -2037,13 +2023,14 @@
                   }
                 },
                 "url": {
-                  "raw": "{{baseURL}}/users/login",
+                  "raw": "{{baseURL}}/users/login/AdamYahya",
                   "host": [
                     "{{baseURL}}"
                   ],
                   "path": [
                     "users",
-                    "login"
+                    "login",
+                    "AdamYahya"
                   ]
                 },
                 "description": "POST /users/login. Logs in and stores the token in the adminToken collection variable. Implemented by: Leen Abdallah"
@@ -2077,13 +2064,14 @@
                   }
                 },
                 "url": {
-                  "raw": "{{baseURL}}/users/login",
+                  "raw": "{{baseURL}}/users/login/AdamYahya",
                   "host": [
                     "{{baseURL}}"
                   ],
                   "path": [
                     "users",
-                    "login"
+                    "login",
+                    "AdamYahya"
                   ]
                 },
                 "description": "POST /users/login. Logs in and stores the token in the analystToken collection variable. Implemented by: Leen Abdallah"
@@ -2117,13 +2105,14 @@
                   }
                 },
                 "url": {
-                  "raw": "{{baseURL}}/users/login",
+                  "raw": "{{baseURL}}/users/login/AdamYahya",
                   "host": [
                     "{{baseURL}}"
                   ],
                   "path": [
                     "users",
-                    "login"
+                    "login",
+                    "AdamYahya"
                   ]
                 },
                 "description": "POST /users/login. Logs in and stores the token in the auditorToken collection variable. Implemented by: Leen Abdallah"
@@ -2157,13 +2146,14 @@
                   }
                 },
                 "url": {
-                  "raw": "{{baseURL}}/users/login",
+                  "raw": "{{baseURL}}/users/login/AdamYahya",
                   "host": [
                     "{{baseURL}}"
                   ],
                   "path": [
                     "users",
-                    "login"
+                    "login",
+                    "AdamYahya"
                   ]
                 },
                 "description": "POST /users/login. Logs in and stores the token in the employeeToken collection variable. Implemented by: Leen Abdallah"
@@ -4476,6 +4466,3744 @@
       ]
     },
     {
+      "name": "Service 5 – Security Audit Logging",
+      "item": [
+        {
+          "name": "Setup – Logins and a user without logs",
+          "item": [
+            {
+              "name": "Admin login",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () { pm.response.to.have.status(200); });",
+                      "const result = pm.response.json().data;",
+                      "pm.collectionVariables.set(\"adminToken\", result.token);",
+                      "pm.collectionVariables.set(\"adminUserId\", result.user.user_id);"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"username\":\"admin\",\"password\":\"{{adminPassword}}\"}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseURL}}/users/login/AdamYahya",
+                  "host": [
+                    "{{baseURL}}"
+                  ],
+                  "path": [
+                    "users",
+                    "login",
+                    "AdamYahya"
+                  ]
+                },
+                "description": "POST /users/login/AdamYahya. Logs in the admin, stores the token in adminToken and the user id in adminUserId. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Analyst login",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () { pm.response.to.have.status(200); });",
+                      "const result = pm.response.json().data;",
+                      "pm.collectionVariables.set(\"analystToken\", result.token);",
+                      "pm.collectionVariables.set(\"analystUserId\", result.user.user_id);"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"username\":\"{{analystUsername}}\",\"password\":\"{{analystPassword}}\"}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseURL}}/users/login/AdamYahya",
+                  "host": [
+                    "{{baseURL}}"
+                  ],
+                  "path": [
+                    "users",
+                    "login",
+                    "AdamYahya"
+                  ]
+                },
+                "description": "POST /users/login/AdamYahya. Logs in the analyst, stores the token in analystToken and the user id in analystUserId. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Auditor login",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () { pm.response.to.have.status(200); });",
+                      "const result = pm.response.json().data;",
+                      "pm.collectionVariables.set(\"auditorToken\", result.token);",
+                      "pm.collectionVariables.set(\"auditorUserId\", result.user.user_id);"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"username\":\"{{auditorUsername}}\",\"password\":\"{{auditorPassword}}\"}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseURL}}/users/login/AdamYahya",
+                  "host": [
+                    "{{baseURL}}"
+                  ],
+                  "path": [
+                    "users",
+                    "login",
+                    "AdamYahya"
+                  ]
+                },
+                "description": "POST /users/login/AdamYahya. Logs in the auditor, stores the token in auditorToken and the user id in auditorUserId. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Regular user login",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () { pm.response.to.have.status(200); });",
+                      "const result = pm.response.json().data;",
+                      "pm.collectionVariables.set(\"employeeToken\", result.token);",
+                      "pm.collectionVariables.set(\"employeeUserId\", result.user.user_id);"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"username\":\"{{recipientUsername}}\",\"password\":\"{{recipientPassword}}\"}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseURL}}/users/login/AdamYahya",
+                  "host": [
+                    "{{baseURL}}"
+                  ],
+                  "path": [
+                    "users",
+                    "login",
+                    "AdamYahya"
+                  ]
+                },
+                "description": "POST /users/login/AdamYahya. Logs in the regular user, stores the token in employeeToken and the user id in employeeUserId. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Register a user that has no logs (admin)",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.collectionVariables.set(\"emptyLogUsername\", \"logs_empty_\" + Date.now());"
+                    ]
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 201\", function () { pm.response.to.have.status(201); });",
+                      "pm.collectionVariables.set(\"emptyLogUserId\", pm.response.json().data.user_id);"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{adminToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"full_name\": \"No Logs User\", \"username\": \"{{emptyLogUsername}}\", \"email\": \"{{emptyLogUsername}}@example.com\", \"password\": \"TemporaryFixture435!\", \"department\": \"Security\", \"role\": \"Auditor\"}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseURL}}/users/register/AdamYahya",
+                  "host": [
+                    "{{baseURL}}"
+                  ],
+                  "path": [
+                    "users",
+                    "register",
+                    "AdamYahya"
+                  ]
+                },
+                "description": "POST /users/register/AdamYahya. Creates an Auditor that never logs in, so it has no logs. A registration made by the admin is logged under the admin's id, not the new user's. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "1. Create Log Record",
+          "item": [
+            {
+              "name": "Create log: incident created (admin)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 201\", function () { pm.response.to.have.status(201); });",
+                      "const log = pm.response.json().data;",
+                      "pm.test(\"Log has the values that were sent\", function () { pm.expect(log.user_id).to.eql(Number(pm.collectionVariables.get(\"analystUserId\"))); pm.expect(log.action).to.eql(\"Incident created\"); pm.expect(log.severity_level).to.eql(\"Information\"); pm.expect(log.related_service).to.eql(\"incidents\"); });",
+                      "pm.test(\"Log id and timestamp are set by the system\", function () { pm.expect(log.log_id).to.be.a(\"number\"); pm.expect(log.timestamp).to.match(/^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}$/); });",
+                      "pm.collectionVariables.set(\"logId\", log.log_id);"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{adminToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"user_id\": {{analystUserId}}, \"action\": \"Incident created\", \"description\": \"Analyst opened incident 4\", \"severity_level\": \"Information\", \"related_service\": \"incidents\"}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{logsURL}}/leen-abdallah/logs",
+                  "host": [
+                    "{{logsURL}}"
+                  ],
+                  "path": [
+                    "leen-abdallah",
+                    "logs"
+                  ]
+                },
+                "description": "POST /leen-abdallah/logs. Creates an Information log for the analyst. Admin only. Returns 201. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Create log: incident updated (admin)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 201\", function () { pm.response.to.have.status(201); });",
+                      "const log = pm.response.json().data;",
+                      "pm.test(\"Log has the values that were sent\", function () { pm.expect(log.user_id).to.eql(Number(pm.collectionVariables.get(\"analystUserId\"))); pm.expect(log.action).to.eql(\"Incident updated\"); pm.expect(log.severity_level).to.eql(\"Warning\"); pm.expect(log.related_service).to.eql(\"incidents\"); });",
+                      "pm.test(\"Log id and timestamp are set by the system\", function () { pm.expect(log.log_id).to.be.a(\"number\"); pm.expect(log.timestamp).to.match(/^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}$/); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{adminToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"user_id\": {{analystUserId}}, \"action\": \"Incident updated\", \"description\": \"Analyst changed incident 4 to Resolved\", \"severity_level\": \"Warning\", \"related_service\": \"incidents\"}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{logsURL}}/leen-abdallah/logs",
+                  "host": [
+                    "{{logsURL}}"
+                  ],
+                  "path": [
+                    "leen-abdallah",
+                    "logs"
+                  ]
+                },
+                "description": "POST /leen-abdallah/logs. Creates a Warning log for the analyst. Returns 201. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Create log: asset modified (admin)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 201\", function () { pm.response.to.have.status(201); });",
+                      "const log = pm.response.json().data;",
+                      "pm.test(\"Log has the values that were sent\", function () { pm.expect(log.user_id).to.eql(Number(pm.collectionVariables.get(\"auditorUserId\"))); pm.expect(log.action).to.eql(\"Asset modified\"); pm.expect(log.severity_level).to.eql(\"Error\"); pm.expect(log.related_service).to.eql(\"assets\"); });",
+                      "pm.test(\"Log id and timestamp are set by the system\", function () { pm.expect(log.log_id).to.be.a(\"number\"); pm.expect(log.timestamp).to.match(/^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}$/); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{adminToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"user_id\": {{auditorUserId}}, \"action\": \"Asset modified\", \"description\": \"Asset 2 changed\", \"severity_level\": \"Error\", \"related_service\": \"assets\"}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{logsURL}}/leen-abdallah/logs",
+                  "host": [
+                    "{{logsURL}}"
+                  ],
+                  "path": [
+                    "leen-abdallah",
+                    "logs"
+                  ]
+                },
+                "description": "POST /leen-abdallah/logs. Creates an Error log for the auditor user. Returns 201. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Create log: threat deleted (admin)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 201\", function () { pm.response.to.have.status(201); });",
+                      "const log = pm.response.json().data;",
+                      "pm.test(\"Log has the values that were sent\", function () { pm.expect(log.user_id).to.eql(Number(pm.collectionVariables.get(\"adminUserId\"))); pm.expect(log.action).to.eql(\"Threat deleted\"); pm.expect(log.severity_level).to.eql(\"Critical\"); pm.expect(log.related_service).to.eql(\"threats\"); });",
+                      "pm.test(\"Log id and timestamp are set by the system\", function () { pm.expect(log.log_id).to.be.a(\"number\"); pm.expect(log.timestamp).to.match(/^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}$/); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{adminToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"user_id\": {{adminUserId}}, \"action\": \"Threat deleted\", \"description\": \"Threat 3 deleted\", \"severity_level\": \"Critical\", \"related_service\": \"threats\"}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{logsURL}}/leen-abdallah/logs",
+                  "host": [
+                    "{{logsURL}}"
+                  ],
+                  "path": [
+                    "leen-abdallah",
+                    "logs"
+                  ]
+                },
+                "description": "POST /leen-abdallah/logs. Creates a Critical log for the admin. Returns 201. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Create log: severity in lower case (admin)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 201\", function () { pm.response.to.have.status(201); });",
+                      "pm.test(\"Severity is stored in its normal spelling\", function () { pm.expect(pm.response.json().data.severity_level).to.eql(\"Warning\"); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{adminToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"user_id\": {{employeeUserId}}, \"action\": \"Role changed\", \"description\": \"Role changed to Auditor\", \"severity_level\": \"warning\", \"related_service\": \"users\"}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{logsURL}}/leen-abdallah/logs",
+                  "host": [
+                    "{{logsURL}}"
+                  ],
+                  "path": [
+                    "leen-abdallah",
+                    "logs"
+                  ]
+                },
+                "description": "POST /leen-abdallah/logs. Severity is matched ignoring case, so 'warning' is stored as 'Warning'. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Create log: action with a percent sign (admin)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 201\", function () { pm.response.to.have.status(201); });",
+                      "const log = pm.response.json().data;",
+                      "pm.test(\"Log has the values that were sent\", function () { pm.expect(log.user_id).to.eql(Number(pm.collectionVariables.get(\"employeeUserId\"))); pm.expect(log.action).to.eql(\"Discount 100% applied\"); pm.expect(log.severity_level).to.eql(\"Information\"); pm.expect(log.related_service).to.eql(\"assets\"); });",
+                      "pm.test(\"Log id and timestamp are set by the system\", function () { pm.expect(log.log_id).to.be.a(\"number\"); pm.expect(log.timestamp).to.match(/^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}$/); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{adminToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"user_id\": {{employeeUserId}}, \"action\": \"Discount 100% applied\", \"description\": \"Percent sign in the action\", \"severity_level\": \"Information\", \"related_service\": \"assets\"}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{logsURL}}/leen-abdallah/logs",
+                  "host": [
+                    "{{logsURL}}"
+                  ],
+                  "path": [
+                    "leen-abdallah",
+                    "logs"
+                  ]
+                },
+                "description": "POST /leen-abdallah/logs. Special characters are stored as typed. Used later to show that search treats % as text. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Create log: missing fields",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 400\", function () { pm.response.to.have.status(400); });",
+                      "pm.test(\"Message lists the missing fields\", function () { pm.expect(pm.response.json().message).to.include(\"Missing required fields\"); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{adminToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"action\": \"Incident created\"}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{logsURL}}/leen-abdallah/logs",
+                  "host": [
+                    "{{logsURL}}"
+                  ],
+                  "path": [
+                    "leen-abdallah",
+                    "logs"
+                  ]
+                },
+                "description": "POST /leen-abdallah/logs. Only the action is sent. Returns 400. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Create log: empty body",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 400\", function () { pm.response.to.have.status(400); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{adminToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{logsURL}}/leen-abdallah/logs",
+                  "host": [
+                    "{{logsURL}}"
+                  ],
+                  "path": [
+                    "leen-abdallah",
+                    "logs"
+                  ]
+                },
+                "description": "POST /leen-abdallah/logs. An empty JSON object. Returns 400. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Create log: client sets timestamp",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 400\", function () { pm.response.to.have.status(400); });",
+                      "pm.test(\"Message names the unknown field\", function () { pm.expect(pm.response.json().message).to.include(\"timestamp\"); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{adminToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"user_id\": {{adminUserId}}, \"action\": \"x\", \"description\": \"x\", \"severity_level\": \"Information\", \"related_service\": \"users\", \"timestamp\": \"2000-01-01 00:00:00\"}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{logsURL}}/leen-abdallah/logs",
+                  "host": [
+                    "{{logsURL}}"
+                  ],
+                  "path": [
+                    "leen-abdallah",
+                    "logs"
+                  ]
+                },
+                "description": "POST /leen-abdallah/logs. The timestamp is set by the system, so sending one is rejected. Returns 400. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Create log: invalid severity",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 400\", function () { pm.response.to.have.status(400); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{adminToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"user_id\": {{adminUserId}}, \"action\": \"x\", \"description\": \"x\", \"severity_level\": \"Severe\", \"related_service\": \"users\"}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{logsURL}}/leen-abdallah/logs",
+                  "host": [
+                    "{{logsURL}}"
+                  ],
+                  "path": [
+                    "leen-abdallah",
+                    "logs"
+                  ]
+                },
+                "description": "POST /leen-abdallah/logs. Severity is not one of Information, Warning, Error, Critical. Returns 400. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Create log: unknown user",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 400\", function () { pm.response.to.have.status(400); });",
+                      "pm.test(\"Message says the user does not exist\", function () { pm.expect(pm.response.json().message).to.include(\"does not match any existing user\"); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{adminToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"user_id\": 999999, \"action\": \"x\", \"description\": \"x\", \"severity_level\": \"Information\", \"related_service\": \"users\"}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{logsURL}}/leen-abdallah/logs",
+                  "host": [
+                    "{{logsURL}}"
+                  ],
+                  "path": [
+                    "leen-abdallah",
+                    "logs"
+                  ]
+                },
+                "description": "POST /leen-abdallah/logs. user_id does not belong to any user. Returns 400. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Create log: user id as text",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 400\", function () { pm.response.to.have.status(400); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{adminToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"user_id\": \"1\", \"action\": \"x\", \"description\": \"x\", \"severity_level\": \"Information\", \"related_service\": \"users\"}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{logsURL}}/leen-abdallah/logs",
+                  "host": [
+                    "{{logsURL}}"
+                  ],
+                  "path": [
+                    "leen-abdallah",
+                    "logs"
+                  ]
+                },
+                "description": "POST /leen-abdallah/logs. user_id must be a number. Returns 400. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Create log: action too long",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 400\", function () { pm.response.to.have.status(400); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{adminToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"user_id\": {{adminUserId}}, \"action\": \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\", \"description\": \"x\", \"severity_level\": \"Information\", \"related_service\": \"users\"}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{logsURL}}/leen-abdallah/logs",
+                  "host": [
+                    "{{logsURL}}"
+                  ],
+                  "path": [
+                    "leen-abdallah",
+                    "logs"
+                  ]
+                },
+                "description": "POST /leen-abdallah/logs. The action is longer than 100 characters. Returns 400. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Create log: invalid JSON body",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 400\", function () { pm.response.to.have.status(400); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{adminToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{not json",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{logsURL}}/leen-abdallah/logs",
+                  "host": [
+                    "{{logsURL}}"
+                  ],
+                  "path": [
+                    "leen-abdallah",
+                    "logs"
+                  ]
+                },
+                "description": "POST /leen-abdallah/logs. The body is not valid JSON. Returns 400. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Create log as analyst",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 403\", function () { pm.response.to.have.status(403); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{analystToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"user_id\": {{adminUserId}}, \"action\": \"x\", \"description\": \"x\", \"severity_level\": \"Information\", \"related_service\": \"users\"}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{logsURL}}/leen-abdallah/logs",
+                  "host": [
+                    "{{logsURL}}"
+                  ],
+                  "path": [
+                    "leen-abdallah",
+                    "logs"
+                  ]
+                },
+                "description": "POST /leen-abdallah/logs. Analysts cannot create logs. Returns 403 and the attempt is logged. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Create log as auditor",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 403\", function () { pm.response.to.have.status(403); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{auditorToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"user_id\": {{adminUserId}}, \"action\": \"x\", \"description\": \"x\", \"severity_level\": \"Information\", \"related_service\": \"users\"}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{logsURL}}/leen-abdallah/logs",
+                  "host": [
+                    "{{logsURL}}"
+                  ],
+                  "path": [
+                    "leen-abdallah",
+                    "logs"
+                  ]
+                },
+                "description": "POST /leen-abdallah/logs. Auditors cannot create logs. Returns 403. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Create log as regular user",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 403\", function () { pm.response.to.have.status(403); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{employeeToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"user_id\": {{adminUserId}}, \"action\": \"x\", \"description\": \"x\", \"severity_level\": \"Information\", \"related_service\": \"users\"}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{logsURL}}/leen-abdallah/logs",
+                  "host": [
+                    "{{logsURL}}"
+                  ],
+                  "path": [
+                    "leen-abdallah",
+                    "logs"
+                  ]
+                },
+                "description": "POST /leen-abdallah/logs. Regular users have no access to the log APIs. Returns 403. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Create log without token",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 401\", function () { pm.response.to.have.status(401); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"user_id\": {{adminUserId}}, \"action\": \"x\", \"description\": \"x\", \"severity_level\": \"Information\", \"related_service\": \"users\"}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{logsURL}}/leen-abdallah/logs",
+                  "host": [
+                    "{{logsURL}}"
+                  ],
+                  "path": [
+                    "leen-abdallah",
+                    "logs"
+                  ]
+                },
+                "description": "POST /leen-abdallah/logs. No Authorization header. Returns 401. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Create log with invalid token",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 401\", function () { pm.response.to.have.status(401); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{invalidToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"user_id\": {{adminUserId}}, \"action\": \"x\", \"description\": \"x\", \"severity_level\": \"Information\", \"related_service\": \"users\"}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{logsURL}}/leen-abdallah/logs",
+                  "host": [
+                    "{{logsURL}}"
+                  ],
+                  "path": [
+                    "leen-abdallah",
+                    "logs"
+                  ]
+                },
+                "description": "POST /leen-abdallah/logs. A token that is not valid. Returns 401. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "2. Retrieve All Logs",
+          "item": [
+            {
+              "name": "Get all logs (admin)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () { pm.response.to.have.status(200); });",
+                      "const result = pm.response.json();",
+                      "pm.test(\"Response is a list\", function () { pm.expect(result.status).to.eql(\"success\"); pm.expect(result.data).to.be.an(\"array\"); });",
+                      "pm.test(\"Contains the log created earlier\", function () { pm.expect(result.data.map(function (l) { return l.log_id; })).to.include(Number(pm.collectionVariables.get(\"logId\"))); });",
+                      "pm.test(\"Every log has all seven fields\", function () { result.data.forEach(function (l) { pm.expect(l).to.have.all.keys(\"log_id\", \"user_id\", \"action\", \"description\", \"timestamp\", \"severity_level\", \"related_service\"); }); });",
+                      "pm.test(\"Logs are listed oldest first\", function () { const ids = result.data.map(function (l) { return l.log_id; }); pm.expect(ids).to.eql(ids.slice().sort(function (a, b) { return a - b; })); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{adminToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{logsURL}}/leen-abdallah/logs",
+                  "host": [
+                    "{{logsURL}}"
+                  ],
+                  "path": [
+                    "leen-abdallah",
+                    "logs"
+                  ]
+                },
+                "description": "GET /leen-abdallah/logs. Returns every audit log. Allowed for admin and auditor. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Get all logs (auditor)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () { pm.response.to.have.status(200); });",
+                      "const result = pm.response.json();",
+                      "pm.test(\"Response is a list\", function () { pm.expect(result.status).to.eql(\"success\"); pm.expect(result.data).to.be.an(\"array\"); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{auditorToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{logsURL}}/leen-abdallah/logs",
+                  "host": [
+                    "{{logsURL}}"
+                  ],
+                  "path": [
+                    "leen-abdallah",
+                    "logs"
+                  ]
+                },
+                "description": "GET /leen-abdallah/logs. Auditors can read all logs. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Get all logs (analyst)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 403\", function () { pm.response.to.have.status(403); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{analystToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{logsURL}}/leen-abdallah/logs",
+                  "host": [
+                    "{{logsURL}}"
+                  ],
+                  "path": [
+                    "leen-abdallah",
+                    "logs"
+                  ]
+                },
+                "description": "GET /leen-abdallah/logs. Analysts cannot list all logs. Returns 403. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Get all logs (regular user)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 403\", function () { pm.response.to.have.status(403); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{employeeToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{logsURL}}/leen-abdallah/logs",
+                  "host": [
+                    "{{logsURL}}"
+                  ],
+                  "path": [
+                    "leen-abdallah",
+                    "logs"
+                  ]
+                },
+                "description": "GET /leen-abdallah/logs. Regular users have no access. Returns 403. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Get all logs without token",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 401\", function () { pm.response.to.have.status(401); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{logsURL}}/leen-abdallah/logs",
+                  "host": [
+                    "{{logsURL}}"
+                  ],
+                  "path": [
+                    "leen-abdallah",
+                    "logs"
+                  ]
+                },
+                "description": "GET /leen-abdallah/logs. No token. Returns 401. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "3. Retrieve Specific Log",
+          "item": [
+            {
+              "name": "Get log by id (admin)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () { pm.response.to.have.status(200); });",
+                      "const log = pm.response.json().data;",
+                      "pm.test(\"Returns the requested log\", function () { pm.expect(log.log_id).to.eql(Number(pm.collectionVariables.get(\"logId\"))); pm.expect(log.action).to.eql(\"Incident created\"); pm.expect(log.severity_level).to.eql(\"Information\"); pm.expect(log.related_service).to.eql(\"incidents\"); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{adminToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{logsURL}}/leen-abdallah/logs/{{logId}}",
+                  "host": [
+                    "{{logsURL}}"
+                  ],
+                  "path": [
+                    "leen-abdallah",
+                    "logs",
+                    "{{logId}}"
+                  ]
+                },
+                "description": "GET /leen-abdallah/logs/{{logId}}. Returns the log that was created in step 1. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Get log by id (auditor)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () { pm.response.to.have.status(200); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{auditorToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{logsURL}}/leen-abdallah/logs/{{logId}}",
+                  "host": [
+                    "{{logsURL}}"
+                  ],
+                  "path": [
+                    "leen-abdallah",
+                    "logs",
+                    "{{logId}}"
+                  ]
+                },
+                "description": "GET /leen-abdallah/logs/{{logId}}. Auditors can read one log. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Get log by id (analyst)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () { pm.response.to.have.status(200); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{analystToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{logsURL}}/leen-abdallah/logs/{{logId}}",
+                  "host": [
+                    "{{logsURL}}"
+                  ],
+                  "path": [
+                    "leen-abdallah",
+                    "logs",
+                    "{{logId}}"
+                  ]
+                },
+                "description": "GET /leen-abdallah/logs/{{logId}}. Analysts can read one log. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Get non-existing log",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 404\", function () { pm.response.to.have.status(404); });",
+                      "pm.test(\"Message says not found\", function () { pm.expect(pm.response.json().message).to.eql(\"Log not found\"); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{adminToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{logsURL}}/leen-abdallah/logs/999999",
+                  "host": [
+                    "{{logsURL}}"
+                  ],
+                  "path": [
+                    "leen-abdallah",
+                    "logs",
+                    "999999"
+                  ]
+                },
+                "description": "GET /leen-abdallah/logs/999999. No log has this id. Returns 404. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Get log with invalid id",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 400\", function () { pm.response.to.have.status(400); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{adminToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{logsURL}}/leen-abdallah/logs/abc",
+                  "host": [
+                    "{{logsURL}}"
+                  ],
+                  "path": [
+                    "leen-abdallah",
+                    "logs",
+                    "abc"
+                  ]
+                },
+                "description": "GET /leen-abdallah/logs/abc. The id is not a number. Returns 400. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Get log with id 0",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 400\", function () { pm.response.to.have.status(400); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{adminToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{logsURL}}/leen-abdallah/logs/0",
+                  "host": [
+                    "{{logsURL}}"
+                  ],
+                  "path": [
+                    "leen-abdallah",
+                    "logs",
+                    "0"
+                  ]
+                },
+                "description": "GET /leen-abdallah/logs/0. Ids start at 1. Returns 400. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Get log with huge id",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 400\", function () { pm.response.to.have.status(400); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{adminToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{logsURL}}/leen-abdallah/logs/99999999999999999999999",
+                  "host": [
+                    "{{logsURL}}"
+                  ],
+                  "path": [
+                    "leen-abdallah",
+                    "logs",
+                    "99999999999999999999999"
+                  ]
+                },
+                "description": "GET /leen-abdallah/logs/99999999999999999999999. Too large for the database. Returns 400 instead of an error. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Get log (regular user)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 403\", function () { pm.response.to.have.status(403); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{employeeToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{logsURL}}/leen-abdallah/logs/{{logId}}",
+                  "host": [
+                    "{{logsURL}}"
+                  ],
+                  "path": [
+                    "leen-abdallah",
+                    "logs",
+                    "{{logId}}"
+                  ]
+                },
+                "description": "GET /leen-abdallah/logs/{{logId}}. Regular users have no access. Returns 403. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Get log without token",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 401\", function () { pm.response.to.have.status(401); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{logsURL}}/leen-abdallah/logs/{{logId}}",
+                  "host": [
+                    "{{logsURL}}"
+                  ],
+                  "path": [
+                    "leen-abdallah",
+                    "logs",
+                    "{{logId}}"
+                  ]
+                },
+                "description": "GET /leen-abdallah/logs/{{logId}}. No token. Returns 401. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "4. Search Logs",
+          "item": [
+            {
+              "name": "Search by user",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () { pm.response.to.have.status(200); });",
+                      "const result = pm.response.json();",
+                      "pm.test(\"Response is a list\", function () { pm.expect(result.status).to.eql(\"success\"); pm.expect(result.data).to.be.an(\"array\"); });",
+                      "pm.test(\"Every returned log has user_id = \" + Number(pm.collectionVariables.get(\"analystUserId\")), function () { pm.expect(result.data.length).to.be.above(0); result.data.forEach(function (log) { pm.expect(log.user_id).to.eql(Number(pm.collectionVariables.get(\"analystUserId\"))); }); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{adminToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{logsURL}}/leen-abdallah/logs/search?user_id={{analystUserId}}",
+                  "host": [
+                    "{{logsURL}}"
+                  ],
+                  "path": [
+                    "leen-abdallah",
+                    "logs",
+                    "search"
+                  ],
+                  "query": [
+                    {
+                      "key": "user_id",
+                      "value": "{{analystUserId}}"
+                    }
+                  ]
+                },
+                "description": "GET /leen-abdallah/logs/search. Logs written for one user. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Search by date (today)",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.collectionVariables.set(\"todayDate\", new Date().toISOString().slice(0, 10));"
+                    ]
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () { pm.response.to.have.status(200); });",
+                      "const result = pm.response.json();",
+                      "pm.test(\"Response is a list\", function () { pm.expect(result.status).to.eql(\"success\"); pm.expect(result.data).to.be.an(\"array\"); });",
+                      "pm.test(\"Every log is from that day\", function () { pm.expect(result.data.length).to.be.above(0); result.data.forEach(function (log) { pm.expect(log.timestamp.slice(0, 10)).to.eql(pm.collectionVariables.get(\"todayDate\")); }); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{adminToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{logsURL}}/leen-abdallah/logs/search?date={{todayDate}}",
+                  "host": [
+                    "{{logsURL}}"
+                  ],
+                  "path": [
+                    "leen-abdallah",
+                    "logs",
+                    "search"
+                  ],
+                  "query": [
+                    {
+                      "key": "date",
+                      "value": "{{todayDate}}"
+                    }
+                  ]
+                },
+                "description": "GET /leen-abdallah/logs/search. Logs from one day (UTC, written YYYY-MM-DD). Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Search by action",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () { pm.response.to.have.status(200); });",
+                      "const result = pm.response.json();",
+                      "pm.test(\"Response is a list\", function () { pm.expect(result.status).to.eql(\"success\"); pm.expect(result.data).to.be.an(\"array\"); });",
+                      "pm.test(\"Every action contains the text, ignoring case\", function () { pm.expect(result.data.length).to.be.above(1); result.data.forEach(function (log) { pm.expect(log.action.toLowerCase()).to.include(\"incident\"); }); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{adminToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{logsURL}}/leen-abdallah/logs/search?action=incident",
+                  "host": [
+                    "{{logsURL}}"
+                  ],
+                  "path": [
+                    "leen-abdallah",
+                    "logs",
+                    "search"
+                  ],
+                  "query": [
+                    {
+                      "key": "action",
+                      "value": "incident"
+                    }
+                  ]
+                },
+                "description": "GET /leen-abdallah/logs/search. Action matches part of the text, ignoring case. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Search by severity",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () { pm.response.to.have.status(200); });",
+                      "const result = pm.response.json();",
+                      "pm.test(\"Response is a list\", function () { pm.expect(result.status).to.eql(\"success\"); pm.expect(result.data).to.be.an(\"array\"); });",
+                      "pm.test(\"Every returned log has severity_level = \" + \"Critical\", function () { pm.expect(result.data.length).to.be.above(0); result.data.forEach(function (log) { pm.expect(log.severity_level).to.eql(\"Critical\"); }); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{adminToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{logsURL}}/leen-abdallah/logs/search?severity_level=Critical",
+                  "host": [
+                    "{{logsURL}}"
+                  ],
+                  "path": [
+                    "leen-abdallah",
+                    "logs",
+                    "search"
+                  ],
+                  "query": [
+                    {
+                      "key": "severity_level",
+                      "value": "Critical"
+                    }
+                  ]
+                },
+                "description": "GET /leen-abdallah/logs/search. Exact severity level. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Search by severity in lower case",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () { pm.response.to.have.status(200); });",
+                      "const result = pm.response.json();",
+                      "pm.test(\"Response is a list\", function () { pm.expect(result.status).to.eql(\"success\"); pm.expect(result.data).to.be.an(\"array\"); });",
+                      "pm.test(\"Every returned log has severity_level = \" + \"Warning\", function () { pm.expect(result.data.length).to.be.above(0); result.data.forEach(function (log) { pm.expect(log.severity_level).to.eql(\"Warning\"); }); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{adminToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{logsURL}}/leen-abdallah/logs/search?severity_level=warning",
+                  "host": [
+                    "{{logsURL}}"
+                  ],
+                  "path": [
+                    "leen-abdallah",
+                    "logs",
+                    "search"
+                  ],
+                  "query": [
+                    {
+                      "key": "severity_level",
+                      "value": "warning"
+                    }
+                  ]
+                },
+                "description": "GET /leen-abdallah/logs/search. Severity ignores case. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Search by related service",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () { pm.response.to.have.status(200); });",
+                      "const result = pm.response.json();",
+                      "pm.test(\"Response is a list\", function () { pm.expect(result.status).to.eql(\"success\"); pm.expect(result.data).to.be.an(\"array\"); });",
+                      "pm.test(\"Every returned log has related_service = \" + \"threats\", function () { pm.expect(result.data.length).to.be.above(0); result.data.forEach(function (log) { pm.expect(log.related_service).to.eql(\"threats\"); }); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{adminToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{logsURL}}/leen-abdallah/logs/search?related_service=threats",
+                  "host": [
+                    "{{logsURL}}"
+                  ],
+                  "path": [
+                    "leen-abdallah",
+                    "logs",
+                    "search"
+                  ],
+                  "query": [
+                    {
+                      "key": "related_service",
+                      "value": "threats"
+                    }
+                  ]
+                },
+                "description": "GET /leen-abdallah/logs/search. Related service matches part of the text. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Search combined",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () { pm.response.to.have.status(200); });",
+                      "const result = pm.response.json();",
+                      "pm.test(\"Response is a list\", function () { pm.expect(result.status).to.eql(\"success\"); pm.expect(result.data).to.be.an(\"array\"); });",
+                      "pm.test(\"Every returned log has user_id = \" + Number(pm.collectionVariables.get(\"analystUserId\")), function () { pm.expect(result.data.length).to.be.above(0); result.data.forEach(function (log) { pm.expect(log.user_id).to.eql(Number(pm.collectionVariables.get(\"analystUserId\"))); }); });",
+                      "pm.test(\"Every returned log has severity_level = \" + \"Warning\", function () { pm.expect(result.data.length).to.be.above(0); result.data.forEach(function (log) { pm.expect(log.severity_level).to.eql(\"Warning\"); }); });",
+                      "pm.test(\"Every returned log has related_service = \" + \"incidents\", function () { pm.expect(result.data.length).to.be.above(0); result.data.forEach(function (log) { pm.expect(log.related_service).to.eql(\"incidents\"); }); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{adminToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{logsURL}}/leen-abdallah/logs/search?user_id={{analystUserId}}&severity_level=Warning&related_service=incidents",
+                  "host": [
+                    "{{logsURL}}"
+                  ],
+                  "path": [
+                    "leen-abdallah",
+                    "logs",
+                    "search"
+                  ],
+                  "query": [
+                    {
+                      "key": "user_id",
+                      "value": "{{analystUserId}}"
+                    },
+                    {
+                      "key": "severity_level",
+                      "value": "Warning"
+                    },
+                    {
+                      "key": "related_service",
+                      "value": "incidents"
+                    }
+                  ]
+                },
+                "description": "GET /leen-abdallah/logs/search. All filters must match. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Search with no results",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () { pm.response.to.have.status(200); });",
+                      "const result = pm.response.json();",
+                      "pm.test(\"Response is a list\", function () { pm.expect(result.status).to.eql(\"success\"); pm.expect(result.data).to.be.an(\"array\"); });",
+                      "pm.test(\"No logs found\", function () { pm.expect(result.data).to.have.lengthOf(0); pm.expect(result.message).to.eql(\"0 log(s) found\"); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{adminToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{logsURL}}/leen-abdallah/logs/search?action=no-such-action-zzz",
+                  "host": [
+                    "{{logsURL}}"
+                  ],
+                  "path": [
+                    "leen-abdallah",
+                    "logs",
+                    "search"
+                  ],
+                  "query": [
+                    {
+                      "key": "action",
+                      "value": "no-such-action-zzz"
+                    }
+                  ]
+                },
+                "description": "GET /leen-abdallah/logs/search. Nothing matches, so the list is empty. Returns 200. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Search treats % as text",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () { pm.response.to.have.status(200); });",
+                      "const result = pm.response.json();",
+                      "pm.test(\"Response is a list\", function () { pm.expect(result.status).to.eql(\"success\"); pm.expect(result.data).to.be.an(\"array\"); });",
+                      "pm.test(\"Only actions that contain a % are returned\", function () { pm.expect(result.data.length).to.be.above(0); result.data.forEach(function (log) { pm.expect(log.action).to.include(\"%\"); }); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{adminToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{logsURL}}/leen-abdallah/logs/search?action=%25",
+                  "host": [
+                    "{{logsURL}}"
+                  ],
+                  "path": [
+                    "leen-abdallah",
+                    "logs",
+                    "search"
+                  ],
+                  "query": [
+                    {
+                      "key": "action",
+                      "value": "%25"
+                    }
+                  ]
+                },
+                "description": "GET /leen-abdallah/logs/search. A percent sign is matched as a plain character, not as a wildcard. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Search without parameters",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 400\", function () { pm.response.to.have.status(400); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{adminToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{logsURL}}/leen-abdallah/logs/search",
+                  "host": [
+                    "{{logsURL}}"
+                  ],
+                  "path": [
+                    "leen-abdallah",
+                    "logs",
+                    "search"
+                  ]
+                },
+                "description": "GET /leen-abdallah/logs/search. At least one filter is required. Returns 400. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Search with unknown parameter",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 400\", function () { pm.response.to.have.status(400); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{adminToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{logsURL}}/leen-abdallah/logs/search?colour=red",
+                  "host": [
+                    "{{logsURL}}"
+                  ],
+                  "path": [
+                    "leen-abdallah",
+                    "logs",
+                    "search"
+                  ],
+                  "query": [
+                    {
+                      "key": "colour",
+                      "value": "red"
+                    }
+                  ]
+                },
+                "description": "GET /leen-abdallah/logs/search. Unknown parameter. Returns 400. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Search invalid date",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 400\", function () { pm.response.to.have.status(400); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{adminToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{logsURL}}/leen-abdallah/logs/search?date=2026-13-45",
+                  "host": [
+                    "{{logsURL}}"
+                  ],
+                  "path": [
+                    "leen-abdallah",
+                    "logs",
+                    "search"
+                  ],
+                  "query": [
+                    {
+                      "key": "date",
+                      "value": "2026-13-45"
+                    }
+                  ]
+                },
+                "description": "GET /leen-abdallah/logs/search. Not a real date. Returns 400. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Search date in wrong format",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 400\", function () { pm.response.to.have.status(400); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{adminToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{logsURL}}/leen-abdallah/logs/search?date=20260101",
+                  "host": [
+                    "{{logsURL}}"
+                  ],
+                  "path": [
+                    "leen-abdallah",
+                    "logs",
+                    "search"
+                  ],
+                  "query": [
+                    {
+                      "key": "date",
+                      "value": "20260101"
+                    }
+                  ]
+                },
+                "description": "GET /leen-abdallah/logs/search. Dates must be written YYYY-MM-DD. Returns 400. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Search invalid severity",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 400\", function () { pm.response.to.have.status(400); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{adminToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{logsURL}}/leen-abdallah/logs/search?severity_level=Severe",
+                  "host": [
+                    "{{logsURL}}"
+                  ],
+                  "path": [
+                    "leen-abdallah",
+                    "logs",
+                    "search"
+                  ],
+                  "query": [
+                    {
+                      "key": "severity_level",
+                      "value": "Severe"
+                    }
+                  ]
+                },
+                "description": "GET /leen-abdallah/logs/search. Unknown severity. Returns 400. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Search invalid user id",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 400\", function () { pm.response.to.have.status(400); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{adminToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{logsURL}}/leen-abdallah/logs/search?user_id=abc",
+                  "host": [
+                    "{{logsURL}}"
+                  ],
+                  "path": [
+                    "leen-abdallah",
+                    "logs",
+                    "search"
+                  ],
+                  "query": [
+                    {
+                      "key": "user_id",
+                      "value": "abc"
+                    }
+                  ]
+                },
+                "description": "GET /leen-abdallah/logs/search. The user id is not a number. Returns 400. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Search as auditor",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () { pm.response.to.have.status(200); });",
+                      "const result = pm.response.json();",
+                      "pm.test(\"Response is a list\", function () { pm.expect(result.status).to.eql(\"success\"); pm.expect(result.data).to.be.an(\"array\"); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{auditorToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{logsURL}}/leen-abdallah/logs/search?user_id={{analystUserId}}",
+                  "host": [
+                    "{{logsURL}}"
+                  ],
+                  "path": [
+                    "leen-abdallah",
+                    "logs",
+                    "search"
+                  ],
+                  "query": [
+                    {
+                      "key": "user_id",
+                      "value": "{{analystUserId}}"
+                    }
+                  ]
+                },
+                "description": "GET /leen-abdallah/logs/search. Auditors can search. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Search as analyst",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () { pm.response.to.have.status(200); });",
+                      "const result = pm.response.json();",
+                      "pm.test(\"Response is a list\", function () { pm.expect(result.status).to.eql(\"success\"); pm.expect(result.data).to.be.an(\"array\"); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{analystToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{logsURL}}/leen-abdallah/logs/search?user_id={{analystUserId}}",
+                  "host": [
+                    "{{logsURL}}"
+                  ],
+                  "path": [
+                    "leen-abdallah",
+                    "logs",
+                    "search"
+                  ],
+                  "query": [
+                    {
+                      "key": "user_id",
+                      "value": "{{analystUserId}}"
+                    }
+                  ]
+                },
+                "description": "GET /leen-abdallah/logs/search. Analysts can search. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Search as regular user",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 403\", function () { pm.response.to.have.status(403); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{employeeToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{logsURL}}/leen-abdallah/logs/search?user_id={{analystUserId}}",
+                  "host": [
+                    "{{logsURL}}"
+                  ],
+                  "path": [
+                    "leen-abdallah",
+                    "logs",
+                    "search"
+                  ],
+                  "query": [
+                    {
+                      "key": "user_id",
+                      "value": "{{analystUserId}}"
+                    }
+                  ]
+                },
+                "description": "GET /leen-abdallah/logs/search. Regular users have no access. Returns 403. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Search without token",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 401\", function () { pm.response.to.have.status(401); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{logsURL}}/leen-abdallah/logs/search?user_id={{analystUserId}}",
+                  "host": [
+                    "{{logsURL}}"
+                  ],
+                  "path": [
+                    "leen-abdallah",
+                    "logs",
+                    "search"
+                  ],
+                  "query": [
+                    {
+                      "key": "user_id",
+                      "value": "{{analystUserId}}"
+                    }
+                  ]
+                },
+                "description": "GET /leen-abdallah/logs/search. No token. Returns 401. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "5. Retrieve Logs By User",
+          "item": [
+            {
+              "name": "Logs of the analyst (admin)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () { pm.response.to.have.status(200); });",
+                      "const result = pm.response.json();",
+                      "pm.test(\"Response is a list\", function () { pm.expect(result.status).to.eql(\"success\"); pm.expect(result.data).to.be.an(\"array\"); });",
+                      "pm.test(\"Every returned log has user_id = \" + Number(pm.collectionVariables.get(\"analystUserId\")), function () { pm.expect(result.data.length).to.be.above(0); result.data.forEach(function (log) { pm.expect(log.user_id).to.eql(Number(pm.collectionVariables.get(\"analystUserId\"))); }); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{adminToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{logsURL}}/leen-abdallah/logs/user/{{analystUserId}}",
+                  "host": [
+                    "{{logsURL}}"
+                  ],
+                  "path": [
+                    "leen-abdallah",
+                    "logs",
+                    "user",
+                    "{{analystUserId}}"
+                  ]
+                },
+                "description": "GET /leen-abdallah/logs/user/{{analystUserId}}. All logs written for the analyst. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Logs of the admin (auditor)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () { pm.response.to.have.status(200); });",
+                      "const result = pm.response.json();",
+                      "pm.test(\"Response is a list\", function () { pm.expect(result.status).to.eql(\"success\"); pm.expect(result.data).to.be.an(\"array\"); });",
+                      "pm.test(\"Every returned log has user_id = \" + Number(pm.collectionVariables.get(\"adminUserId\")), function () { pm.expect(result.data.length).to.be.above(0); result.data.forEach(function (log) { pm.expect(log.user_id).to.eql(Number(pm.collectionVariables.get(\"adminUserId\"))); }); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{auditorToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{logsURL}}/leen-abdallah/logs/user/{{adminUserId}}",
+                  "host": [
+                    "{{logsURL}}"
+                  ],
+                  "path": [
+                    "leen-abdallah",
+                    "logs",
+                    "user",
+                    "{{adminUserId}}"
+                  ]
+                },
+                "description": "GET /leen-abdallah/logs/user/{{adminUserId}}. Auditors can read logs by user. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "User with no logs",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () { pm.response.to.have.status(200); });",
+                      "const result = pm.response.json();",
+                      "pm.test(\"Response is a list\", function () { pm.expect(result.status).to.eql(\"success\"); pm.expect(result.data).to.be.an(\"array\"); });",
+                      "pm.test(\"The list is empty\", function () { pm.expect(result.data).to.have.lengthOf(0); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{adminToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{logsURL}}/leen-abdallah/logs/user/{{emptyLogUserId}}",
+                  "host": [
+                    "{{logsURL}}"
+                  ],
+                  "path": [
+                    "leen-abdallah",
+                    "logs",
+                    "user",
+                    "{{emptyLogUserId}}"
+                  ]
+                },
+                "description": "GET /leen-abdallah/logs/user/{{emptyLogUserId}}. A user that exists but has no logs gets an empty list with 200. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Unknown user",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 404\", function () { pm.response.to.have.status(404); });",
+                      "pm.test(\"Message says user not found\", function () { pm.expect(pm.response.json().message).to.eql(\"User not found\"); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{adminToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{logsURL}}/leen-abdallah/logs/user/999999",
+                  "host": [
+                    "{{logsURL}}"
+                  ],
+                  "path": [
+                    "leen-abdallah",
+                    "logs",
+                    "user",
+                    "999999"
+                  ]
+                },
+                "description": "GET /leen-abdallah/logs/user/999999. No user has this id. Returns 404. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Invalid user id",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 400\", function () { pm.response.to.have.status(400); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{adminToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{logsURL}}/leen-abdallah/logs/user/abc",
+                  "host": [
+                    "{{logsURL}}"
+                  ],
+                  "path": [
+                    "leen-abdallah",
+                    "logs",
+                    "user",
+                    "abc"
+                  ]
+                },
+                "description": "GET /leen-abdallah/logs/user/abc. The id is not a number. Returns 400. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Logs by user (analyst)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 403\", function () { pm.response.to.have.status(403); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{analystToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{logsURL}}/leen-abdallah/logs/user/{{analystUserId}}",
+                  "host": [
+                    "{{logsURL}}"
+                  ],
+                  "path": [
+                    "leen-abdallah",
+                    "logs",
+                    "user",
+                    "{{analystUserId}}"
+                  ]
+                },
+                "description": "GET /leen-abdallah/logs/user/{{analystUserId}}. Analysts cannot use this route. Returns 403. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Logs by user (regular user)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 403\", function () { pm.response.to.have.status(403); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{employeeToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{logsURL}}/leen-abdallah/logs/user/{{analystUserId}}",
+                  "host": [
+                    "{{logsURL}}"
+                  ],
+                  "path": [
+                    "leen-abdallah",
+                    "logs",
+                    "user",
+                    "{{analystUserId}}"
+                  ]
+                },
+                "description": "GET /leen-abdallah/logs/user/{{analystUserId}}. Regular users have no access. Returns 403. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Logs by user without token",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 401\", function () { pm.response.to.have.status(401); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{logsURL}}/leen-abdallah/logs/user/{{analystUserId}}",
+                  "host": [
+                    "{{logsURL}}"
+                  ],
+                  "path": [
+                    "leen-abdallah",
+                    "logs",
+                    "user",
+                    "{{analystUserId}}"
+                  ]
+                },
+                "description": "GET /leen-abdallah/logs/user/{{analystUserId}}. No token. Returns 401. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "6. Delete Logs",
+          "item": [
+            {
+              "name": "Create a log to delete (admin)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 201\", function () { pm.response.to.have.status(201); });",
+                      "const log = pm.response.json().data;",
+                      "pm.test(\"Log has the values that were sent\", function () { pm.expect(log.user_id).to.eql(Number(pm.collectionVariables.get(\"employeeUserId\"))); pm.expect(log.action).to.eql(\"Temporary log\"); pm.expect(log.severity_level).to.eql(\"Information\"); pm.expect(log.related_service).to.eql(\"users\"); });",
+                      "pm.test(\"Log id and timestamp are set by the system\", function () { pm.expect(log.log_id).to.be.a(\"number\"); pm.expect(log.timestamp).to.match(/^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}$/); });",
+                      "pm.collectionVariables.set(\"deleteLogId\", log.log_id);"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{adminToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"user_id\": {{employeeUserId}}, \"action\": \"Temporary log\", \"description\": \"Created only to be deleted\", \"severity_level\": \"Information\", \"related_service\": \"users\"}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{logsURL}}/leen-abdallah/logs",
+                  "host": [
+                    "{{logsURL}}"
+                  ],
+                  "path": [
+                    "leen-abdallah",
+                    "logs"
+                  ]
+                },
+                "description": "POST /leen-abdallah/logs. Creates a log that the next requests try to delete. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Delete log as analyst",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 403\", function () { pm.response.to.have.status(403); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{analystToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{logsURL}}/leen-abdallah/logs/{{deleteLogId}}",
+                  "host": [
+                    "{{logsURL}}"
+                  ],
+                  "path": [
+                    "leen-abdallah",
+                    "logs",
+                    "{{deleteLogId}}"
+                  ]
+                },
+                "description": "DELETE /leen-abdallah/logs/{{deleteLogId}}. Analysts cannot delete logs. Returns 403 and the attempt is logged. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Delete log as auditor",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 403\", function () { pm.response.to.have.status(403); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{auditorToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{logsURL}}/leen-abdallah/logs/{{deleteLogId}}",
+                  "host": [
+                    "{{logsURL}}"
+                  ],
+                  "path": [
+                    "leen-abdallah",
+                    "logs",
+                    "{{deleteLogId}}"
+                  ]
+                },
+                "description": "DELETE /leen-abdallah/logs/{{deleteLogId}}. Auditors cannot delete logs. Returns 403. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Delete log as regular user",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 403\", function () { pm.response.to.have.status(403); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{employeeToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{logsURL}}/leen-abdallah/logs/{{deleteLogId}}",
+                  "host": [
+                    "{{logsURL}}"
+                  ],
+                  "path": [
+                    "leen-abdallah",
+                    "logs",
+                    "{{deleteLogId}}"
+                  ]
+                },
+                "description": "DELETE /leen-abdallah/logs/{{deleteLogId}}. Regular users cannot delete logs. Returns 403. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Delete log without token",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 401\", function () { pm.response.to.have.status(401); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{logsURL}}/leen-abdallah/logs/{{deleteLogId}}",
+                  "host": [
+                    "{{logsURL}}"
+                  ],
+                  "path": [
+                    "leen-abdallah",
+                    "logs",
+                    "{{deleteLogId}}"
+                  ]
+                },
+                "description": "DELETE /leen-abdallah/logs/{{deleteLogId}}. No token. Returns 401. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Log still exists after refused deletes",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () { pm.response.to.have.status(200); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{adminToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{logsURL}}/leen-abdallah/logs/{{deleteLogId}}",
+                  "host": [
+                    "{{logsURL}}"
+                  ],
+                  "path": [
+                    "leen-abdallah",
+                    "logs",
+                    "{{deleteLogId}}"
+                  ]
+                },
+                "description": "GET /leen-abdallah/logs/{{deleteLogId}}. None of the refused requests removed the log. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Delete log with invalid id",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 400\", function () { pm.response.to.have.status(400); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{adminToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{logsURL}}/leen-abdallah/logs/abc",
+                  "host": [
+                    "{{logsURL}}"
+                  ],
+                  "path": [
+                    "leen-abdallah",
+                    "logs",
+                    "abc"
+                  ]
+                },
+                "description": "DELETE /leen-abdallah/logs/abc. The id is not a number. Returns 400. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Delete log (admin)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () { pm.response.to.have.status(200); });",
+                      "pm.test(\"Message confirms deletion\", function () { pm.expect(pm.response.json().message).to.eql(\"Log deleted successfully\"); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{adminToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{logsURL}}/leen-abdallah/logs/{{deleteLogId}}",
+                  "host": [
+                    "{{logsURL}}"
+                  ],
+                  "path": [
+                    "leen-abdallah",
+                    "logs",
+                    "{{deleteLogId}}"
+                  ]
+                },
+                "description": "DELETE /leen-abdallah/logs/{{deleteLogId}}. The administrator deletes the log. Returns 200. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Get deleted log",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 404\", function () { pm.response.to.have.status(404); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{adminToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{logsURL}}/leen-abdallah/logs/{{deleteLogId}}",
+                  "host": [
+                    "{{logsURL}}"
+                  ],
+                  "path": [
+                    "leen-abdallah",
+                    "logs",
+                    "{{deleteLogId}}"
+                  ]
+                },
+                "description": "GET /leen-abdallah/logs/{{deleteLogId}}. The deleted log is gone. Returns 404. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Delete already deleted log",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 404\", function () { pm.response.to.have.status(404); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{adminToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{logsURL}}/leen-abdallah/logs/{{deleteLogId}}",
+                  "host": [
+                    "{{logsURL}}"
+                  ],
+                  "path": [
+                    "leen-abdallah",
+                    "logs",
+                    "{{deleteLogId}}"
+                  ]
+                },
+                "description": "DELETE /leen-abdallah/logs/{{deleteLogId}}. Deleting again. Returns 404. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Delete non-existing log",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 404\", function () { pm.response.to.have.status(404); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{adminToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{logsURL}}/leen-abdallah/logs/999999",
+                  "host": [
+                    "{{logsURL}}"
+                  ],
+                  "path": [
+                    "leen-abdallah",
+                    "logs",
+                    "999999"
+                  ]
+                },
+                "description": "DELETE /leen-abdallah/logs/999999. No log has this id. Returns 404. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Deletion was recorded in the logs",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () { pm.response.to.have.status(200); });",
+                      "const result = pm.response.json();",
+                      "pm.test(\"Response is a list\", function () { pm.expect(result.status).to.eql(\"success\"); pm.expect(result.data).to.be.an(\"array\"); });",
+                      "pm.test(\"The deletion left a Warning log\", function () { pm.expect(result.data.length).to.be.above(0); result.data.forEach(function (log) { pm.expect(log.severity_level).to.eql(\"Warning\"); pm.expect(log.related_service).to.eql(\"logs\"); }); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{adminToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{logsURL}}/leen-abdallah/logs/search?action=Log deleted&user_id={{adminUserId}}",
+                  "host": [
+                    "{{logsURL}}"
+                  ],
+                  "path": [
+                    "leen-abdallah",
+                    "logs",
+                    "search"
+                  ],
+                  "query": [
+                    {
+                      "key": "action",
+                      "value": "Log deleted"
+                    },
+                    {
+                      "key": "user_id",
+                      "value": "{{adminUserId}}"
+                    }
+                  ]
+                },
+                "description": "GET /leen-abdallah/logs/search. Deleting a log writes a new Warning log, so deletions can be traced. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Refused deletes were recorded",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () { pm.response.to.have.status(200); });",
+                      "const result = pm.response.json();",
+                      "pm.test(\"Response is a list\", function () { pm.expect(result.status).to.eql(\"success\"); pm.expect(result.data).to.be.an(\"array\"); });",
+                      "pm.test(\"The analyst's refused request was logged\", function () { pm.expect(result.data.length).to.be.above(0); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{adminToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{logsURL}}/leen-abdallah/logs/search?user_id={{analystUserId}}&severity_level=Warning&related_service=logs",
+                  "host": [
+                    "{{logsURL}}"
+                  ],
+                  "path": [
+                    "leen-abdallah",
+                    "logs",
+                    "search"
+                  ],
+                  "query": [
+                    {
+                      "key": "user_id",
+                      "value": "{{analystUserId}}"
+                    },
+                    {
+                      "key": "severity_level",
+                      "value": "Warning"
+                    },
+                    {
+                      "key": "related_service",
+                      "value": "logs"
+                    }
+                  ]
+                },
+                "description": "GET /leen-abdallah/logs/search. Permission violations are written to the audit log. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "7. Logs cannot be modified",
+          "item": [
+            {
+              "name": "Update a log (PUT)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 405\", function () { pm.response.to.have.status(405); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "PUT",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{adminToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"action\": \"Changed\"}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{logsURL}}/leen-abdallah/logs/{{logId}}",
+                  "host": [
+                    "{{logsURL}}"
+                  ],
+                  "path": [
+                    "leen-abdallah",
+                    "logs",
+                    "{{logId}}"
+                  ]
+                },
+                "description": "PUT /leen-abdallah/logs/{{logId}}. There is no update route: audit logs cannot be modified. Returns 405. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Delete without an id",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 405\", function () { pm.response.to.have.status(405); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{adminToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{logsURL}}/leen-abdallah/logs",
+                  "host": [
+                    "{{logsURL}}"
+                  ],
+                  "path": [
+                    "leen-abdallah",
+                    "logs"
+                  ]
+                },
+                "description": "DELETE /leen-abdallah/logs. Logs can only be deleted one at a time by id. Returns 405. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            },
+            {
+              "name": "Log is unchanged",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () { pm.response.to.have.status(200); });",
+                      "pm.test(\"The original action is preserved\", function () { pm.expect(pm.response.json().data.action).to.eql(\"Incident created\"); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{adminToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{logsURL}}/leen-abdallah/logs/{{logId}}",
+                  "host": [
+                    "{{logsURL}}"
+                  ],
+                  "path": [
+                    "leen-abdallah",
+                    "logs",
+                    "{{logId}}"
+                  ]
+                },
+                "description": "GET /leen-abdallah/logs/{{logId}}. The failed update did not change the log. Implemented by: Leen Abdallah"
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    },
+    {
       "name": "Service 6 – Security Reports",
       "item": [
         {
@@ -4508,13 +8236,14 @@
                   }
                 },
                 "url": {
-                  "raw": "{{baseURL}}/users/login",
+                  "raw": "{{baseURL}}/users/login/AdamYahya",
                   "host": [
                     "{{baseURL}}"
                   ],
                   "path": [
                     "users",
-                    "login"
+                    "login",
+                    "AdamYahya"
                   ]
                 },
                 "description": "POST /users/login. Logs in and stores the token in the adminToken collection variable. Implemented by: Leen Abdallah"
@@ -4548,13 +8277,14 @@
                   }
                 },
                 "url": {
-                  "raw": "{{baseURL}}/users/login",
+                  "raw": "{{baseURL}}/users/login/AdamYahya",
                   "host": [
                     "{{baseURL}}"
                   ],
                   "path": [
                     "users",
-                    "login"
+                    "login",
+                    "AdamYahya"
                   ]
                 },
                 "description": "POST /users/login. Logs in and stores the token in the analystToken collection variable. Implemented by: Leen Abdallah"
@@ -4588,13 +8318,14 @@
                   }
                 },
                 "url": {
-                  "raw": "{{baseURL}}/users/login",
+                  "raw": "{{baseURL}}/users/login/AdamYahya",
                   "host": [
                     "{{baseURL}}"
                   ],
                   "path": [
                     "users",
-                    "login"
+                    "login",
+                    "AdamYahya"
                   ]
                 },
                 "description": "POST /users/login. Logs in and stores the token in the auditorToken collection variable. Implemented by: Leen Abdallah"
@@ -4628,13 +8359,14 @@
                   }
                 },
                 "url": {
-                  "raw": "{{baseURL}}/users/login",
+                  "raw": "{{baseURL}}/users/login/AdamYahya",
                   "host": [
                     "{{baseURL}}"
                   ],
                   "path": [
                     "users",
-                    "login"
+                    "login",
+                    "AdamYahya"
                   ]
                 },
                 "description": "POST /users/login. Logs in and stores the token in the employeeToken collection variable. Implemented by: Leen Abdallah"
@@ -5713,7 +9445,7 @@
                     "vulnerabilities"
                   ]
                 },
-                "description": "GET /leen-abdallah/reports/vulnerabilities. Total vulnerabilities, by severity and status, and critical vulnerabilities. Allowed: returns 200 with the report. Implemented by: Leen Abdallah"
+                "description": "GET /leen-abdallah/reports/vulnerabilities. Total vulnerabilities, by severity and status, and critical vulnerabilities, read from the Vulnerability Management Service. Allowed: returns 200 with the report. Implemented by: Leen Abdallah"
               },
               "response": []
             },
@@ -5940,7 +9672,9 @@
                       "const sum = (o) => Object.values(o).reduce((a, b) => a + b, 0);",
                       "pm.test(\"Login attempts are successful plus failed logins\", function () { pm.expect(report.login_attempts).to.eql(report.successful_logins + report.failed_logins); });",
                       "pm.test(\"Total activities cover the login attempts\", function () { pm.expect(report.total_activities >= report.login_attempts).to.be.true; });",
-                      "pm.test(\"Most performed actions are sorted\", function () { const totals = report.most_performed_actions.map(a => a.total); pm.expect(totals).to.eql([...totals].sort((a, b) => b - a)); });"
+                      "pm.test(\"Most performed actions are sorted\", function () { const totals = report.most_performed_actions.map(a => a.total); pm.expect(totals).to.eql([...totals].sort((a, b) => b - a)); });",
+                      "pm.test(\"Most performed actions are at most five\", function () { pm.expect(report.most_performed_actions.length <= 5).to.be.true; });",
+                      "pm.test(\"Recent activities are the newest logs first\", function () { const ids = report.recent_activities.map(a => a.log_id); pm.expect(ids.length <= 5).to.be.true; pm.expect(ids).to.eql([...ids].sort((a, b) => b - a)); });"
                     ]
                   }
                 }
@@ -5969,7 +9703,7 @@
                     "activity"
                   ]
                 },
-                "description": "GET /leen-abdallah/reports/activity. Total activities, login attempts, failed logins and most performed actions. Allowed: returns 200 with the report. Implemented by: Leen Abdallah"
+                "description": "GET /leen-abdallah/reports/activity. Total activities, login attempts, failed logins, most performed actions and the latest activities, all read from the Security Audit Logging Service. Allowed: returns 200 with the report. Implemented by: Leen Abdallah"
               },
               "response": []
             },
@@ -7085,6 +10819,78 @@
     {
       "key": "reportsURL",
       "value": "http://127.0.0.1:5006",
+      "type": "string"
+    },
+    {
+      "key": "admin",
+      "secret": true
+    },
+    {
+      "key": "yy",
+      "secret": true
+    },
+    {
+      "key": "jad",
+      "secret": true
+    },
+    {
+      "key": "assetsURL",
+      "value": "http://127.0.0.1:5002",
+      "type": "string"
+    },
+    {
+      "key": "vulnURL",
+      "value": "http://127.0.0.1:5007",
+      "type": "string"
+    },
+    {
+      "key": "logsURL",
+      "value": "http://127.0.0.1:5005",
+      "type": "string"
+    },
+    {
+      "key": "logId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "deleteLogId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "adminUserId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "analystUserId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "auditorUserId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "employeeUserId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "emptyLogUserId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "emptyLogUsername",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "todayDate",
+      "value": "",
       "type": "string"
     }
   ]

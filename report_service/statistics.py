@@ -7,10 +7,19 @@ from incident_service.models import SEVERITIES as INCIDENT_SEVERITIES
 from incident_service.models import STATUSES as INCIDENT_STATUSES
 from threat_service.models import SEVERITY_LEVELS as THREAT_SEVERITIES
 from threat_service.models import THREAT_TYPES
+from vulnerability_service.models import SEVERITY_LEVELS as VULNERABILITY_SEVERITIES
+from vulnerability_service.models import STATUSES as VULNERABILITY_STATUSES
 
 # an incident counts as open until it is resolved or closed
 CLOSED_INCIDENT_STATUSES = ("Resolved", "Closed")
 RECENT_THREAT_LIMIT = 5
+TOP_VULNERABILITY_LIMIT = 10
+TOP_ACTION_LIMIT = 5
+RECENT_ACTIVITY_LIMIT = 5
+
+# the actions the user service writes to the audit log for logins
+LOGIN_SUCCESS_ACTION = "Successful login"
+LOGIN_FAILURE_ACTION = "Failed login"
 
 
 def tally(records, field, categories):
@@ -83,4 +92,60 @@ def recent_threats(threats, limit=RECENT_THREAT_LIMIT):
         {key: threat[key] for key in ("threat_id", "threat_type", "threat_value",
                                       "severity_level", "source", "date_added")}
         for threat in newest[:limit]
+    ]
+
+
+# ---- vulnerabilities ----
+def vulnerabilities_by_severity(vulnerabilities):
+    return tally(vulnerabilities, "severity_level", VULNERABILITY_SEVERITIES)
+
+
+def vulnerabilities_by_status(vulnerabilities):
+    return tally(vulnerabilities, "status", VULNERABILITY_STATUSES)
+
+
+def count_critical_vulnerabilities(vulnerabilities):
+    return count_where(vulnerabilities, "severity_level", "Critical")
+
+
+def top_critical_vulnerabilities(vulnerabilities, limit=TOP_VULNERABILITY_LIMIT):
+    """Return the critical vulnerabilities with the highest CVSS score first."""
+    critical = [v for v in vulnerabilities if v.get("severity_level") == "Critical"]
+    critical.sort(key=lambda v: (-v["cvss_score"], v["vulnerability_id"]))
+    return [
+        {key: vulnerability[key] for key in ("vulnerability_id", "title", "cve_id",
+                                             "cvss_score", "status", "asset_id")}
+        for vulnerability in critical[:limit]
+    ]
+
+
+# ---- activity (audit logs) ----
+def count_login_attempts(logs):
+    """Count successful and failed login attempts together."""
+    return (count_where(logs, "action", LOGIN_SUCCESS_ACTION)
+            + count_where(logs, "action", LOGIN_FAILURE_ACTION))
+
+
+def count_successful_logins(logs):
+    return count_where(logs, "action", LOGIN_SUCCESS_ACTION)
+
+
+def count_failed_logins(logs):
+    return count_where(logs, "action", LOGIN_FAILURE_ACTION)
+
+
+def most_performed_actions(logs, limit=TOP_ACTION_LIMIT):
+    """Return the most frequent actions, most frequent first (ties by name)."""
+    counts = tally(logs, "action", ())
+    ranked = sorted(counts.items(), key=lambda item: (-item[1], item[0]))
+    return [{"action": action, "total": total} for action, total in ranked[:limit]]
+
+
+def recent_activities(logs, limit=RECENT_ACTIVITY_LIMIT):
+    """Return the latest audit log records, newest first."""
+    newest = sorted(logs, key=lambda log: log["log_id"], reverse=True)
+    return [
+        {key: log[key] for key in ("log_id", "user_id", "action", "severity_level",
+                                   "related_service", "timestamp")}
+        for log in newest[:limit]
     ]

@@ -5,7 +5,7 @@ from flask import Flask
 from common import config
 from common.auth import roles_required
 from common.errors import register_error_handlers, success_response
-from report_service import repository, sources, statistics
+from report_service import sources, statistics
 
 SERVICE = "reports"
 BASE_ROUTE = "/leen-abdallah/reports"
@@ -107,13 +107,14 @@ def vulnerability_report():
 
     Implemented by: Leen Abdallah
     """
+    vulnerabilities = sources.get_vulnerabilities()
     data = {
         "generated_at": generated_at(),
-        "total_vulnerabilities": repository.count_vulnerabilities(),
-        "critical_vulnerabilities": repository.count_critical_vulnerabilities(),
-        "vulnerabilities_by_severity": repository.vulnerabilities_by_severity(),
-        "vulnerabilities_by_status": repository.vulnerabilities_by_status(),
-        "top_critical_vulnerabilities": repository.critical_vulnerabilities(),
+        "total_vulnerabilities": len(vulnerabilities),
+        "critical_vulnerabilities": statistics.count_critical_vulnerabilities(vulnerabilities),
+        "vulnerabilities_by_severity": statistics.vulnerabilities_by_severity(vulnerabilities),
+        "vulnerabilities_by_status": statistics.vulnerabilities_by_status(vulnerabilities),
+        "top_critical_vulnerabilities": statistics.top_critical_vulnerabilities(vulnerabilities),
     }
     return success_response("Vulnerability report generated successfully", data)
 
@@ -125,13 +126,15 @@ def activity_report():
 
     Implemented by: Leen Abdallah
     """
+    logs = sources.get_logs()
     data = {
         "generated_at": generated_at(),
-        "total_activities": repository.count_activities(),
-        "login_attempts": repository.count_login_attempts(),
-        "successful_logins": repository.count_successful_logins(),
-        "failed_logins": repository.count_failed_logins(),
-        "most_performed_actions": repository.most_performed_actions(),
+        "total_activities": len(logs),
+        "login_attempts": statistics.count_login_attempts(logs),
+        "successful_logins": statistics.count_successful_logins(logs),
+        "failed_logins": statistics.count_failed_logins(logs),
+        "most_performed_actions": statistics.most_performed_actions(logs),
+        "recent_activities": statistics.recent_activities(logs),
     }
     return success_response("Activity report generated successfully", data)
 

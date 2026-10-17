@@ -1,7 +1,8 @@
 """Where the reports get their data from.
 
-Users, assets, incidents and threats belong to other services, so the report
-service asks those services for their records through their REST APIs. The
+Users, assets, incidents, threats, vulnerabilities and audit logs belong to other
+services, so the report service asks those services for their records through
+their REST APIs. The
 caller's own token is forwarded, which means a report can only show what the
 caller is allowed to see in each service.
 """
@@ -9,10 +10,12 @@ from common.errors import ApiError
 from common.service_client import fetch_resource
 
 # the list endpoint of each service (see the BASE_ROUTE of that service)
-USERS_PATH = "/users"
-ASSETS_PATH = "/assets"
+USERS_PATH = "/users/AdamYahya"
+ASSETS_PATH = "/assets/AdamYahya"
 INCIDENTS_PATH = "/Youssef-Al-Hajj-Youness/incidents"
 THREATS_PATH = "/leen-abdallah/threats"
+VULNERABILITIES_PATH = "/vulnerabilities/AdamYahya"
+LOGS_PATH = "/leen-abdallah/logs"
 
 
 def _fetch_list(service, path):
@@ -41,3 +44,11 @@ def get_incidents():
 
 def get_threats():
     return _fetch_list("threats", THREATS_PATH)
+
+
+def get_vulnerabilities():
+    return _fetch_list("vulnerabilities", VULNERABILITIES_PATH)
+
+
+def get_logs():
+    return _fetch_list("logs", LOGS_PATH)
