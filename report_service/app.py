@@ -76,5 +76,59 @@ def asset_report():
     return success_response("Asset report generated successfully", data)
 
 
+@app.get("/reports/threats")
+@report_access
+def threat_report():
+    """Threat intelligence statistics: total, by severity, by type and recent threats.
+
+    Implemented by: Leen Abdallah
+    """
+    data = {
+        "generated_at": generated_at(),
+        "total_threats": repository.count_threats(),
+        "critical_threats": repository.count_critical_threats(),
+        "threats_by_severity": repository.threats_by_severity(),
+        "threats_by_type": repository.threats_by_type(),
+        "recent_threats": repository.recent_threats(),
+    }
+    return success_response("Threat report generated successfully", data)
+
+
+@app.get("/reports/vulnerabilities")
+@report_access
+def vulnerability_report():
+    """Vulnerability statistics: total, by severity, by status and critical ones.
+
+    Implemented by: Leen Abdallah
+    """
+    data = {
+        "generated_at": generated_at(),
+        "total_vulnerabilities": repository.count_vulnerabilities(),
+        "critical_vulnerabilities": repository.count_critical_vulnerabilities(),
+        "vulnerabilities_by_severity": repository.vulnerabilities_by_severity(),
+        "vulnerabilities_by_status": repository.vulnerabilities_by_status(),
+        "top_critical_vulnerabilities": repository.critical_vulnerabilities(),
+    }
+    return success_response("Vulnerability report generated successfully", data)
+
+
+@app.get("/reports/activity")
+@report_access
+def activity_report():
+    """Security activity statistics taken from the audit logs.
+
+    Implemented by: Leen Abdallah
+    """
+    data = {
+        "generated_at": generated_at(),
+        "total_activities": repository.count_activities(),
+        "login_attempts": repository.count_login_attempts(),
+        "successful_logins": repository.count_successful_logins(),
+        "failed_logins": repository.count_failed_logins(),
+        "most_performed_actions": repository.most_performed_actions(),
+    }
+    return success_response("Activity report generated successfully", data)
+
+
 if __name__ == "__main__":
     app.run(port=config.PORTS["reports"])
