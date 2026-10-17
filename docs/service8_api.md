@@ -148,15 +148,14 @@ erDiagram
 
 ## Manual Postman requests
 
-Import the project's existing collection; use the folder
-`Service 8 - Notification and Alert Management`. Start both services and create
-the users you need through Service 1. Set the username/password variables
-locally, run each login request, and copy its returned token into `adminToken`,
-`employeeToken`, `analystToken`, or `auditorToken` as appropriate. Set
-`recipientId`, `emptyUserId`, and the returned `notificationId` manually.
-The requests include descriptions and expected HTTP statuses; no runner or
-scripts are required. Use Postman and your SQLite viewer for the instructor's
-screenshots. Keep screenshots and local credentials outside Git.
+The project's collection includes `Service 8 - Notification Service` with all
+six prefixed endpoints. Its requests use `service8_base_url`, `admin_token`,
+`analyst_token`, `auditor_token`, `analyst_id` and `notification_id`. Samples
+target the analyst recipient; all IDs and tokens must come from actual API
+responses. The original Service 1/2 folders and their older variable names are
+preserved. See [the collection guide](services_3_8_9_postman.md) for the full
+variable mapping and request dependencies. No collection runner or scripts are
+required, and preparing the collection does not begin screenshot capture.
 
 Keep all screenshots, reports, databases, and environment exports outside Git.
 The instructor requires actual Postman screenshots in the final team report.
