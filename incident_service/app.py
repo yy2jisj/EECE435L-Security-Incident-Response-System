@@ -6,6 +6,7 @@ from common.audit import log_event
 from common.auth import deny, roles_required
 from common.db import get_connection
 from common.errors import ApiError, error_response, register_error_handlers, success_response
+from common.service_client import fetch_resource
 from common.validators import check_fields, choice, get_json_body
 from incident_service import repository
 from incident_service.models import (
@@ -49,6 +50,28 @@ def find_incident(value, conn=None):
     if item is None:
         raise ApiError("Incident not found", 404)
     return item
+
+
+def validate_analyst(analyst):
+    if analyst is None:
+        raise ApiError("Analyst not found", 404)
+    if analyst["role"] != config.ROLE_ANALYST:
+        raise ApiError("Assigned user must have the Security Analyst role", 400)
+    if analyst["account_status"] != "Active":
+        raise ApiError("Assigned analyst must have an active account", 400)
+
+
+def check_analyst_via_api(analyst_id):
+    # Service 1 exposes its user directory to administrators, not an ID lookup.
+    directory = fetch_resource("users", "/users")
+    if not isinstance(directory, list) or any(
+        not isinstance(user, dict) or type(user.get("user_id")) is not int
+        or not isinstance(user.get("role"), str)
+        or not isinstance(user.get("account_status"), str)
+        for user in directory
+    ):
+        raise ApiError("The users service sent an invalid user directory", 503)
+    validate_analyst(next((user for user in directory if user["user_id"] == analyst_id), None))
 
 
 @app.post(BASE_ROUTE)
@@ -98,16 +121,14 @@ def assign_incident(item_id):
     data = get_json_body()
     check_fields(data, required=["analyst_id"])
     analyst_id = related_id(data["analyst_id"], "analyst_id")
+    find_incident(item_id)
+    # No write transaction may be held during the dependency's HTTP request.
+    check_analyst_via_api(analyst_id)
     with get_connection() as conn:
         conn.execute("BEGIN IMMEDIATE")
         item = find_incident(item_id, conn)
-        analyst = users.get_by_id(analyst_id, conn)
-        if analyst is None:
-            raise ApiError("Analyst not found", 404)
-        if analyst["role"] != config.ROLE_ANALYST:
-            raise ApiError("Assigned user must have the Security Analyst role", 400)
-        if analyst["account_status"] != "Active":
-            raise ApiError("Assigned analyst must have an active account", 400)
+        # Recheck under the lock in case the shared user changed after the API call.
+        validate_analyst(users.get_by_id(analyst_id, conn))
         if item["assigned_analyst_id"] != analyst_id:
             repository.assign_analyst(item["incident_id"], analyst_id, conn)
             notification = Notification(
