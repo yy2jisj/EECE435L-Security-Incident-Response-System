@@ -204,6 +204,20 @@ class LogApiTests(ApiTestCase):
         self.assertTrue(rows)
         self.assertEqual(rows[-1]["user_id"], self.analyst_id)
 
+    def test_missing_and_invalid_tokens_are_logged_without_a_user(self):
+        execute("DELETE FROM logs")
+        self.client.get(ROOT)
+        self.client.get(ROOT, headers={"Authorization": "Bearer not.a.token"})
+        rows = fetch_all("SELECT * FROM logs WHERE action = 'Unauthorized access attempt'")
+        self.assertEqual(len(rows), 2)
+        for row in rows:
+            self.assertIsNone(row["user_id"])
+            self.assertEqual(row["severity_level"], "Warning")
+            self.assertEqual(row["related_service"], "logs")
+        # logs without a user are still listed, but belong to nobody
+        listed = self.client.get(ROOT, headers=self.admin).get_json()["data"]
+        self.assertEqual([log["user_id"] for log in listed[:2]], [None, None])
+
     def test_routes_live_under_student_name(self):
         self.assertEqual(self.client.get("/logs", headers=self.admin).status_code, 404)
 
@@ -216,7 +230,7 @@ class LogSearchAndDeleteTests(ApiTestCase):
         self.client = app.test_client()
         self.employee = self.reporter
         self.employee_id = self.reporter_id
-        # earlier tests rows (logins, registrations) are removed so counts are exact
+        # remove the logins and registrations from setUp so the counts are exact
         execute("DELETE FROM logs")
         self.a = self.seed(self.analyst_id, "Incident created", "Information",
                            "incidents", "2026-01-05 23:59:59")

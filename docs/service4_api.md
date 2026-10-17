@@ -17,7 +17,7 @@ python -m user_service.app        # port 5001, for logging in
 python -m threat_service.app      # port 5004
 ```
 
-Log in with `POST http://127.0.0.1:5001/users/login` and send
+Log in with `POST http://127.0.0.1:5001/users/login/AdamYahya` and send
 `Authorization: Bearer <token>` with every request. Every route lives under
 `/leen-abdallah/threats`.
 
