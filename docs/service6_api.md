@@ -16,28 +16,30 @@ python -m user_service.app        # 5001
 python -m asset_service.app       # 5002
 python -m incident_service.app    # 5003
 python -m threat_service.app      # 5004
+python -m log_service.app         # 5005
+python -m vulnerability_service.app  # 5007
 python -m report_service.app      # 5006
 ```
 
-Log in with `POST http://127.0.0.1:5001/users/login` and send
+Log in with `POST http://127.0.0.1:5001/users/login/AdamYahya` and send
 `Authorization: Bearer <token>`. Every route lives under `/leen-abdallah/reports`.
 
 ## Where the data comes from
 
 | Report data | Source | How |
 |---|---|---|
-| Users | Service 1 | `GET /users` over HTTP |
-| Assets | Service 2 | `GET /assets` over HTTP |
+| Users | Service 1 | `GET /users/AdamYahya` over HTTP |
+| Assets | Service 2 | `GET /assets/AdamYahya` over HTTP |
 | Incidents | Service 3 | `GET /Youssef-Al-Hajj-Youness/incidents` over HTTP |
 | Threats | Service 4 | `GET /leen-abdallah/threats` over HTTP |
-| Vulnerabilities | `vulnerabilities` table | Read directly (Service 7 is not available yet) |
-| Activity | `logs` table | Read directly (Service 5 is not available yet) |
+| Vulnerabilities | Service 7 | `GET /vulnerabilities/AdamYahya` over HTTP |
+| Activity | Service 5 | `GET /leen-abdallah/logs` over HTTP |
 
 The caller's own token is forwarded to the other services, so a report only
 contains what the caller is allowed to see there. The URL of each service
 defaults to `http://127.0.0.1:<port>` and can be overridden with
-`USERS_SERVICE_URL`, `ASSETS_SERVICE_URL`, `INCIDENTS_SERVICE_URL` and
-`THREATS_SERVICE_URL`. If a source service is down or refuses the request, the
+`USERS_SERVICE_URL`, `ASSETS_SERVICE_URL`, `INCIDENTS_SERVICE_URL`,
+`THREATS_SERVICE_URL`, `VULNERABILITIES_SERVICE_URL` and `LOGS_SERVICE_URL`. If a source service is down or refuses the request, the
 report returns `503`. Statistics are computed from the records the services
 return, and every breakdown lists all known categories (with 0 when empty), so
 the shape of a report never changes. Each report includes `generated_at` (UTC).
@@ -261,11 +263,12 @@ Response `200`:
 
 ## 6. Activity Report
 
-`GET /leen-abdallah/reports/activity` analyses the audit logs. It returns the
-total number of log records, the login attempts (successful plus failed), the
-successful and failed logins, and the 5 most performed actions (ties are ordered
-by action name). A refused login for an inactive or suspended account also counts
-as a failed login.
+`GET /leen-abdallah/reports/activity` analyses the audit logs, which it reads from
+the Security Audit Logging Service (Service 5). It returns the total number of log
+records, the login attempts (successful plus failed), the successful and failed
+logins, the 5 most performed actions (ties are ordered by action name) and the 5
+most recent activities (newest first). A refused login for an inactive or
+suspended account also counts as a failed login.
 
 Response `200`:
 
@@ -273,32 +276,74 @@ Response `200`:
 {
   "data": {
     "failed_logins": 1,
-    "generated_at": "2026-10-17 12:04:16",
-    "login_attempts": 5,
+    "generated_at": "2026-10-17 19:50:50",
+    "login_attempts": 3,
     "most_performed_actions": [
       {
-        "action": "Unauthorized access attempt",
-        "total": 7
-      },
-      {
         "action": "Successful login",
-        "total": 4
+        "total": 2
       },
       {
         "action": "Threat added",
-        "total": 4
+        "total": 2
+      },
+      {
+        "action": "Unauthorized access attempt",
+        "total": 2
       },
       {
         "action": "User created",
-        "total": 3
+        "total": 2
       },
       {
         "action": "Failed login",
         "total": 1
       }
     ],
-    "successful_logins": 4,
-    "total_activities": 21
+    "recent_activities": [
+      {
+        "action": "Unauthorized access attempt",
+        "log_id": 9,
+        "related_service": "reports",
+        "severity_level": "Warning",
+        "timestamp": "2026-10-17 19:50:50",
+        "user_id": 2
+      },
+      {
+        "action": "Successful login",
+        "log_id": 8,
+        "related_service": "users",
+        "severity_level": "Information",
+        "timestamp": "2026-10-17 19:50:50",
+        "user_id": 2
+      },
+      {
+        "action": "Unauthorized access attempt",
+        "log_id": 7,
+        "related_service": "threats",
+        "severity_level": "Warning",
+        "timestamp": "2026-10-17 19:50:50",
+        "user_id": null
+      },
+      {
+        "action": "Threat added",
+        "log_id": 6,
+        "related_service": "threats",
+        "severity_level": "Information",
+        "timestamp": "2026-10-17 19:50:50",
+        "user_id": 1
+      },
+      {
+        "action": "Threat added",
+        "log_id": 5,
+        "related_service": "threats",
+        "severity_level": "Information",
+        "timestamp": "2026-10-17 19:50:50",
+        "user_id": 1
+      }
+    ],
+    "successful_logins": 2,
+    "total_activities": 9
   },
   "message": "Activity report generated successfully",
   "status": "success"
@@ -323,7 +368,7 @@ report always matches the stored log records.
 ## Tests
 
 ```bash
-python -m unittest tests.test_report_api -v
+python -m unittest discover -s tests -p "test_report_api.py" -v
 ```
 
 The tests start the source services over real HTTP and check every number
