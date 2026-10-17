@@ -7,9 +7,19 @@ from asset_service.models import ASSET_TYPES, CRITICALITY_LEVELS
 from common.db import fetch_all, fetch_one
 from incident_service.models import SEVERITIES as INCIDENT_SEVERITIES
 from incident_service.models import STATUSES as INCIDENT_STATUSES
+from threat_service.models import SEVERITY_LEVELS as THREAT_SEVERITIES
+from threat_service.models import THREAT_TYPES
 
 # an incident counts as open until it is resolved or closed
 CLOSED_INCIDENT_STATUSES = ("Resolved", "Closed")
+
+# the vulnerability service is not built yet, so its allowed values (see the
+# vulnerabilities table in schema.sql) are listed here
+VULNERABILITY_SEVERITIES = ("Low", "Medium", "High", "Critical")
+VULNERABILITY_STATUSES = ("Open", "Under Investigation", "In Progress", "Resolved", "Closed")
+
+RECENT_THREAT_LIMIT = 5
+CRITICAL_VULNERABILITY_LIMIT = 10
 
 
 def count_by(table, column, categories, where="", params=()):
@@ -79,3 +89,53 @@ def incidents_by_severity():
 
 def incidents_by_status():
     return count_by("incidents", "status", INCIDENT_STATUSES)
+
+
+# ---- threats ----
+def count_threats():
+    return _count("SELECT COUNT(*) AS total FROM threats")
+
+
+def count_critical_threats():
+    return _count("SELECT COUNT(*) AS total FROM threats WHERE severity_level = 'Critical'")
+
+
+def threats_by_severity():
+    return count_by("threats", "severity_level", THREAT_SEVERITIES)
+
+
+def threats_by_type():
+    return count_by("threats", "threat_type", THREAT_TYPES)
+
+
+def recent_threats(limit=RECENT_THREAT_LIMIT):
+    """Return the most recently added threats, newest first."""
+    return fetch_all(
+        "SELECT threat_id, threat_type, threat_value, severity_level, source, date_added "
+        "FROM threats ORDER BY date_added DESC, threat_id DESC LIMIT ?", (limit,))
+
+
+# ---- vulnerabilities ----
+def count_vulnerabilities():
+    return _count("SELECT COUNT(*) AS total FROM vulnerabilities")
+
+
+def count_critical_vulnerabilities():
+    return _count(
+        "SELECT COUNT(*) AS total FROM vulnerabilities WHERE severity_level = 'Critical'")
+
+
+def vulnerabilities_by_severity():
+    return count_by("vulnerabilities", "severity_level", VULNERABILITY_SEVERITIES)
+
+
+def vulnerabilities_by_status():
+    return count_by("vulnerabilities", "status", VULNERABILITY_STATUSES)
+
+
+def critical_vulnerabilities(limit=CRITICAL_VULNERABILITY_LIMIT):
+    """Return the critical vulnerabilities with the highest CVSS score first."""
+    return fetch_all(
+        "SELECT vulnerability_id, title, cve_id, cvss_score, status, asset_id "
+        "FROM vulnerabilities WHERE severity_level = 'Critical' "
+        "ORDER BY cvss_score DESC, vulnerability_id LIMIT ?", (limit,))
