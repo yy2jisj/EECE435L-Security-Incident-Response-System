@@ -63,7 +63,7 @@ def validate_analyst(analyst):
 
 def check_analyst_via_api(analyst_id):
     # Service 1 exposes its user directory to administrators, not an ID lookup.
-    directory = fetch_resource("users", "/users")
+    directory = fetch_resource("users", "/users/AdamYahya")
     if not isinstance(directory, list) or any(
         not isinstance(user, dict) or type(user.get("user_id")) is not int
         or not isinstance(user.get("role"), str)

@@ -46,7 +46,7 @@ class IncidentApiTests(ApiTestCase):
         real_get = requests.get
 
         def inspect_http(url, **kwargs):
-            self.assertTrue(url.endswith("/users"))
+            self.assertTrue(url.endswith("/users/AdamYahya"))
             self.assertEqual(kwargs["headers"], self.admin)
             self.assertEqual(kwargs["timeout"], 5)
             write_connection.assert_not_called()
