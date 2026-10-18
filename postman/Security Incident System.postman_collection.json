@@ -1447,7 +1447,8 @@
                 "vulnerabilities",
                 "AdamYahya"
               ]
-            }
+            },
+            "description": "Creates a new vulnerability record (status starts as Open). Body: title, description, cve_id (CVE-YYYY-NNNN), cvss_score (0.0-10.0), severity_level (must match the score), asset_id (must exist), discovery_source. Returns 201. Errors: 400 invalid/missing fields, 401 no token, 403 wrong role, 409 CVE already recorded for that asset. Allowed role: Security Administrator. Implemented by: Adam Yahya"
           },
           "response": []
         },
@@ -1484,7 +1485,8 @@
                 "vulnerabilities",
                 "AdamYahya"
               ]
-            }
+            },
+            "description": "Creates a second vulnerability (Medium, CVSS 5.5) on a different asset to build up sample data. Same rules as 'create vuln'. Allowed role: Security Administrator. Implemented by: Adam Yahya"
           },
           "response": []
         },
@@ -1521,7 +1523,8 @@
                 "vulnerabilities",
                 "AdamYahya"
               ]
-            }
+            },
+            "description": "Creates a third vulnerability (Low, CVSS 3.1) on the same asset as the first, used as sample data and later as the record deleted in the delete tests. Allowed role: Security Administrator. Implemented by: Adam Yahya"
           },
           "response": []
         },
@@ -1558,7 +1561,8 @@
                 "vulnerabilities",
                 "AdamYahya"
               ]
-            }
+            },
+            "description": "Validation test: sends cve_id 'HELLO-123', which does not match the CVE-YYYY-NNNN format. Expected: 400 with a validation error and nothing is stored. Allowed role: Security Administrator. Implemented by: Adam Yahya"
           },
           "response": []
         },
@@ -1586,7 +1590,8 @@
                 "vulnerabilities",
                 "AdamYahya"
               ]
-            }
+            },
+            "description": "Returns every vulnerability. Allowed roles: Security Administrator, Security Analyst, Auditor. Errors: 401 no/invalid token, 403 Regular User. Implemented by: Adam Yahya"
           },
           "response": []
         },
@@ -1615,7 +1620,8 @@
                 "1",
                 "AdamYahya"
               ]
-            }
+            },
+            "description": "Returns one vulnerability by id (path parameter). Allowed roles: Security Administrator, Security Analyst, Auditor. Errors: 400 invalid id, 401, 403, 404 not found. Implemented by: Adam Yahya"
           },
           "response": []
         },
@@ -1644,7 +1650,8 @@
                 "9999",
                 "AdamYahya"
               ]
-            }
+            },
+            "description": "Error test: requests vulnerability id 9999, which does not exist. Expected: 404 'Vulnerability not found' in the standard error format. Implemented by: Adam Yahya"
           },
           "response": []
         },
@@ -1681,7 +1688,8 @@
                 "vulnerabilities",
                 "AdamYahya"
               ]
-            }
+            },
+            "description": "Authorization test: a Security Analyst (jad) tries to create a vulnerability. Expected: 403 because only the Security Administrator may create. Compare with 'create vuln' (admin, 201). Implemented by: Adam Yahya"
           },
           "response": []
         },
@@ -1719,7 +1727,8 @@
                 "1",
                 "AdamYahya"
               ]
-            }
+            },
+            "description": "Updates a vulnerability as a Security Analyst. Optional body fields: description, cvss_score, severity_level, status, resolution_date. Status can only move one step forward (Open > Under Investigation > In Progress > Resolved > Closed); here Open moves to Under Investigation. Allowed roles: Security Administrator, Security Analyst. Errors: 400, 403, 404. Implemented by: Adam Yahya"
           },
           "response": []
         },
@@ -1757,7 +1766,8 @@
                 "1",
                 "AdamYahya"
               ]
-            }
+            },
+            "description": "Validation test: tries to move vulnerability 1 straight to Resolved, skipping steps. Expected: 400 stating the next allowed status. Allowed roles: Security Administrator, Security Analyst. Implemented by: Adam Yahya"
           },
           "response": []
         },
@@ -1786,7 +1796,8 @@
                 "1",
                 "AdamYahya"
               ]
-            }
+            },
+            "description": "Reads vulnerability 1 again to confirm the earlier update (new status and description) was saved. Allowed roles: Security Administrator, Security Analyst, Auditor. Implemented by: Adam Yahya"
           },
           "response": []
         },
@@ -1821,7 +1832,8 @@
                   "value": "CVE-2024-12345"
                 }
               ]
-            }
+            },
+            "description": "Searches vulnerabilities by the cve_id query parameter. Invalid CVE format returns 400. Allowed roles: Security Administrator, Security Analyst, Auditor. Implemented by: Adam Yahya"
           },
           "response": []
         },
@@ -1856,7 +1868,8 @@
                   "value": "Critical"
                 }
               ]
-            }
+            },
+            "description": "Searches vulnerabilities by the severity_level query parameter (Low, Medium, High or Critical). An invalid value returns 400. Allowed roles: Security Administrator, Security Analyst, Auditor. Implemented by: Adam Yahya"
           },
           "response": []
         },
@@ -1891,7 +1904,8 @@
                   "value": "6"
                 }
               ]
-            }
+            },
+            "description": "Searches vulnerabilities by the asset_id query parameter, returning all vulnerabilities of that asset. Allowed roles: Security Administrator, Security Analyst, Auditor. Implemented by: Adam Yahya"
           },
           "response": []
         },
@@ -1926,7 +1940,8 @@
                   "value": "Open"
                 }
               ]
-            }
+            },
+            "description": "Searches vulnerabilities by the status query parameter (Open, Under Investigation, In Progress, Resolved or Closed). Allowed roles: Security Administrator, Security Analyst, Auditor. Implemented by: Adam Yahya"
           },
           "response": []
         },
@@ -1955,7 +1970,8 @@
                 "3",
                 "AdamYahya"
               ]
-            }
+            },
+            "description": "Authorization test: a Security Analyst tries to delete vulnerability 3. Expected: 403 because only the Security Administrator may delete. Implemented by: Adam Yahya"
           },
           "response": []
         },
@@ -1984,7 +2000,8 @@
                 "3",
                 "AdamYahya"
               ]
-            }
+            },
+            "description": "Deletes vulnerability 3 as the Security Administrator. Expected: 200 'Vulnerability deleted successfully'; the action is written to the audit log. Errors: 404 if it does not exist. Implemented by: Adam Yahya"
           },
           "response": []
         }
