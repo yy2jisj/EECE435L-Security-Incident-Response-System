@@ -10638,22 +10638,22 @@
     },
     {
       "key": "adminPassword",
-      "value": "",
+      "value": "Admin@1234",
       "type": "string"
     },
     {
       "key": "recipientPassword",
-      "value": "",
+      "value": "Employee@1234",
       "type": "string"
     },
     {
       "key": "analystPassword",
-      "value": "",
+      "value": "Analyst@1234",
       "type": "string"
     },
     {
       "key": "auditorPassword",
-      "value": "",
+      "value": "Auditor@1234",
       "type": "string"
     },
     {
